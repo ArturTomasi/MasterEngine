@@ -3,7 +3,7 @@
 
     <property name="build.dir" value="build"/>
     <property name="publish.dir" value="publish"/>
-    <property name="src.dir" value="src"/>
+    <property name="src.dir" value="build"/>
     <!--
     <buildnumber file="${src.dir}/ant/build.number"/>
 	-->
