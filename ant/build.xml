@@ -83,7 +83,7 @@
     </target>-->
     
     <target name="build" depends="clean,compile">
-        <war destfile="${publish.dir}/eng.war"
+        <war destfile="${src.dir}/dist/eng.war"
              webxml="${src.dir}/web/WEB-INF/web.xml">
             
             <fileset dir="${src.dir}/web"/>
