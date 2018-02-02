@@ -17,7 +17,7 @@
         <!--copydir src="parts" dest="${src.dir}"/>-->
     </target>
     
-    <!--
+ 
     <target name="update.build.info">
         <mkdir dir="${build.dir}"/>
         
@@ -48,7 +48,7 @@
             <replacefilter token="@commit@"  value="${info.entry.revision}"/>
         </replace>
     </target>
-    -->
+  
     
     <target name="compile">
         <mkdir dir="${build.dir}/classes"/>
