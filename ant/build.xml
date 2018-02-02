@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="masterengine" default="build" basedir="..\..\.">
+<project name="masterengine" default="build" basedir="..\.">
 
     <property name="build.dir" value="build"/>
     <property name="publish.dir" value="publish"/>
     <property name="src.dir" value="src"/>
-    
+    <!--
     <buildnumber file="${src.dir}/ant/build.number"/>
-
+	-->
     <property file="${src.dir}/ant/build.properties"/>
     
     <target name="clean">
