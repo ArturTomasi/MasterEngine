@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk>
+    <desktop-config>
+        <theme-uri>/inc/default.css</theme-uri>
+    </desktop-config>
+    
+    <client-config>   
+        <data-handler>
+            <name>mask</name><!-- the attribute name, i.e. data-mask -->
+            <script src="~./js/jquery.mask.min.js" /> 
+            <script>
+            function (wgt, dataValue) {
+                jq(wgt.$n()).mask(dataValue);
+
+                // unformat after onChange event.
+                wgt.listen({onChange: function (event) {
+                    event.data.value = jq(this.$n()).cleanVal();
+                }});
+            }
+            </script>
+        </data-handler>
+    </client-config>
+</zk>

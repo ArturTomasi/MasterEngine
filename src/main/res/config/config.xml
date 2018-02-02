@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+    
+    <category label="Envio de Email">
+        
+        <item label="SMTP Host"
+              property="sendmail.host"
+              type="string"/>
+        
+        <item label="SMTP Porta"
+              property="sendmail.port"
+              type="integer"/>
+        
+        <item label="SMTP Remetente"
+              property="sendmail.from"
+              type="string"/>
+        
+        <item label="Autenticação"
+              property="sendmail.auth"
+              type="flag"/>
+        
+        <item label="Usuário"
+              property="sendmail.user"
+              type="string"/>
+        
+        <item label="Senha"
+              property="sendmail.pwd"
+              type="encrypt"/>
+        
+        <item label="Habilitar STARTTLS"
+              property="sendmail.starttls"
+              type="flag"/>
+        
+    </category>
+    
+    <category label="Notificações">
+        
+        <item label="Email para envio"
+              property="notification.mail"
+              type="string">
+        </item>
+        
+    </category>
+    
+</configuration>

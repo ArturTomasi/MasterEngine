@@ -1,0 +1,103 @@
+body
+{
+    margin: 0px !important;
+    padding: 0px !important;
+}
+
+.default-app-pane-south
+{
+    background-color: rgb(48, 67, 105);
+}
+
+.default-app-window .z-window-content,
+.launcher-app .z-window-content,
+.login-app .z-window-content
+{
+    margin: 0px;
+    padding: 0px;
+}
+
+.default-app-pane-west
+{
+    background: linear-gradient(to bottom,#fefefe 0,#eee 100%);
+}
+
+.default-app-pane-north
+{
+    background-color: rgb(48, 67, 105);
+}
+
+.default-app-view-button
+{
+    padding: 5px;
+    border-radius: 8px;
+    border: 1px solid lightgrey;
+    height: 70px;
+    margin: 2px;
+    text-align: center;
+    cursor: pointer;
+    background: linear-gradient(to bottom,#fefefe 0,#eee 100%);
+}
+
+.default-app-view-button.selected
+{
+    background: linear-gradient(rgb(213, 228, 234) 0px, rgb(183, 210, 226) 100%);
+}
+
+.default-app-view-button img
+{
+    height: 40px;
+    width: auto;
+}
+
+.launcher-app 
+{
+    overflow-y: auto;
+}
+
+.launcher-app-button
+{
+    padding: 20px;
+    display: inline-block;
+    border-radius: 8px;
+    -webkit-box-shadow: 10px 10px 20px 5px rgba(0,0,0,0.59);
+    -moz-box-shadow: 10px 10px 20px 5px rgba(0,0,0,0.59);
+    box-shadow: 10px 10px 20px 5px rgba(0,0,0,0.59);
+    margin-right: 50px;
+    margin-top: 20px;
+    background-color: whitesmoke;
+    cursor: pointer;
+}
+
+.launcher-app-button:hover
+{
+    background: lightgray;
+}
+
+.login-app-container
+{
+    background: linear-gradient(to bottom,#fefefe 0,#eee 100%);
+    max-width: 300px;
+    padding: 50px;
+    border-radius: 8px;
+    border: 1px solid lightgray;
+}
+
+.login-app .z-window-content
+{
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top,  #ffffff 0%, #f6f6f6 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #ffffff 0%,#f6f6f6 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #ffffff 0%,#f6f6f6 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=0 ); /* IE6-9 */
+}
+
+.default-editor
+{
+    background-color: rgba(100, 114, 142, 0.95);
+}
+
+.default-editor .z-window-header
+{
+    color: white;
+}

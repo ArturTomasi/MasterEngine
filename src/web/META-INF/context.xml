@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true" path="/eng">
+    
+    <Resource name="BeanManager"
+      auth="Container"
+      type="javax.enterprise.inject.spi.BeanManager"
+      factory="org.jboss.weld.resources.ManagerObjectFactory"/>
+    
+    <Resource 
+        name="ds/default" 
+        auth="Container" 
+        type="javax.sql.DataSource" 
+        maxActive="150" 
+        maxIdle="15" 
+        minIdle="10" 
+        maxWait="10000"
+        username="root" 
+        testOnBorrow="true"
+        validationQuery="select 1"
+        password="admin" 
+        driverClassName="com.mysql.jdbc.Driver" 
+        url="jdbc:mysql://localhost:3306/eng_homolog?autoReconnect=true&amp;characterEncoding=utf8"/>
+    
+</Context>
