@@ -59,9 +59,10 @@
                encoding="UTF-8">
             
             <src path="${src.dir}/main/src"/>
+            <!--
             <exclude name="**/*.svn"/>
             <exclude name="**/test/**"/>
-
+ 	    -->
             <classpath>
                  <fileset dir="${src.dir}/lib">
                      <include name="**/*.jar"/>
