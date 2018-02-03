@@ -28,7 +28,8 @@
             <replacefilter token="@hotfix@"  value="${hotfix}"/>
             <replacefilter token="@build@"   value="${build.number}"/>
             <replacefilter token="@mode@"    value="${mode}"/>
-            <replacefilter token="@commit@"  value="${TODAY}"/>
+            <replacefilter token="@commit@"  value="${commit}"/>
+            <replacefilter token="@today@"   value="${today}"/>
         </replace>
     </target>
     
@@ -58,12 +59,12 @@
         </copy>
     </target>
     
-<!--    <target name="jar">
+    <target name="jar">
         <mkdir dir="${publish.dir}"/>
         
         <jar destfile="${publish.dir}/masterengine.jar"
              basedir="${build.dir}/classes"/>
-    </target>-->
+    </target>
     
     <target name="build" depends="clean,update.build.info,compile">
         <war destfile="${src.dir}/dist/eng.war"
@@ -73,7 +74,7 @@
             
             <classes dir="${build.dir}/classes"/>
             
-            <!--<lib file="${publish.dir}/masterengine.jar"/>-->
+            <lib file="${publish.dir}/masterengine.jar"/>
             <lib dir="${src.dir}/lib">
                  <include name="**/*.jar"/>
                  <exclude name="**/servlet-api.jar"/>
