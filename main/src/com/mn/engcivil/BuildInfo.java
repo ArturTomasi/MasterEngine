@@ -15,7 +15,12 @@ public class BuildInfo
 
     public static String getVersion()
     {
-        return "1.3.1";
+        return 	NUMBER 	+ " - " + 
+		RELEASE + " - " +
+		HOTFIX  + " - " +
+		MODE	+ " - " +
+		BUILD 	+ " - " +
+		COMMIT;
     }
     
     public static void main( String[] args )

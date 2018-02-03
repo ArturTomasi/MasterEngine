@@ -18,33 +18,17 @@
     </target>
     
     <target name="update.build.info">
-        <mkdir dir="${build.dir}"/>
         
-        <copy file="parts/main/src/com/mn/engcivil/BuildInfo.java" 
-              todir="${src.dir}/main/src/com/mn/engcivil"
-              overwrite="true"/>
-        
-        <exec executable="svn" output="${build.dir}/svn.info.xml">
-            <arg value="username"/>
-            <arg value=""/>
-            <arg value="password"/>
-            <arg value=""/>
-            <arg value="info"/>
-            <arg value="xml"/>
-            <arg value="${svn.url}"/>
-        </exec>
-        
-        <xmlproperty file="${build.dir}/svn.info.xml" collapseAttributes="true"/>
-        
-        <echo message="Revision: ${info.entry.revision}"/>
-        
+	<tstamp>
+   	    <format property="TODAY" pattern="dd/MM/yyyy HH:mm:ss" />
+	</tstamp>
         <replace file="${src.dir}/main/src/com/mn/engcivil/BuildInfo.java" failOnNoReplacements="true">
             <replacefilter token="@number@"  value="${number}"/>
             <replacefilter token="@release@" value="${release}"/>
             <replacefilter token="@hotfix@"  value="${hotfix}"/>
             <replacefilter token="@build@"   value="${build.number}"/>
             <replacefilter token="@mode@"    value="${mode}"/>
-            <replacefilter token="@commit@"  value="${info.entry.revision}"/>
+            <replacefilter token="@commit@"  value="${TODAY}"/>
         </replace>
     </target>
     
