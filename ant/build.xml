@@ -66,7 +66,7 @@
              basedir="${build.dir}/classes"/>
     </target>
     
-    <target name="build" depends="clean,update.build.info,compile">
+    <target name="build" depends="clean,update.build.info,compile,jar">
         <war destfile="${src.dir}/dist/eng.war"
              webxml="${src.dir}/web/WEB-INF/web.xml">
             
