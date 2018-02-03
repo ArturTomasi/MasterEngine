@@ -4,9 +4,9 @@
     <property name="build.dir" value="build"/>
     <property name="publish.dir" value="publish"/>
     <property name="src.dir" value="."/>
-    <!--
+
     <buildnumber file="${src.dir}/ant/build.number"/>
-	-->
+
     <property file="${src.dir}/ant/build.properties"/>
     
     <target name="clean">
@@ -17,7 +17,6 @@
         <!--copydir src="parts" dest="${src.dir}"/>-->
     </target>
     
-    <!--
     <target name="update.build.info">
         <mkdir dir="${build.dir}"/>
         
@@ -48,7 +47,7 @@
             <replacefilter token="@commit@"  value="${info.entry.revision}"/>
         </replace>
     </target>
-    -->
+    
     
     <target name="compile">
         <mkdir dir="${build.dir}/classes"/>
