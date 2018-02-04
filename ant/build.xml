@@ -18,7 +18,13 @@
     </target>
     
     <target name="update.build.info">
-        
+	
+	<exec executable="git" outputproperty="git.revision">
+	    <arg value="log" />
+	    <arg value="-1" />
+	    <arg value="--pretty=format:%H" />
+	</exec>        
+
 	<tstamp>
    	    <format property="today" pattern="dd/MM/yyyy" />
 	</tstamp>
@@ -28,7 +34,7 @@
             <replacefilter token="@hotfix@"  value="${hotfix}"/>
             <replacefilter token="@build@"   value="${build.number}"/>
             <replacefilter token="@mode@"    value="${mode}"/>
-            <replacefilter token="@commit@"  value="${GIT_COMMIT}"/>
+            <replacefilter token="@commit@"  value="${git.revision}"/>
             <replacefilter token="@today@"   value="${today}"/>
         </replace>
     </target>
