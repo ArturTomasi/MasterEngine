@@ -28,7 +28,7 @@
             <replacefilter token="@hotfix@"  value="${hotfix}"/>
             <replacefilter token="@build@"   value="${build.number}"/>
             <replacefilter token="@mode@"    value="${mode}"/>
-            <replacefilter token="@commit@"  value="${commit}"/>
+            <replacefilter token="@commit@"  value="${GIT_COMMIT}"/>
             <replacefilter token="@today@"   value="${today}"/>
         </replace>
     </target>
