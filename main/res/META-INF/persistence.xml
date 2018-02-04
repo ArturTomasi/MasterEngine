@@ -2,21 +2,21 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="default" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>com.mn.engcivil.domain.Capstone</class>
-    <class>com.mn.engcivil.domain.City</class>
-    <class>com.mn.engcivil.domain.Client</class>
-    <class>com.mn.engcivil.domain.Contact</class>
-    <class>com.mn.engcivil.domain.Equipment</class>
-    <class>com.mn.engcivil.domain.Job</class>
-    <class>com.mn.engcivil.domain.Role</class>
-    <class>com.mn.engcivil.domain.Rule</class>
-    <class>com.mn.engcivil.domain.Sample</class>
-    <class>com.mn.engcivil.domain.SampleMail</class>
-    <class>com.mn.engcivil.domain.State</class>
-    <class>com.mn.engcivil.domain.User</class>
+    <class>com.me.eng.domain.Capstone</class>
+    <class>com.me.eng.domain.City</class>
+    <class>com.me.eng.domain.Client</class>
+    <class>com.me.eng.domain.Contact</class>
+    <class>com.me.eng.domain.Equipment</class>
+    <class>com.me.eng.domain.Job</class>
+    <class>com.me.eng.domain.Role</class>
+    <class>com.me.eng.domain.Rule</class>
+    <class>com.me.eng.domain.Sample</class>
+    <class>com.me.eng.domain.SampleMail</class>
+    <class>com.me.eng.domain.State</class>
+    <class>com.me.eng.domain.User</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/eng_homolog?autoReconnect=true&amp;zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/eng_homolog?autoReconnect=true&amp;zeroDateTimeBehavior=convertToNull&amp;characterEncoding=utf8"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value="admin"/>

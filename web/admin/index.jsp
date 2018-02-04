@@ -10,11 +10,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="shortcut icon" href="../img/me_logo.png">
-        <title>MasterEngine - Configurações</title>
+        <title>MasterEngine</title>
     </head>
     <body>
         <jsp:include page="/WEB-INF/zk/DefaultApplication.zul">
-            <jsp:param name="ui" value="com.mn.engcivil.interfaces.apps.LauncherApplicationUI"></jsp:param>
+            <jsp:param name="ui" value="com.me.eng.ui.apps.LauncherApplicationUI"></jsp:param>
         </jsp:include>
     </body>
 </html>

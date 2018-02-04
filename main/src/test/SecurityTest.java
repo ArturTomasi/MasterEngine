@@ -1,7 +1,7 @@
 
 package test;
 
-import com.mn.engcivil.domain.Security;
+import com.me.eng.domain.Security;
 
 /**
  *

@@ -1,13 +1,13 @@
 package test;
 
-import com.mn.engcivil.domain.NewtownFormula;
-import com.mn.engcivil.domain.RCFormula;
-import com.mn.engcivil.domain.Sample;
-import com.mn.engcivil.domain.reports.ItextReportGenerator;
-import com.mn.engcivil.domain.reports.SampleReport;
-import com.mn.engcivil.domain.repositories.SampleRepository;
-import com.mn.engcivil.infrastructure.JPAManager;
-import com.mn.engcivil.infrastructure.SampleDAO;
+import com.me.eng.domain.NewtownFormula;
+import com.me.eng.domain.RCFormula;
+import com.me.eng.domain.Sample;
+import com.me.eng.domain.reports.ItextReportGenerator;
+import com.me.eng.domain.reports.SampleReport;
+import com.me.eng.domain.repositories.SampleRepository;
+import com.me.eng.infrastructure.JPAManager;
+import com.me.eng.infrastructure.SampleDAO;
 import java.awt.Desktop;
 import java.io.File;
 import java.util.logging.Level;

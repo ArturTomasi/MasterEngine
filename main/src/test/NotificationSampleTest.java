@@ -1,9 +1,9 @@
 package test;
 
-import com.mn.engcivil.domain.Sample;
-import com.mn.engcivil.domain.repositories.SampleRepository;
-import com.mn.engcivil.infrastructure.JPAManager;
-import com.mn.engcivil.infrastructure.SampleDAO;
+import com.me.eng.domain.Sample;
+import com.me.eng.domain.repositories.SampleRepository;
+import com.me.eng.infrastructure.JPAManager;
+import com.me.eng.infrastructure.SampleDAO;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 

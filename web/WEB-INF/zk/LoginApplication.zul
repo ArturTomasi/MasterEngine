@@ -1,3 +1,3 @@
 <zk>
-    <window use="com.mn.engcivil.interfaces.apps.LoginApplication"/>
+    <window use="com.me.eng.ui.apps.LoginApplication"/>
 </zk>

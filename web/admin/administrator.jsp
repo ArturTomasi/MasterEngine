@@ -14,7 +14,7 @@
     </head>
     <body>
         <jsp:include page="/WEB-INF/zk/DefaultApplication.zul">
-            <jsp:param name="ui" value="com.mn.engcivil.interfaces.apps.AdministratorApplicationUI"></jsp:param>
+            <jsp:param name="ui" value="com.me.eng.ui.apps.AdministratorApplicationUI"></jsp:param>
         </jsp:include>
     </body>
 </html>

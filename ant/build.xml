@@ -20,7 +20,7 @@
     <target name="update.build.info">
         
 	<tstamp>
-   	    <format property="TODAY" pattern="dd/MM/yyyy" />
+   	    <format property="today" pattern="dd/MM/yyyy" />
 	</tstamp>
         <replace file="${src.dir}/main/src/com/mn/engcivil/BuildInfo.java" failOnNoReplacements="true">
             <replacefilter token="@number@"  value="${number}"/>

@@ -1,8 +1,8 @@
 package test;
 
-import com.mn.engcivil.application.ConfigurationManager;
-import com.mn.engcivil.infrastructure.Mail;
-import com.mn.engcivil.infrastructure.SendMail;
+import com.me.eng.application.ConfigurationManager;
+import com.me.eng.infrastructure.Mail;
+import com.me.eng.infrastructure.SendMail;
 import java.io.File;
 import java.io.FileInputStream;
 

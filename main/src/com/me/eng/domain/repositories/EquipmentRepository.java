@@ -1,0 +1,16 @@
+package com.me.eng.domain.repositories;
+
+import com.me.eng.domain.Equipment;
+import javax.inject.Named;
+
+/**
+ *
+ * @author Matheus
+ */
+@Named
+public interface EquipmentRepository
+    extends 
+        EntityRepository<Equipment>
+{
+    public int countSamples( Equipment e ) throws Exception;
+}

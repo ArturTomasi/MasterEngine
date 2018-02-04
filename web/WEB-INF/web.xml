@@ -42,7 +42,7 @@
     </listener>
     
     <listener>
-        <listener-class>com.mn.engcivil.application.Bootstrap</listener-class>
+        <listener-class>com.me.eng.application.Bootstrap</listener-class>
     </listener>
     
     <resource-env-ref>
