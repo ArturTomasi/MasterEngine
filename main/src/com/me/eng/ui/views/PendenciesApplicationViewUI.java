@@ -41,6 +41,7 @@ public class PendenciesApplicationViewUI
     protected void initComponents()
     {
         sampleTable = new SampleTable();
+        sampleTable.enableInplace();
         
         sampleTable.addColumn( 0, new Column<Sample>()
         {
