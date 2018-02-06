@@ -75,7 +75,7 @@ public class SampleTable
                     style += "font-weight: bold";
                 }
                 
-                tf.setFormat( "#,##0.##" );
+                tf.setFormat( "###0.##" );
                 tf.setStyle( style );
                 tf.setConstraint( "no negative" );
                 tf.setValue( value.getResistence() );

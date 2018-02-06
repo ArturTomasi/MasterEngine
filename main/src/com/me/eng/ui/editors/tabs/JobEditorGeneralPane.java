@@ -48,7 +48,7 @@ public class JobEditorGeneralPane
             e.addError( "Nome" );
         }
         
-        if ( tfCEI.getValue().isEmpty() || tfCEI.getValue().length() != 12 )
+        if ( ! tfCEI.getValue().isEmpty() && tfCEI.getValue().length() != 12 )
         {
             e.addError( "CEI inválido!" );
         }

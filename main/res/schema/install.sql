@@ -108,7 +108,7 @@ create table eng_jobs
     ref_client int not null,
     address varchar(300),
     ref_city int,
-    cnpj char(14) not null, 
+    cei char(14), 
     primary key (id),
     foreign key fk_jobs_client (ref_client) references eng_clients (id),
     foreign key fk_jobs_cities (ref_city) references eng_cities (id)
