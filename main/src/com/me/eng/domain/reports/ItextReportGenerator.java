@@ -1,5 +1,6 @@
 package com.me.eng.domain.reports;
 
+import com.google.common.base.Strings;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
@@ -8,13 +9,9 @@ import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.me.eng.application.ApplicationContext;
-import com.me.eng.application.ConfigurationManager;
 import com.me.eng.application.ResourceLocator;
 import com.me.eng.domain.City;
 import com.me.eng.domain.Cnpj;
@@ -38,6 +35,8 @@ public class ItextReportGenerator
     implements 
         ReportGenerator
 {
+    private float fontSize = 11;
+    
     private Formula newton;
     private Formula rc;
     
@@ -74,7 +73,7 @@ public class ItextReportGenerator
         
         document.open();
         
-        float fontSize = 11;
+        Sample root = report.getRoot();
         
         List<Sample> samples = report.getItems();
         
@@ -121,58 +120,8 @@ public class ItextReportGenerator
         
         addBreak();
         
-        Sample root = report.getRoot();
-        
-        Paragraph client = new Paragraph();
-        client.add( new Chunk( "Cliente:           ", FontFactory.getCalibriBoldFont( fontSize ) ) );
-        client.add( new Chunk( root.getClient().getName(), FontFactory.getCalibriFont( fontSize ) ) );
-        
-        document.add( client );
-        
-        String address = root.getJob().getAddress();
-        
-        if ( address == null || address.isEmpty() )
-        {
-            address = root.getClient().getAddress();
-        }
-        
-        Paragraph paragraph = new Paragraph();
-        paragraph.add( new Chunk( "                         ", FontFactory.getCalibriBoldFont( fontSize ) ) );
-        paragraph.add( new Chunk( address, FontFactory.getCalibriFont( fontSize ) ) );
-        
-        document.add( paragraph );
-        
-        City city = root.getJob().getCity();
-        
-        if ( city == null )
-        {
-            city = root.getClient().getCity();
-        }
-        
-        paragraph = new Paragraph();
-        paragraph.add( new Chunk( "                         ", FontFactory.getCalibriBoldFont( fontSize ) ) );
-        paragraph.add( new Chunk( city + "-" + city.getState().getUF().toUpperCase(), FontFactory.getCalibriFont( fontSize ) ) );
-        
-        document.add( paragraph );
-        
-        Cnpj cnpj = root.getClient().getCnpj();
-        
-        paragraph = new Paragraph();
-        paragraph.add( new Chunk( "                         ", FontFactory.getCalibriBoldFont( fontSize ) ) );
-        paragraph.add( new Chunk( "CNPJ " + cnpj, FontFactory.getCalibriFont( fontSize ) ) );
-        
-        document.add( paragraph );
-        
-        String CEI = root.getJob().getCEI();
-        
-        paragraph = new Paragraph();
-        paragraph.add( new Chunk( "                         ", FontFactory.getCalibriBoldFont( fontSize ) ) );
-        paragraph.add( new Chunk( "CEI " + CEI, FontFactory.getCalibriFont( fontSize ) ) );
-        
-        document.add( paragraph );
-        
-        addBreak();
-        addBreak();
+        createClientSection( report );
+
         addBreak();
         
         Contact c = root.getContact();
@@ -186,8 +135,9 @@ public class ItextReportGenerator
             document.add( contact );
 
             addBreak();
-            addBreak();
         }
+        
+        createJobSection( report );
         
         String value = "Corpo de prova cilíndrico"; 
         
@@ -210,17 +160,6 @@ public class ItextReportGenerator
         document.add( material );
         
         addBreak();
-        
-        if ( root.getJob() != null )
-        {
-            Paragraph job = new Paragraph();
-            job.add( new Chunk( "Obra: ", FontFactory.getCalibriBoldFont( fontSize ) ) );
-            job.add( new Chunk( root.getJob().getName(), FontFactory.getCalibriFont( fontSize ) ) );
-
-            document.add( job );
-            
-            addBreak();
-        }
         
         Paragraph dtAccept = new Paragraph();
         dtAccept.add( new Chunk( "Data do recebimento do material: ", FontFactory.getCalibriBoldFont( fontSize ) ) );
@@ -477,6 +416,92 @@ public class ItextReportGenerator
     private void addBreak() throws Exception
     {
         document.add( Chunk.NEWLINE );
+    }
+    
+    private void createClientSection( SampleReport report ) throws Exception
+    {
+        Sample root = report.getRoot();
+        
+        Paragraph client = new Paragraph();
+        client.add( new Chunk( "Cliente:           ", FontFactory.getCalibriBoldFont( fontSize ) ) );
+        client.add( new Chunk( root.getClient().getName(), FontFactory.getCalibriFont( fontSize ) ) );
+        
+        document.add( client );
+        
+        String address = root.getClient().getAddress();
+        
+        Paragraph paragraph = new Paragraph();
+        paragraph.add( new Chunk( "                         ", FontFactory.getCalibriBoldFont( fontSize ) ) );
+        paragraph.add( new Chunk( address, FontFactory.getCalibriFont( fontSize ) ) );
+        
+        document.add( paragraph );
+        
+        City city = root.getClient().getCity();
+        
+        paragraph = new Paragraph();
+        paragraph.add( new Chunk( "                         ", FontFactory.getCalibriBoldFont( fontSize ) ) );
+        paragraph.add( new Chunk( city + "-" + city.getState().getUF().toUpperCase(), FontFactory.getCalibriFont( fontSize ) ) );
+        
+        document.add( paragraph );
+        
+        Cnpj cnpj = root.getClient().getCnpj();
+        
+        paragraph = new Paragraph();
+        paragraph.add( new Chunk( "                         ", FontFactory.getCalibriBoldFont( fontSize ) ) );
+        paragraph.add( new Chunk( "CNPJ " + cnpj, FontFactory.getCalibriFont( fontSize ) ) );
+        
+        document.add( paragraph );
+    }
+    
+    private void createJobSection( SampleReport report ) throws Exception
+    {
+        Sample root = report.getRoot();
+        
+        if ( root.getJob() != null )
+        {
+            Paragraph job = new Paragraph();
+            job.add( new Chunk( "Obra:              ", FontFactory.getCalibriBoldFont( fontSize ) ) );
+            job.add( new Chunk( root.getJob().getName(), FontFactory.getCalibriFont( fontSize ) ) );
+
+            document.add( job );
+
+            String address = root.getJob().getAddress();
+        
+            Paragraph paragraph;
+                
+            if ( ! Strings.isNullOrEmpty( address ) )
+            {
+                paragraph= new Paragraph();
+                paragraph.add( new Chunk( "                         ", FontFactory.getCalibriBoldFont( fontSize ) ) );
+                paragraph.add( new Chunk( address, FontFactory.getCalibriFont( fontSize ) ) );
+
+                document.add( paragraph );
+            }
+
+            City city = root.getJob().getCity();
+
+            if ( city != null )
+            {
+                paragraph = new Paragraph();
+                paragraph.add( new Chunk( "                         ", FontFactory.getCalibriBoldFont( fontSize ) ) );
+                paragraph.add( new Chunk( city + "-" + city.getState().getUF().toUpperCase(), FontFactory.getCalibriFont( fontSize ) ) );
+            
+                document.add( paragraph );
+            }
+
+            String cei = root.getJob().getCEI();
+
+            if ( ! Strings.isNullOrEmpty( cei ) )
+            {
+                paragraph = new Paragraph();
+                paragraph.add( new Chunk( "                         ", FontFactory.getCalibriBoldFont( fontSize ) ) );
+                paragraph.add( new Chunk( "CEI " + cei, FontFactory.getCalibriFont( fontSize ) ) );
+
+                document.add( paragraph );
+            }
+            
+            addBreak();
+        }
     }
     
     private float px( float cm ) 
