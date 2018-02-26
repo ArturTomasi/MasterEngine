@@ -1,3 +1,22 @@
+/* 
+ *  Filename:    NotificationManager 
+ *
+ *  Author:      Artur Tomasi
+ *  EMail:       tomasi.artur@gmail.com
+ *  Internet:    www.masterengine.com.br
+ *
+ *  Copyright © 2018 by Over Line Ltda.
+ *  95900-038, LAJEADO, RS
+ *  BRAZIL
+ *
+ *  The copyright to the computer program(s) herein
+ *  is the property of Over Line Ltda., Brazil.
+ *  The program(s) may be used and/or copied only with
+ *  the written permission of Over Line Ltda.
+ *  or in accordance with the terms and conditions
+ *  stipulated in the agreement/contract under which
+ *  the program(s) have been supplied.
+ */
 package com.me.eng.infrastructure;
 
 import com.me.eng.application.ApplicationContext;
@@ -25,6 +44,11 @@ public class NotificationManager
 {
     private static NotificationManager instance = new NotificationManager();
     
+    /**
+     * getInstance
+     * 
+     * @return NotificationManager
+     */
     public static NotificationManager getInstance()
     {
         return instance;
@@ -32,6 +56,10 @@ public class NotificationManager
     
     private ScheduledExecutorService scheduledExecutorService;
     
+    /**
+     * start
+     * 
+     */
     public void start()
     {
         scheduledExecutorService = Executors.newScheduledThreadPool( 1 );
@@ -57,9 +85,12 @@ public class NotificationManager
                 sendNotifications();
             }
         }, minutes, TimeUnit.MINUTES );
-//        }, 1, TimeUnit.SECONDS );
     }
     
+    /**
+     * sendNotifications
+     * 
+     */
     private void sendNotifications()
     {
         final CDI cdi = WeldContainer.current();
@@ -80,6 +111,11 @@ public class NotificationManager
         }
     }
     
+    /**
+     * sendNotifications
+     * 
+     * @param sampleRepository SampleRepository
+     */
     public void sendNotifications( SampleRepository sampleRepository )
     {
         String mails[] = ConfigurationManager.getInstance().getTokens( "notification.mail" );
@@ -116,6 +152,10 @@ public class NotificationManager
         }, 1, TimeUnit.DAYS );
     }
     
+    /**
+     * stop
+     * 
+     */
     public void stop()
     {
         scheduledExecutorService.shutdownNow();

@@ -1,3 +1,22 @@
+/* 
+ *  Filename:    AbstractTable 
+ *
+ *  Author:      Artur Tomasi
+ *  EMail:       tomasi.artur@gmail.com
+ *  Internet:    www.masterengine.com.br
+ *
+ *  Copyright © 2018 by Over Line Ltda.
+ *  95900-038, LAJEADO, RS
+ *  BRAZIL
+ *
+ *  The copyright to the computer program(s) herein
+ *  is the property of Over Line Ltda., Brazil.
+ *  The program(s) may be used and/or copied only with
+ *  the written permission of Over Line Ltda.
+ *  or in accordance with the terms and conditions
+ *  stipulated in the agreement/contract under which
+ *  the program(s) have been supplied.
+ */
 package com.me.eng.ui.tables;
 
 import com.me.eng.application.ApplicationContext;
@@ -24,6 +43,7 @@ import org.zkoss.zul.event.ListDataEvent;
 /**
  *
  * @author Matheus
+ * @param <T>
  */
 public abstract class AbstractTable<T>
     extends 
@@ -35,6 +55,11 @@ public abstract class AbstractTable<T>
     {
         private List<T> items = Collections.emptyList();
         
+        /**
+         * setItems
+         * 
+         * @param items List&lt;T&gt;
+         */
         public void setItems( List<T> items )
         {
             this.items = items;
@@ -42,11 +67,22 @@ public abstract class AbstractTable<T>
             fireEvent( ListDataEvent.CONTENTS_CHANGED, 0, -1 );
         }
 
+        /**
+         * getItems
+         * 
+         * @return List&lt;T&gt;
+         */
         public List<T> getItems()
         {
             return items;
         }
         
+        /**
+         * addItem
+         * 
+         * @param e T
+         * @param index int
+         */
         public void addItem( T e, int index )
         {
             this.items.add( index, e );
@@ -54,6 +90,11 @@ public abstract class AbstractTable<T>
             fireEvent( ListDataEvent.INTERVAL_ADDED, index, index );
         }
         
+        /**
+         * updateItem
+         * 
+         * @param e T
+         */
         public void updateItem( T e )
         {
             int index = this.items.indexOf( e );
@@ -69,6 +110,11 @@ public abstract class AbstractTable<T>
             }
         }
         
+        /**
+         * removeItem
+         * 
+         * @param e T
+         */
         public void removeItem( T e )
         {
             int index = this.items.indexOf( e );
@@ -81,12 +127,23 @@ public abstract class AbstractTable<T>
             }
         }
         
+        /**
+         * getElementAt
+         * 
+         * @param i int
+         * @return T
+         */
         @Override
         public T getElementAt( int i )
         {
             return items.get( i );
         }
 
+        /**
+         * getSize
+         * 
+         * @return int
+         */
         @Override
         public int getSize()
         {
@@ -100,6 +157,10 @@ public abstract class AbstractTable<T>
     
     private List<Column> columns = new LinkedList<Column>();
     
+    /**
+     * AbstractTable
+     * 
+     */
     public AbstractTable()
     {
         setModel( model );
@@ -147,63 +208,126 @@ public abstract class AbstractTable<T>
         refreshColumns();
     }
 
+    /**
+     * addColumn
+     * 
+     * @param column Column&lt;T&gt;
+     */
     public void addColumn( Column<T> column )
     {
         addColumn( columns.size(), column );
     }
     
+    /**
+     * addColumn
+     * 
+     * @param index int
+     * @param column Column&lt;T&gt;
+     */
     public void addColumn( int index, Column<T> column )
     {
         columns.add( index, column );
         refreshColumns();
     }
     
+    /**
+     * removeColumn
+     * 
+     * @param column Column
+     */
     public void removeColumn( Column column )
     {
         columns.remove( column );
         refreshColumns();
     }
 
+    /**
+     * setTableCellRenderer
+     * 
+     * @param tableRenderer TableCellRenderer
+     */
     public void setTableCellRenderer( TableCellRenderer tableRenderer )
     {
         this.tableRenderer = tableRenderer;
     }
     
+    /**
+     * setElements
+     * 
+     * @param items List&lt;T&gt;
+     */
     public void setElements( List<T> items )
     {
         model.setItems( items != null ? new ArrayList<T>( items ) : new LinkedList<T>() );
     }
     
+    /**
+     * getElements
+     * 
+     * @return List&lt;T&gt;
+     */
     public List<T> getElements()
     {
         return new ArrayList<T>( model.getItems() );
     }
     
+    /**
+     * addElement
+     * 
+     * @param item T
+     */
     public void addElement( T item )
     {
         addElement( item, model.getItems().size() );
     }
     
+    /**
+     * addElement
+     * 
+     * @param item T
+     * @param index int
+     */
     public void addElement( T item, int index )
     {
         model.addItem( item, index );
     }
     
+    /**
+     * updateElement
+     * 
+     * @param item T
+     */
     public void updateElement( T item )
     {
         model.updateItem( item );
     }
     
+    /**
+     * removeElement
+     * 
+     * @param item T
+     */
     public void removeElement( T item )
     {
         model.removeItem( item );
     }
     
+    /**
+     * indexOf
+     * 
+     * @param item T
+     * @return int
+     */
     public int indexOf( T item )
     {
         return model.getItems().indexOf( item );
     }
     
+    /**
+     * setSelectedElement
+     * 
+     * @param item T
+     */
     public void setSelectedElement( T item )
     {
         clearSelection();
@@ -226,6 +350,11 @@ public abstract class AbstractTable<T>
         }
     }
     
+    /**
+     * setSelectedElements
+     * 
+     * @param items List&lt;T&gt;
+     */
     public void setSelectedElements( List<T> items )
     {
         clearSelection();
@@ -239,11 +368,21 @@ public abstract class AbstractTable<T>
         }
     }
     
+    /**
+     * getSelectedElements
+     * 
+     * @return List&lt;T&gt;
+     */
     public List<T> getSelectedElements()
     {
         return new ArrayList<T>( model.getSelection() );
     }
     
+    /**
+     * getSelectedElement
+     * 
+     * @return T
+     */
     public T getSelectedElement()
     {
         Listitem item = getSelectedItem();
@@ -256,6 +395,11 @@ public abstract class AbstractTable<T>
         return  null;
     }
     
+    /**
+     * addContextAction
+     * 
+     * @param a Action
+     */
     public void addContextAction( Action a )
     {
         if ( menupopup == null )
@@ -274,11 +418,20 @@ public abstract class AbstractTable<T>
         menupopup.appendChild( menuitem );
     }
     
+    /**
+     * handleException
+     * 
+     * @param e Exception
+     */
     protected void handleException( Exception e )
     {
         ApplicationContext.getInstance().handleException( e );
     }
     
+    /**
+     * refreshColumns
+     * 
+     */
     private void refreshColumns()
     {
         if ( columns.isEmpty() )
@@ -318,5 +471,11 @@ public abstract class AbstractTable<T>
 
     private Menupopup menupopup;
     
+    /**
+     * Column[]
+     * 
+     * @return abstract
+     * @ignored getColumns
+     */
     protected abstract Column[] getColumns();
 }

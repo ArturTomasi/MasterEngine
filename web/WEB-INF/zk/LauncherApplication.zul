@@ -1,4 +1,0 @@
-<zk>
-    <window use="com.me.eng.ui.apps.LauncherApplication"
-            apply="com.me.eng.ui.apps.GenericApplicationInject"/>
-</zk>

@@ -1,9 +1,7 @@
 <zk>
-    <window apply="com.me.eng.ui.apps.DefaultApplicationUIController"
-            sclass="default-app-window">
+    <window apply="com.me.eng.ui.apps.DefaultApplicationUIController" sclass="default-app-window">
 
-         <div id="applicationPane" 
-              use="com.me.eng.ui.apps.DefaultApplicationUIPane"/>
+         <div id="applicationPane"  use="com.me.eng.ui.apps.DefaultApplicationUIPane"/>
 
     </window>
 </zk>

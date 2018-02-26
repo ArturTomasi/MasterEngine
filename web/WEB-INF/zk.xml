@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <zk>
     <desktop-config>
-        <theme-uri>/inc/default.css</theme-uri>
+        <theme-uri>/inc/css/default.css</theme-uri>
     </desktop-config>
     
     <client-config>   
@@ -21,4 +20,13 @@
             </script>
         </data-handler>
     </client-config>
+    
+    <listener>
+        <listener-class>com.me.eng.ui.apps.listeners.WebAppInit</listener-class>
+    </listener>
+    
+    <session-config>
+        <device-type>ajax</device-type>    
+         <timeout-message>Session timeout. Please reload.</timeout-message>  
+    </session-config>
 </zk>

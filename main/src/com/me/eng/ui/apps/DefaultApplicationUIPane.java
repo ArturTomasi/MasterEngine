@@ -1,3 +1,22 @@
+/* 
+ *  Filename:    DefaultApplicationUIPane 
+ *
+ *  Author:      Artur Tomasi
+ *  EMail:       tomasi.artur@gmail.com
+ *  Internet:    www.masterengine.com.br
+ *
+ *  Copyright © 2018 by Over Line Ltda.
+ *  95900-038, LAJEADO, RS
+ *  BRAZIL
+ *
+ *  The copyright to the computer program(s) herein
+ *  is the property of Over Line Ltda., Brazil.
+ *  The program(s) may be used and/or copied only with
+ *  the written permission of Over Line Ltda.
+ *  or in accordance with the terms and conditions
+ *  stipulated in the agreement/contract under which
+ *  the program(s) have been supplied.
+ */
 package com.me.eng.ui.apps;
 
 import com.google.common.base.Objects;
@@ -34,11 +53,20 @@ public class DefaultApplicationUIPane
 {
     private ApplicationViewUI viewUI;
     
+    /**
+     * DefaultApplicationUIPane
+     * 
+     */
     public DefaultApplicationUIPane()
     {
         initComponents();
     }
     
+    /**
+     * resize
+     * 
+     * @param e ClientInfoEvent
+     */
     public void resize( ClientInfoEvent e )
     {
         borderlayout.setWidth( e.getDesktopWidth() + "px" );
@@ -46,6 +74,11 @@ public class DefaultApplicationUIPane
         borderlayout.resize();
     }
     
+    /**
+     * setApplicationUI
+     * 
+     * @param ui ApplicationUI
+     */
     public void setApplicationUI( ApplicationUI ui )
     {
         menu.setApplicationUI( ui );
@@ -55,6 +88,11 @@ public class DefaultApplicationUIPane
         statusBar.setUser( ApplicationContext.getInstance().getActiveUser() );
     }
     
+    /**
+     * activeView
+     * 
+     * @param view ApplicationViewUI
+     */
     public void activeView( ApplicationViewUI view )
     {
         if ( ! Objects.equal( viewUI, view ) )
@@ -105,6 +143,10 @@ public class DefaultApplicationUIPane
         }
     }
     
+    /**
+     * initComponents
+     * 
+     */
     private void initComponents()
     {
         borderlayout.appendChild( new North() );

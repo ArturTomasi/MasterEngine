@@ -1,6 +1,24 @@
+/* 
+ *  Filename:    AbstractTreeTable 
+ *
+ *  Author:      Artur Tomasi
+ *  EMail:       tomasi.artur@gmail.com
+ *  Internet:    www.masterengine.com.br
+ *
+ *  Copyright © 2018 by Over Line Ltda.
+ *  95900-038, LAJEADO, RS
+ *  BRAZIL
+ *
+ *  The copyright to the computer program(s) herein
+ *  is the property of Over Line Ltda., Brazil.
+ *  The program(s) may be used and/or copied only with
+ *  the written permission of Over Line Ltda.
+ *  or in accordance with the terms and conditions
+ *  stipulated in the agreement/contract under which
+ *  the program(s) have been supplied.
+ */
 package com.me.eng.ui.tables;
 
-import java.util.Collections;
 import java.util.Objects;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zul.AbstractTreeModel;
@@ -25,23 +43,47 @@ public abstract class AbstractTreeTable<T>
         extends 
             AbstractTreeModel<DefaultTreeNode>
     {
+        /**
+         * Model
+         * 
+         * @param root DefaultTreeNode
+         */
         public Model( DefaultTreeNode root )
         {
             super( root );
         }
         
+        /**
+         * isLeaf
+         * 
+         * @param e DefaultTreeNode
+         * @return boolean
+         */
         @Override
         public boolean isLeaf( DefaultTreeNode e )
         {
             return e.isLeaf();
         }
 
+        /**
+         * getChild
+         * 
+         * @param e DefaultTreeNode
+         * @param i int
+         * @return DefaultTreeNode
+         */
         @Override
         public DefaultTreeNode getChild( DefaultTreeNode e, int i )
         {
             return (DefaultTreeNode) e.getChildAt( i );
         }
 
+        /**
+         * getChildCount
+         * 
+         * @param e DefaultTreeNode
+         * @return int
+         */
         @Override
         public int getChildCount( DefaultTreeNode e )
         {
@@ -49,6 +91,10 @@ public abstract class AbstractTreeTable<T>
         }
     }
 
+    /**
+     * AbstractTreeTable
+     * 
+     */
     public AbstractTreeTable()
     {
         setItemRenderer( new TreeitemRenderer<T>()
@@ -87,11 +133,20 @@ public abstract class AbstractTreeTable<T>
         init();
     }
     
+    /**
+     * setRootNode
+     * 
+     * @param node DefaultTreeNode&lt;T&gt;
+     */
     public void setRootNode( DefaultTreeNode<T> node )
     {
         setModel( new Model( node ) );
     }
     
+    /**
+     * init
+     * 
+     */
     private void init() 
     {
         setSizedByContent( true );
@@ -121,6 +176,21 @@ public abstract class AbstractTreeTable<T>
         appendChild( head );
     }
     
+    /**
+     * Column[]
+     * 
+     * @return abstract
+     * @ignored getColumns
+     */
     protected abstract Column[] getColumns();
+    
+    /**
+     * Object
+     * 
+     * @param c Column
+     * @param value T
+     * @return abstract
+     * @ignored getValueAt
+     */
     protected abstract Object getValueAt( Column c, T value );
 }

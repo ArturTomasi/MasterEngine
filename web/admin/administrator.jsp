@@ -2,4 +2,4 @@
 
 <%@taglib prefix="me" tagdir="/WEB-INF/tags/"%>
 
-<me:application title="Administração de Amostras" ui="com.me.eng.ui.apps.AdministratorApplicationUI"></me:application>
+<me:application module="eng_samples" title="Administração de Amostras" ui="com.me.eng.ui.apps.AdministratorApplicationUI"></me:application>

@@ -14,6 +14,7 @@
     <class>com.me.eng.domain.SampleMail</class>
     <class>com.me.eng.domain.State</class>
     <class>com.me.eng.domain.User</class>
+    <class>com.me.eng.domain.License</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/eng_homolog?autoReconnect=true&amp;zeroDateTimeBehavior=convertToNull&amp;characterEncoding=utf8"/>

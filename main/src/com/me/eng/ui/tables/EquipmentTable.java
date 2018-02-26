@@ -1,6 +1,25 @@
+/* 
+ *  Filename:    EquipmentTable 
+ *
+ *  Author:      Artur Tomasi
+ *  EMail:       tomasi.artur@gmail.com
+ *  Internet:    www.masterengine.com.br
+ *
+ *  Copyright © 2018 by Over Line Ltda.
+ *  95900-038, LAJEADO, RS
+ *  BRAZIL
+ *
+ *  The copyright to the computer program(s) herein
+ *  is the property of Over Line Ltda., Brazil.
+ *  The program(s) may be used and/or copied only with
+ *  the written permission of Over Line Ltda.
+ *  or in accordance with the terms and conditions
+ *  stipulated in the agreement/contract under which
+ *  the program(s) have been supplied.
+ */
 package com.me.eng.ui.tables;
 
-import com.me.eng.application.ApplicationServices;
+import com.me.eng.services.ApplicationServices;
 import com.me.eng.domain.Equipment;
 import com.me.eng.domain.repositories.EquipmentRepository;
 import com.me.eng.ui.Callback;
@@ -37,11 +56,21 @@ public class EquipmentTable
         
         private String label;
 
+        /**
+         * Columns
+         * 
+         * @param label String
+         */
         private Columns( String label )
         {
             this.label = label;
         }
 
+        /**
+         * getLabel
+         * 
+         * @return String
+         */
         @Override
         public String getLabel()
         {
@@ -117,10 +146,13 @@ public class EquipmentTable
         }
     };
     
-    public EquipmentTable()
-    {
-    }
+    public EquipmentTable() {}
     
+    /**
+     * setEditable
+     * 
+     * @param editable boolean
+     */
     public final void setEditable( boolean editable )
     {
         if ( editable )
@@ -136,6 +168,11 @@ public class EquipmentTable
         }
     }
     
+    /**
+     * getColumns
+     * 
+     * @return Column[]
+     */
     @Override
     protected Column[] getColumns()
     {

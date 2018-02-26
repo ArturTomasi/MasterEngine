@@ -1,10 +1,30 @@
-package com.me.eng.application;
+/* 
+ *  Filename:    ConfigurationTreeModelBuilder 
+ *
+ *  Author:      Artur Tomasi
+ *  EMail:       tomasi.artur@gmail.com
+ *  Internet:    www.masterengine.com.br
+ *
+ *  Copyright © 2018 by Over Line Ltda.
+ *  95900-038, LAJEADO, RS
+ *  BRAZIL
+ *
+ *  The copyright to the computer program(s) herein
+ *  is the property of Over Line Ltda., Brazil.
+ *  The program(s) may be used and/or copied only with
+ *  the written permission of Over Line Ltda.
+ *  or in accordance with the terms and conditions
+ *  stipulated in the agreement/contract under which
+ *  the program(s) have been supplied.
+ */
+package com.me.eng.ui.trees;
 
+import com.me.eng.application.ConfigurationManager;
+import com.me.eng.application.ResourceLocator;
 import com.me.eng.domain.Configuration;
 import com.me.eng.domain.ConfigurationCompositeNode;
 import com.me.eng.domain.ConfigurationNode;
 import com.me.eng.domain.ConfigurationNodeImpl;
-import java.util.Properties;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -18,27 +38,58 @@ import org.zkoss.zul.AbstractTreeModel;
  */
 public class ConfigurationTreeModelBuilder
 {
+    /**
+     * ConfigurationTreeModel
+     * 
+     * @return class
+     * @ignored extends
+     * @ignored AbstractTreeModel&lt;ConfigurationNode&gt;
+     */
     public class ConfigurationTreeModel
         extends 
             AbstractTreeModel<ConfigurationNode>
     {
+        /**
+         * ConfigurationTreeModel
+         * 
+         * @param root ConfigurationNode
+         */
         public ConfigurationTreeModel( ConfigurationNode root )
         {
             super( root );
         }
         
+        /**
+         * isLeaf
+         * 
+         * @param e ConfigurationNode
+         * @return boolean
+         */
         @Override
         public boolean isLeaf( ConfigurationNode e )
         {
             return e.children().isEmpty();
         }
 
+        /**
+         * getChild
+         * 
+         * @param e ConfigurationNode
+         * @param i int
+         * @return ConfigurationNode
+         */
         @Override
         public ConfigurationNode getChild( ConfigurationNode e, int i )
         {
             return e.children().get( i );
         }
 
+        /**
+         * getChildCount
+         * 
+         * @param e ConfigurationNode
+         * @return int
+         */
         @Override
         public int getChildCount( ConfigurationNode e )
         {
@@ -46,13 +97,29 @@ public class ConfigurationTreeModelBuilder
         }
     }
     
-    private static final ConfigurationTreeModelBuilder instance = new ConfigurationTreeModelBuilder();
+    private static ConfigurationTreeModelBuilder instance;
     
+    /**
+     * getInstance
+     * 
+     * @return ConfigurationTreeModelBuilder
+     */
     public static ConfigurationTreeModelBuilder getInstance()
     {
+        if ( instance == null )
+        {
+            instance = new ConfigurationTreeModelBuilder();
+        }
+        
         return instance;
     }
     
+    /**
+     * build
+     * 
+     * @return ConfigurationTreeModel
+     * @throws Exception
+     */
     public ConfigurationTreeModel build() throws Exception
     {
         ConfigurationCompositeNode config = new ConfigurationCompositeNode();
@@ -76,6 +143,12 @@ public class ConfigurationTreeModelBuilder
         return new ConfigurationTreeModel( root );
     }
     
+    /**
+     * parseNode
+     * 
+     * @param e ConfigurationNode
+     * @param node Node
+     */
     private void parseNode( ConfigurationNode e, Node node )
     {
         if ( node.getNodeType() != Node.ELEMENT_NODE )

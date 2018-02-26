@@ -193,6 +193,18 @@ create table eng_sample_capstones
     foreign key fk_sample_capstones_capstone (ref_capstone) references eng_capstones (id)
 );
 
+create table eng_licenses
+(
+    id int not null auto_increment,
+    ref_user int not null,
+    module_name varchar(160) not null,
+    session_id varchar(160) not null,
+    dt_created date not null,
+    
+    primary key(id),
+    foreign key fk_user_licenses (ref_user) references core_users (id)
+);
+
 insert into core_roles ( id, role, name ) values ( -1, 'manager-gui', 'Tomcat Manager GUI' );
 insert into core_roles ( id, role, name ) values ( -2, 'manager-script', 'Tomcat Manager Script' );
 insert into core_roles ( id, role, name ) values ( 1, 'administrator', 'Administrador' );

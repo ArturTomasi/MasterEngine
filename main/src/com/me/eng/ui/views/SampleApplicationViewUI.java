@@ -1,7 +1,26 @@
+/* 
+ *  Filename:    SampleApplicationViewUI 
+ *
+ *  Author:      Artur Tomasi
+ *  EMail:       tomasi.artur@gmail.com
+ *  Internet:    www.masterengine.com.br
+ *
+ *  Copyright © 2018 by Over Line Ltda.
+ *  95900-038, LAJEADO, RS
+ *  BRAZIL
+ *
+ *  The copyright to the computer program(s) herein
+ *  is the property of Over Line Ltda., Brazil.
+ *  The program(s) may be used and/or copied only with
+ *  the written permission of Over Line Ltda.
+ *  or in accordance with the terms and conditions
+ *  stipulated in the agreement/contract under which
+ *  the program(s) have been supplied.
+ */
 package com.me.eng.ui.views;
 
 import com.me.eng.application.ApplicationContext;
-import com.me.eng.application.ApplicationServices;
+import com.me.eng.services.ApplicationServices;
 import com.me.eng.domain.Client;
 import com.me.eng.domain.Sample;
 import com.me.eng.domain.SampleFilter;
@@ -30,6 +49,10 @@ public class SampleApplicationViewUI
 {
     private SampleFilter filter;
     
+    /**
+     * SampleApplicationViewUI
+     * 
+     */
     public SampleApplicationViewUI()
     {
         setLabel( "Amostras" );
@@ -38,6 +61,10 @@ public class SampleApplicationViewUI
         addAction( "Amostras", addAction, editAction, deleteAction, proofAction );
     }
     
+    /**
+     * refreshContent
+     * 
+     */
     @Override
     public void refreshContent()
     {
@@ -48,6 +75,10 @@ public class SampleApplicationViewUI
         loadSamples();
     }
     
+    /**
+     * loadSamples
+     * 
+     */
     private void loadSamples()
     {
         try
@@ -67,6 +98,10 @@ public class SampleApplicationViewUI
         }
     }
     
+    /**
+     * addSample
+     * 
+     */
     private void addSample()
     {
         try
@@ -139,6 +174,10 @@ public class SampleApplicationViewUI
         }
     }
     
+    /**
+     * editSample
+     * 
+     */
     private void editSample()
     {
         Sample sample = getSelectedSample();
@@ -165,6 +204,10 @@ public class SampleApplicationViewUI
         }
     }
     
+    /**
+     * deleteSample
+     * 
+     */
     private void deleteSample()
     {
         Sample sample = getSelectedSample();
@@ -212,6 +255,10 @@ public class SampleApplicationViewUI
         }
     }
     
+    /**
+     * proofSample
+     * 
+     */
     private void proofSample()
     {
         final Sample sample = getSelectedSample();
@@ -273,6 +320,11 @@ public class SampleApplicationViewUI
         }
     }
     
+    /**
+     * getSelectedSample
+     * 
+     * @return Sample
+     */
     private Sample getSelectedSample()
     {
         Sample sample = sampleTable.getSelectedElement();
@@ -285,6 +337,10 @@ public class SampleApplicationViewUI
         return sample;
     }
     
+    /**
+     * initComponents
+     * 
+     */
     @Override
     protected void initComponents()
     {
@@ -321,7 +377,6 @@ public class SampleApplicationViewUI
     
     private SampleFilterPane sampleFilterPane;
     
-//    private SampleTree sampleTree;
     private SampleTable sampleTable;
     
     private Action addAction = new Action( "", "Nova", "Nova amostra" )
