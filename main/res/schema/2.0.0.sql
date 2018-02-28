@@ -13,3 +13,6 @@ create table eng_licenses
     primary key(id),
     foreign key fk_user_licenses (ref_user) references core_users (id)
 );
+
+
+insert into core_roles values ( 3, 'recipes', 'Gerenciador de Receitas' );

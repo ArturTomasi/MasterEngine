@@ -25,6 +25,10 @@
         <listener-class>com.me.eng.ui.apps.listeners.WebAppInit</listener-class>
     </listener>
     
+    <listener>
+        <listener-class>com.me.eng.ui.apps.listeners.SessionCleanup</listener-class>
+    </listener>
+    
     <session-config>
         <device-type>ajax</device-type>    
          <timeout-message>Session timeout. Please reload.</timeout-message>  

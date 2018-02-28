@@ -21,7 +21,6 @@ package com.me.eng.domain;
 
 import java.io.Serializable;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -53,13 +52,15 @@ public class User
     public static final String PROFILE_NAMES[] = 
     {
         "Operador",
-        "Administrador"
+        "Administrador",
+        "Gerenciador de Receitas"
     };
     
     public static final String PROFILE_ROLES[] = 
     {
         "operator",
-        "administrator"
+        "administrator",
+        "recipes"
     };
     
     @Id
@@ -88,87 +89,166 @@ public class User
     @JoinTable( name = "core_user_roles",
                 joinColumns = {@JoinColumn(name = "ref_user")},
                 inverseJoinColumns = {@JoinColumn(name = "ref_role")})
-    private Set<Role> roles = new LinkedHashSet<Role>();
+    private Set<Role> roles = new LinkedHashSet();
 
     public User()
     {
     }
 
+    /**
+     * getId
+     * 
+     * @return Integer
+     */
     public Integer getId()
     {
         return id;
     }
 
+    /**
+     * setId
+     * 
+     * @param id Integer
+     */
     public void setId( Integer id )
     {
         this.id = id;
     }
 
+    /**
+     * getLogin
+     * 
+     * @return String
+     */
     public String getLogin()
     {
         return login;
     }
 
+    /**
+     * setLogin
+     * 
+     * @param login String
+     */
     public void setLogin( String login )
     {
         this.login = login;
     }
 
+    /**
+     * getPassword
+     * 
+     * @return String
+     */
     public String getPassword()
     {
         return password;
     }
 
+    /**
+     * setPassword
+     * 
+     * @param password String
+     */
     public void setPassword( String password )
     {
         this.password = password;
     }
 
+    /**
+     * getName
+     * 
+     * @return String
+     */
     public String getName()
     {
         return name;
     }
 
+    /**
+     * setName
+     * 
+     * @param name String
+     */
     public void setName( String name )
     {
         this.name = name;
     }
     
+    /**
+     * grant
+     * 
+     * @param role Role
+     */
     public void grant( Role role )
     {
         roles.add( role );
     }
     
+    /**
+     * revokeAll
+     * 
+     */
     public void revokeAll()
     {
         roles.clear();
     }
     
+    /**
+     * revoke
+     * 
+     * @param role Role
+     */
     public void revoke( Role role )
     {
         roles.remove( role );
     }
 
+    /**
+     * getProfile
+     * 
+     * @return Integer
+     */
     public Integer getProfile()
     {
         return profile;
     }
 
+    /**
+     * setProfile
+     * 
+     * @param profile Integer
+     */
     public void setProfile( Integer profile )
     {
         this.profile = profile;
     }
     
+    /**
+     * isSystemUser
+     * 
+     * @return boolean
+     */
     public boolean isSystemUser()
     {
         return id != null && id == 1;
     }
 
+    /**
+     * isAdministrator
+     * 
+     * @return boolean
+     */
     public boolean isAdministrator()
     {
         return profile >= PROFILE_ADMINISTRATOR;
     }
 
+    /**
+     * hashCode
+     * 
+     * @return int
+     */
     @Override
     public int hashCode()
     {
@@ -193,6 +273,11 @@ public class User
         return true;
     }
 
+    /**
+     * toString
+     * 
+     * @return String
+     */
     @Override
     public String toString()
     {

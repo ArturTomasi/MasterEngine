@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 
 /**
@@ -57,8 +58,8 @@ public class LicenseManager
         return instance;
     }
     
-    private final Map<String, Integer> licensedModules = new HashMap();
-    private final Map<String, License> sessions        = new HashMap();
+    private final Map<String, Integer> licensedModules       = new HashMap();
+    private final Map<String, Map<String, License>> sessions = new HashMap();
     
     /**
      * LicenseController
@@ -102,6 +103,11 @@ public class LicenseManager
                         licensedModules.put( key.substring( 4 ), Integer.valueOf( value ) );
                     }
                 } );
+            }
+            else
+                
+            {
+                ConfigurationManager.setSystemProperty( "license_exception", "true" );
             }
         }
         
@@ -151,18 +157,22 @@ public class LicenseManager
 
             synchronized ( sessions )
             {
-                License sessionLicense = sessions.get( license.key() );
+                Map<String, License> sessionByModule = sessions.getOrDefault( module, new HashMap() );
+                
+                License sessionLicense = sessionByModule.get( license.key() );
 
                 if ( sessionLicense != null )
                 {
                     sessionLicense.lease();
 
-                    if ( max < sessionLicense.countLease() )
+                    if ( max < sessionByModule.values().size() )
                     {
                         throw new LicenseException( LicenseException.Type.MAX_SEAT );
                     }
+                    
+                    sessionByModule.put( license.key(), sessionLicense );
 
-                    sessions.put( sessionLicense.key(), sessionLicense );
+                    sessions.put( module, sessionByModule );
 
                 }        
 
@@ -170,7 +180,9 @@ public class LicenseManager
                 {
                     license.lease();
 
-                    sessions.put( license.key(), license );
+                    sessionByModule.put( license.key(), license );
+                    
+                    sessions.put( module, sessionByModule );
 
                     /**
                      * consume the license
@@ -194,6 +206,41 @@ public class LicenseManager
     /**
      * purgeLicense
      * 
+     * @param sn
+     * @throws Exception
+     */
+    public void purgeLicense( Session sn ) throws Exception
+    {
+        synchronized ( sessions )
+        {
+            sessions.forEach( (module, map ) ->
+            {
+                map.values().removeIf( license ->
+                {
+                    boolean remove = license.getSession().equals( session( sn ) );
+                    
+                    try
+                    {
+                        if ( remove )
+                        {
+                            ApplicationServices.getCurrent().getLicenseRepository().purge( license );
+                        }
+                    }
+                    
+                    catch ( Exception e )
+                    {
+                        ApplicationContext.getInstance().logException( e );
+                    }
+                    
+                    return remove;
+                } );
+            } );
+        }
+    }
+    
+    /**
+     * purgeLicense
+     * 
      * @param module String
      * @throws Exception
      */
@@ -212,15 +259,21 @@ public class LicenseManager
         
         synchronized ( sessions )
         {
-            License sessionLicense = sessions.get( license.key() );
-            
+            Map<String, License> sessionByModule = sessions.getOrDefault( module, new HashMap() );
+                
+            License sessionLicense = sessionByModule.get( license.key() );
+                
             if ( sessionLicense != null )
             {
                 sessionLicense.unlease();
                 
                 if ( sessionLicense.countLease() == 0 )
                 {
-                    ApplicationServices.getCurrent().getLicenseRepository().delete( license );
+                    sessionByModule.remove( license.key() );
+                    
+                    sessions.put( module, sessionByModule );
+                    
+                    ApplicationServices.getCurrent().getLicenseRepository().purge( license );
                 }
             }
         }
@@ -266,7 +319,18 @@ public class LicenseManager
      */
     private String session()
     {
-        return HttpSession.class.cast( Sessions.getCurrent().getNativeSession() ).getId();
+        return session( Sessions.getCurrent() );
+    }
+    
+    /**
+     * session
+     * 
+     * @param session Session
+     * @return String
+     */
+    private String session( Session session )
+    {
+        return HttpSession.class.cast( session.getNativeSession() ).getId();
     }
     
     /**

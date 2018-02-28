@@ -1,7 +1,18 @@
 <zk>
     <window apply="com.me.eng.ui.apps.DefaultApplicationUIController" sclass="default-app-window">
+   
+        <script type="text/javascript">
+            zk.afterMount( function()
+            {
+                zk.beforeUnload( function()
+                {
+                    $.post( zk.ajaxURI( '/zkau/purgeLicense'), {module: '${param.module}' } );
+                } );
+            } );
+        </script>
+        
 
-         <div id="applicationPane"  use="com.me.eng.ui.apps.DefaultApplicationUIPane"/>
+        <div id="applicationPane"  use="com.me.eng.ui.apps.DefaultApplicationUIPane"/>
 
     </window>
 </zk>

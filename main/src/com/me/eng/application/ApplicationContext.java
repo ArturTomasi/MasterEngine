@@ -28,7 +28,6 @@ import java.io.StringWriter;
 import java.security.Principal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.http.HttpSession;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Execution;
 import org.zkoss.zk.ui.Executions;
@@ -89,20 +88,23 @@ public class ApplicationContext
         
         if ( user == null )
         {
-            Principal principal = Executions.getCurrent().getUserPrincipal();
-            
-            try
+            if ( Executions.getCurrent() != null )
             {
-                user = ApplicationServices.getCurrent()
-                            .getUserRepository()
-                            .findByLogin( principal.getName() );
-                
-                setAttribute( SessionVariables.ACTIVE_USER, user );
-            }
-            
-            catch ( Exception e )
-            {
-                logException( e );
+                Principal principal = Executions.getCurrent().getUserPrincipal();
+
+                try
+                {
+                    user = ApplicationServices.getCurrent()
+                                .getUserRepository()
+                                .findByLogin( principal.getName() );
+
+                    setAttribute( SessionVariables.ACTIVE_USER, user );
+                }
+
+                catch ( Exception e )
+                {
+                    logException( e );
+                }
             }
         }
         

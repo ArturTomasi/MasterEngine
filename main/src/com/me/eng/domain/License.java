@@ -214,9 +214,7 @@ public class License
      */
     public String key()
     {
-        return this.module  + "@" + 
-               this.session + "#" + 
-               this.user.getId();
+        return this.module  + "@" + this.session;
     }
     /**
      * hashCode

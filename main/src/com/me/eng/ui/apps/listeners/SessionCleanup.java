@@ -1,5 +1,5 @@
 /*
- *  Filename:    LicenseRepository
+ *  Filename:    SessionCleanup
  *
  *  Author:      Artur Tomasi
  *  EMail:       tomasi.artur@gmail.com
@@ -17,25 +17,24 @@
  *  stipulated in the agreement/contract under which
  *  the program(s) have been supplied.
  */
-package com.me.eng.domain.repositories;
+package com.me.eng.ui.apps.listeners;
 
-import com.me.eng.domain.License;
-import javax.inject.Named;
+import com.me.eng.license.controller.LicenseManager;
+import org.zkoss.zk.ui.Session;
 
 /**
  *
  * @author Artur Tomasi
  */
-@Named
-public interface LicenseRepository 
-    extends 
-        EntityRepository<License> 
+public class SessionCleanup
+    implements 
+        org.zkoss.zk.ui.util.SessionCleanup
 {
-    /**
-     * purge
-     * 
-     * @param license License
-     * @throws Exception
-     */
-    public void purge( License license ) throws Exception;
+
+    @Override
+    public void cleanup( Session sn ) throws Exception 
+    {
+        LicenseManager.getInstance().purgeLicense( sn );
+    }
+    
 }

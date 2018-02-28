@@ -15,11 +15,6 @@
         
         <script type="text/javascript">
             var contextPath = '<%=request.getContextPath()%>';
-            
-            $( window ).on( 'unload', function()
-            {
-                $.post( zk.ajaxURI( '/zkau/purgeLicense'), {module: '${module}' } );
-            } );
         </script>
     </head>
     
