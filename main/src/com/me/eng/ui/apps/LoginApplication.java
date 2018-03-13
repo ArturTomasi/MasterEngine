@@ -19,21 +19,17 @@
  */
 package com.me.eng.ui.apps;
 
-import com.me.eng.ui.panes.ApplicationCaption;
-import com.me.eng.ui.panes.StatusBar;
+import com.me.eng.application.ConfigurationManager;
 import org.zkoss.zhtml.Form;
 import org.zkoss.zhtml.Input;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.ClientInfoEvent;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
-import org.zkoss.zul.Borderlayout;
-import org.zkoss.zul.Center;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Hbox;
 import org.zkoss.zul.Label;
-import org.zkoss.zul.North;
-import org.zkoss.zul.South;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Vbox;
 import org.zkoss.zul.Window;
@@ -42,122 +38,79 @@ import org.zkoss.zul.Window;
  *
  * @author Matheus
  */
-public class LoginApplication
+public class LoginApplication   
     extends 
         Window
 {
+    /**
+     * LoginApplication
+     * 
+     */
     public LoginApplication()
     {
         initComponents();
-        
-        Form form = new Form();
-        form.setDynamicProperty( "method", "POST" );
-        form.setDynamicProperty( "action", "j_security_check" );
-        
-        Textbox tfLogin = new Textbox();
-        tfLogin.setName( "j_username" );
-        
-        Textbox tfPwd = new Textbox();
-        tfPwd.setType( "password" );
-        tfPwd.setName( "j_password" );
-
-        Hbox line1 = new Hbox();
-        line1.setAlign( "middle" );
-        line1.appendChild( new Label( "Login:" ) );
-        line1.appendChild( tfLogin );
-        
-        Hbox line2 = new Hbox();
-        line2.setAlign( "middle" );
-        line2.appendChild( new Label( "Senha:" ) );
-        line2.appendChild( tfPwd );
-        
-        Input submit = new Input();
-        submit.setDynamicProperty( "type", "submit" );
-        submit.setDynamicProperty( "value", "Entrar" );
-        submit.setDynamicProperty( "style", "margin-top: 10px; margin-bottom: 10px" );
-        
-        Vbox vlayout = new Vbox();
-        vlayout.setAlign( "middle" );
-        vlayout.setSpacing( "5px" );
-        vlayout.appendChild( line1 );
-        vlayout.appendChild( line2 );
-        vlayout.appendChild( submit );
-        
-        form.appendChild( vlayout );
-        
-        Div div = new Div();
-        div.setSclass( "login-app-container" );
-        div.appendChild( form );
         
         Boolean error = (Boolean) Sessions.getCurrent().getAttribute( "auth-status" );
         
         if ( error != null && error )
         {
-            Label lb = new Label( "Dados inválidos" );
-            lb.setStyle( "color: red" );
-            
-            vlayout.appendChild( lb );
+            Clients.evalJavaScript( "onLoginError()" );
         }
-        
-        inner.appendChild( div );
     }
     
+    /**
+     * initComponents
+     * 
+     */
     private void initComponents()
     {
-        setSclass( "login-app" );
         setStubonly( true );
+        setZclass( "container login-center" );
         
-        inner.setWidgetAttribute( "align", "center" );
-        inner.setStyle( "display: table-cell; vertical-align: middle" );
+        Label labelApplication = new Label();
+        labelApplication.setValue( ConfigurationManager.getInstance().getProperty( "application.name", "Application Name" ) );
+        labelApplication.setStyle( "display: block;" );
+        labelApplication.setZclass( "title-login" );
         
-        content.appendChild( inner );
+        Label errorLabel = new Label( "Atenção! login ou senha incorretos." );
+        errorLabel.setZclass( "error-login" );
         
-        content.setStyle( "display: table" );
-        content.setHflex( "true" );
-        content.setVflex( "true" );
+        Form form = new Form();
+        form.setStyle( "width: 100%" );
+        form.setDynamicProperty( "method", "POST" );
+        form.setDynamicProperty( "action", "j_security_check" );
         
-        borderlayout.appendChild( new North() );
-        borderlayout.appendChild( new Center() );
-        borderlayout.appendChild( new South() );
+        Textbox tfLogin = new Textbox();
+        tfLogin.setWidth( "100%" );
+        tfLogin.setName( "j_username" );
         
-        borderlayout.getNorth().setHeight( "70px" );
-        borderlayout.getNorth().setBorder( "none" );
-//        borderlayout.getNorth().setStyle( "background: transparent" );
-        borderlayout.getNorth().setStyle( "background-color: rgb(48, 67, 105);" );
-        borderlayout.getNorth().appendChild( caption );
+        Textbox tfPwd = new Textbox();
+        tfPwd.setType( "password" );
+        tfPwd.setWidth( "100%" );
+        tfPwd.setName( "j_password" );
+
+        Input submit = new Input();
+        submit.setSclass( "btn-login" );
+        submit.setDynamicProperty( "type", "submit" );
+        submit.setDynamicProperty( "value", "Entrar" );
         
-        borderlayout.getSouth().setHeight( "20px" );
-        borderlayout.getSouth().setBorder( "none" );
-        borderlayout.getSouth().setStyle( "background-color: rgb(48, 67, 105);" );
-        borderlayout.getSouth().appendChild( statusBar );
+        Div vlayout = new Div();
+        vlayout.setWidth( "500px" );
+        vlayout.appendChild( new Label( "Login:" ) );
+        vlayout.appendChild( tfLogin );
+        vlayout.appendChild( new Label( "Senha:" ) );
+        vlayout.appendChild( tfPwd );
+        vlayout.appendChild( submit );
         
-        borderlayout.getCenter().setBorder( "none" );
-        borderlayout.getCenter().setStyle( "background: transparent" );
-        borderlayout.getCenter().appendChild( content );
+        form.appendChild( vlayout );
         
-        borderlayout.setStyle( "background: transparent" );
+        Div conteiner = new Div();
+        conteiner.setZclass( "login-center-container" );
         
-        appendChild( borderlayout );
+        conteiner.appendChild( labelApplication );
+        conteiner.appendChild( form );
+        conteiner.appendChild(  errorLabel );
         
-        addEventListener( org.zkoss.zk.ui.event.Events.ON_CLIENT_INFO, new EventListener<Event>()
-        {
-            @Override
-            public void onEvent( Event t ) throws Exception
-            {
-                ClientInfoEvent e = (ClientInfoEvent) t;
-                
-                setWidth( e.getDesktopWidth() + "px" );
-                setHeight( e.getDesktopHeight() + "px" );
-            }
-        } );
+        appendChild( conteiner );
     }
-    
-    private Borderlayout borderlayout = new Borderlayout();
-    
-    private ApplicationCaption caption = new ApplicationCaption();
-    
-    private Div content = new Div();
-    private Div inner = new Div();
-    
-    private StatusBar statusBar = new StatusBar();
 }

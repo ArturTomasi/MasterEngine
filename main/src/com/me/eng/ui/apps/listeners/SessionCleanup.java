@@ -30,11 +30,15 @@ public class SessionCleanup
     implements 
         org.zkoss.zk.ui.util.SessionCleanup
 {
-
+    /**
+     * cleanup
+     * 
+     * @param sn Session
+     * @throws Exception
+     */
     @Override
     public void cleanup( Session sn ) throws Exception 
     {
         LicenseManager.getInstance().purgeLicense( sn );
     }
-    
 }

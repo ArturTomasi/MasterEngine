@@ -2,7 +2,76 @@ body, html
 {
     margin: 0px !important;
     padding: 0px !important;
+    background: linear-gradient(to bottom,#fefefe 0,#eee 100%);
 }
+
+.login-center
+{
+    width: 500px !important;
+    margin: auto;
+    transform: translate(-50%, -65%);
+    position: absolute;
+    top: 45%;
+    left: 50%;
+}
+
+
+.login-center-container
+{
+    width: 500px;
+    margin: auto;
+    transform: none;
+    position: initial;
+}
+
+.login-center-container input
+{
+    font-size: 15px;
+    height: 35px;
+}
+
+.login-center-container form span
+{
+    font-size: 15px;
+    line-height: 30px;
+}
+
+.title-login
+{
+    text-align: center;
+    font-size: 45px;
+    font-weight: bold;
+    color: #304368;
+}
+
+.error-login
+{
+    font-size: 12pt;
+    color: #fff !important;
+    border-radius: 8px;
+    display: none;
+    width: 100%;
+    background-color: indianred;
+    margin: auto;
+    position: absolute;
+    bottom: -15px;
+    left: 0;
+    text-align: center;
+    padding: 5px 0px;
+}
+
+.btn-login
+{
+    color: #fff !important;
+    background-color: #304368;
+    border: 2px solid #304368 !important;
+    font-weight: bold !important;
+    border-radius: 10px !important;
+    margin-top: 7px;
+    height: 45px !important;
+    width: 100%;
+}
+
 
 .default-app-pane-south
 {

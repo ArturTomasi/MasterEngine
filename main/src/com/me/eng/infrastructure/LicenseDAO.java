@@ -20,6 +20,7 @@
 package com.me.eng.infrastructure;
 
 import com.me.eng.domain.License;
+import com.me.eng.domain.User;
 import com.me.eng.domain.repositories.LicenseRepository;
 import javax.enterprise.inject.Default;
 import javax.persistence.Query;
@@ -57,6 +58,40 @@ public class LicenseDAO
         Query query = manager.createQuery( "delete from License where session = :session and module = :module" );
         query.setParameter( "module", license.getModule() );
         query.setParameter( "session", license.getSession() );
+        
+        query.executeUpdate();
+    }
+
+    /**
+     * cleanup
+     * 
+     * @param session String
+     * @param user User
+     * @throws Exception
+     */
+    @Override
+    @Transactional
+    public void cleanup( String session, User user ) throws Exception 
+    {
+        Query query = manager.createQuery( "delete from License where session <> :session and user = :user" );
+        
+        query.setParameter( "user",    user );
+        query.setParameter( "session", session );
+        
+        query.executeUpdate();
+    }
+    
+    
+    /**
+     * cleanup
+     * 
+     * @throws Exception
+     */
+    @Override
+    @Transactional
+    public void cleanup() throws Exception 
+    {
+        Query query = manager.createQuery( "delete from License" );
         
         query.executeUpdate();
     }

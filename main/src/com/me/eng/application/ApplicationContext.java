@@ -23,6 +23,7 @@ import com.me.eng.services.ApplicationServices;
 import com.google.common.base.Strings;
 import com.me.eng.domain.SampleFilter;
 import com.me.eng.domain.User;
+import com.me.eng.license.controller.LicenseManager;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.security.Principal;
@@ -98,6 +99,8 @@ public class ApplicationContext
                                 .getUserRepository()
                                 .findByLogin( principal.getName() );
 
+                    LicenseManager.getInstance().cleanup( user );
+                    
                     setAttribute( SessionVariables.ACTIVE_USER, user );
                 }
 

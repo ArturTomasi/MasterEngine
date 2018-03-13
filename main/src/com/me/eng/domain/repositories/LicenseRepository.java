@@ -20,6 +20,7 @@
 package com.me.eng.domain.repositories;
 
 import com.me.eng.domain.License;
+import com.me.eng.domain.User;
 import javax.inject.Named;
 
 /**
@@ -38,4 +39,21 @@ public interface LicenseRepository
      * @throws Exception
      */
     public void purge( License license ) throws Exception;
+    
+    
+    /**
+     * cleanup
+     * 
+     * @param session String
+     * @param user User
+     * @throws Exception
+     */
+    public void cleanup( String session, User user ) throws Exception;
+    
+    /**
+     * cleanup
+     * 
+     * @throws Exception
+     */
+    public void cleanup() throws Exception;
 }

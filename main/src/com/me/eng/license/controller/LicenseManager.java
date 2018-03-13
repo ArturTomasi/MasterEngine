@@ -23,6 +23,8 @@ import com.me.eng.application.ApplicationContext;
 import com.me.eng.application.ConfigurationManager;
 import com.me.eng.domain.License;
 import com.me.eng.domain.User;
+import com.me.eng.domain.repositories.LicenseRepository;
+import com.me.eng.domain.repositories.SampleRepository;
 import com.me.eng.license.exceptions.LicenseException;
 import com.me.eng.license.signature.LicenseConstants;
 import com.me.eng.license.signature.LicenseValidator;
@@ -30,7 +32,11 @@ import com.me.eng.services.ApplicationServices;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import javax.enterprise.inject.spi.CDI;
 import javax.servlet.http.HttpSession;
+import org.jboss.weld.context.RequestContext;
+import org.jboss.weld.context.unbound.UnboundLiteral;
+import org.jboss.weld.environment.se.WeldContainer;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
@@ -61,6 +67,8 @@ public class LicenseManager
     private final Map<String, Integer> licensedModules       = new HashMap();
     private final Map<String, Map<String, License>> sessions = new HashMap();
     
+    private boolean isValidPeriod = true;
+    
     /**
      * LicenseController
      * 
@@ -72,60 +80,121 @@ public class LicenseManager
      */
     public void load()
     {
-        try 
+        Thread listener = new Thread( new Runnable() 
         {
-            ConfigurationManager.clearSystemProperty( "license_exception" );
-            
-            LicenseValidator validator = new LicenseValidator();
-            
-            if ( validator.verifyLicense( LicenseConstants.PUBLIC_KEY_PATH.stringValue(), LicenseConstants.LICENSE_PATH.stringValue() ) )
+            @Override
+            public void run() 
             {
-                Map<String, String> values = validator.getLicenseOptions();
-
-                Date dateStart   = new Date( Long.valueOf( values.get( "date_start" ) ) );
-                Date dateEnd     = new Date( Long.valueOf( values.get( "date_end" ) ) );
-                Date today       = new Date( System.currentTimeMillis() );
-
-                if ( today.after( dateEnd ) )
-                {
-                    throw new LicenseException( LicenseException.Type.INVALID_DATE );
-                }
-            
-                if ( today.before( dateStart ) )
-                {
-                    throw new LicenseException( LicenseException.Type.INVALID_DATE );
-                }
-
-                values.forEach( (key, value) ->
-                {
-                    if ( key.startsWith( "max_eng" ) )
+                do 
+                {         
+                    try 
                     {
-                        licensedModules.put( key.substring( 4 ), Integer.valueOf( value ) );
+                        ConfigurationManager.clearSystemProperty( "license_exception" );
+
+                        LicenseValidator validator = new LicenseValidator();
+
+                        if ( validator.verifyLicense( LicenseConstants.PUBLIC_KEY_PATH.stringValue(), LicenseConstants.LICENSE_PATH.stringValue() ) )
+                        {
+                            Map<String, String> values = validator.getLicenseOptions();
+
+                            Date dateStart   = new Date( Long.valueOf( values.get( "date_start" ) ) );
+                            Date dateEnd     = new Date( Long.valueOf( values.get( "date_end" ) ) );
+                            Date today       = new Date( System.currentTimeMillis() );
+
+                            if ( today.after( dateEnd ) )
+                            {
+                                isValidPeriod = false;
+                            }
+
+                            if ( today.before( dateStart ) )
+                            {
+                               isValidPeriod = false;
+                            }
+                            
+                            if ( isValidPeriod )
+                            {
+                                values.forEach( (key, value) ->
+                                {
+                                    if ( key.startsWith( "max_eng" ) )
+                                    {
+                                        licensedModules.put( key.substring( 4 ), Integer.valueOf( value ) );
+                                    }
+                                } );
+                            }
+                        }
+                        else
+
+                        {
+                            ConfigurationManager.setSystemProperty( "license_exception", "true" );
+                        }
+                    
+                        Thread.sleep( ( 12 * 60 * 60 * 1000 ) );
+                    } 
+                    
+                    catch ( Exception e )
+                    {
+                         ConfigurationManager.setSystemProperty( "license_exception", "true" );
                     }
-                } );
-            }
-            else
+                    
+                }
                 
-            {
-                ConfigurationManager.setSystemProperty( "license_exception", "true" );
+                while ( true );
             }
-        }
+        } );
         
-        catch ( LicenseException e ) 
-        {
-            ConfigurationManager.setSystemProperty( "license_exception", "true" );
-        }
+        listener.setDaemon( true );
+        listener.start();
     }
     
     /**
      * clear
-     * 
      */
-    public void clear()
+    public void cleanup()
     {
-        sessions.clear();
+        try 
+        {
+            CDI cdi = WeldContainer.current();
+
+            LicenseRepository sampleRepository = (LicenseRepository) cdi.select( LicenseRepository.class ).get();
+
+            RequestContext context = (RequestContext) cdi.select( RequestContext.class, UnboundLiteral.INSTANCE ).get();
+            context.activate();
+
+            try
+            {
+                sessions.clear();
+
+                sampleRepository.cleanup();
+            }
+
+            finally
+            {
+                context.deactivate();
+            }
         
-        licensedModules.clear();
+        }
+        
+        catch ( Exception e )
+        {
+            ApplicationContext.getInstance().logException( e );
+        }
+    }
+    
+    
+    /**
+     * cleanup
+     * 
+     * @param user User
+     * @throws Exception
+     */
+    public void cleanup( User user ) throws Exception
+    {
+        sessions.forEach( ( module, licenses ) ->
+        {
+            licenses.values().removeIf( license -> license.getUser().equals( user ) );
+        } );
+        
+        ApplicationServices.getCurrent().getLicenseRepository().cleanup( session(), user );
     }
     
     /**
@@ -142,6 +211,11 @@ public class LicenseManager
         
         try
         {
+            if ( ! isValidPeriod )
+            {
+                throw new LicenseException( LicenseException.Type.INVALID_DATE );
+            }
+        
             Integer max = licensedModules.getOrDefault( module, -1 );
 
             if ( max == -1 )

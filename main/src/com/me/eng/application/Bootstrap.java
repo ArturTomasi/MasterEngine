@@ -45,6 +45,8 @@ public class Bootstrap
         NotificationManager.getInstance().start();
         
         LicenseManager.getInstance().load();
+        
+        LicenseManager.getInstance().cleanup();
     }
 
     /**
@@ -56,7 +58,5 @@ public class Bootstrap
     public void contextDestroyed( ServletContextEvent sce )
     {
         NotificationManager.getInstance().stop();
-        
-        LicenseManager.getInstance().clear();
     }
 }
