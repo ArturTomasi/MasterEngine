@@ -23,15 +23,10 @@ import com.me.eng.application.ConfigurationManager;
 import org.zkoss.zhtml.Form;
 import org.zkoss.zhtml.Input;
 import org.zkoss.zk.ui.Sessions;
-import org.zkoss.zk.ui.event.ClientInfoEvent;
-import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Div;
-import org.zkoss.zul.Hbox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Textbox;
-import org.zkoss.zul.Vbox;
 import org.zkoss.zul.Window;
 
 /**
@@ -81,10 +76,18 @@ public class LoginApplication
         form.setDynamicProperty( "action", "j_security_check" );
         
         Textbox tfLogin = new Textbox();
+        tfLogin.setWidgetAttribute( "autocomplete", "off" );
+        tfLogin.setPlaceholder( "Login" );
+        tfLogin.setSclass( "input-login" );
+        tfLogin.setStyle( "background-image: url(\"../img/tb_login.svg\")" );
         tfLogin.setWidth( "100%" );
         tfLogin.setName( "j_username" );
         
         Textbox tfPwd = new Textbox();
+        tfPwd.setWidgetAttribute( "autocomplete", "off" );
+        tfPwd.setPlaceholder( "Senha" );
+        tfPwd.setStyle( "background-image: url(\"../img/tb_password.svg\")" );
+        tfPwd.setSclass( "input-login" );
         tfPwd.setType( "password" );
         tfPwd.setWidth( "100%" );
         tfPwd.setName( "j_password" );
@@ -96,9 +99,7 @@ public class LoginApplication
         
         Div vlayout = new Div();
         vlayout.setWidth( "500px" );
-        vlayout.appendChild( new Label( "Login:" ) );
         vlayout.appendChild( tfLogin );
-        vlayout.appendChild( new Label( "Senha:" ) );
         vlayout.appendChild( tfPwd );
         vlayout.appendChild( submit );
         

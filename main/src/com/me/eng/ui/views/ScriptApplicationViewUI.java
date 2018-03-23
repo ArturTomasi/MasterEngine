@@ -20,11 +20,13 @@
 package com.me.eng.ui.views;
 
 import bsh.Interpreter;
-import com.me.eng.application.ApplicationContext;
 import com.me.eng.ui.apps.Action;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zul.Borderlayout;
+import org.zkoss.zul.Center;
+import org.zkoss.zul.South;
 import org.zkoss.zul.Textbox;
 
 /**
@@ -65,10 +67,12 @@ public class ScriptApplicationViewUI
             interpreter.eval( inputBox.getValue() );
             
             outputBox.setValue( out.toString( "UTF-8" ) );
+            outputBox.setStyle( "background-color: #c2d9e5; color: #000;" );
         }
         
         catch ( Exception e ) 
         {
+            outputBox.setStyle( "background-color: #dc3545; color: #fff;" );
             outputBox.setValue( e.toString() );
         }
     }
@@ -83,17 +87,31 @@ public class ScriptApplicationViewUI
         setVflex( "true" );
         
         inputBox.setMultiline( true );
-        inputBox.setHeight( "80%" );
+        inputBox.setHeight( "100%" );
         inputBox.setWidth( "100%" );
         inputBox.setPlaceholder( "//Escreva seu código aqui" );
 
         outputBox.setMultiline( true );
-        outputBox.setStyle( "width: 100%; background-color: lightyellow; color: #000;" );
+        outputBox.setWidth( "100%" );
+        outputBox.setStyle( "background-color: #c2d9e5; color: #000;" );
         outputBox.setVflex( "true" );
         
-        appendChild( inputBox );
-        appendChild( outputBox );
+        south.setHeight( "20%" );
+        south.setCollapsible( true );
+        south.setSplittable( true );
+        
+        center.appendChild( inputBox );
+        south.appendChild( outputBox );
+
+        borderlayout.appendChild( center );
+        borderlayout.appendChild( south );
+        
+        appendChild( borderlayout );
     }
+    
+    private Borderlayout borderlayout = new Borderlayout();
+    private Center center = new Center();
+    private South south = new South();
     
     private Textbox inputBox = new Textbox();
     private Textbox outputBox = new Textbox();

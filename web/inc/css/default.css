@@ -2,7 +2,7 @@ body, html
 {
     margin: 0px !important;
     padding: 0px !important;
-    background: linear-gradient(to bottom,#fefefe 0,#eee 100%);
+    background: radial-gradient(#fefefe 0%,#304367 200%);
 }
 
 .login-center
@@ -72,6 +72,20 @@ body, html
     width: 100%;
 }
 
+.input-login
+{
+    border: 1px solid #304368 !important;
+    border-radius: 10px !important;
+    margin-top: 7px;
+    height: 45px !important;
+    color: #304368;
+    font-weight: bold;
+    text-indent: 41px;
+    background-repeat: no-repeat;
+    background-size: 30px;
+    background-position-y: 7px;
+    background-position-x: 7px;
+}
 
 .default-app-pane-south
 {

@@ -17,11 +17,11 @@ fileWriter = new java.io.FileWriter( lincense );
 fileWriter.write( prop );
 fileWriter.close();
 
-creator = new com.me.eng.license.LicenseCreator();
+creator = new com.me.eng.license.signature.LicenseCreator();
 license = new java.io.File( "license.me" );
 creator.signLicense( lincense.getAbsolutePath(), 
-                                 com.me.eng.license.LicenseConstants.PUBLIC_KEY_PATH.stringValue(), 
-                                 com.me.eng.license.LicenseConstants.PRIVATE_KEY_PATH.stringValue(), 
+                                 com.me.eng.license.signature.LicenseConstants.PUBLIC_KEY_PATH.stringValue(), 
+                                 com.me.eng.license.signature.LicenseConstants.PRIVATE_KEY_PATH.stringValue(), 
                                  license.getAbsolutePath() );
 
 org.zkoss.zul.Filedownload.save( license, "text/plain" );
