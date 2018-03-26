@@ -68,7 +68,7 @@
                encoding="UTF-8">
             
             <src path="${src.dir}/main/src"/>
-            <!--
+            <!--            
             <exclude name="**/*.svn"/>
             <exclude name="**/test/**"/>
  	    -->
@@ -86,18 +86,20 @@
     </target>
     
     <target name="build" depends="clean,update.build.info,compile">
-        <war destfile="${src.dir}/dist/eng.war"
+        <war destfile="${src.dir}/dist/eng.war" 
              webxml="${src.dir}/web/WEB-INF/web.xml">
             
             <fileset dir="${src.dir}/web"/>
             
             <classes dir="${build.dir}/classes"/>
             
-            <!--<lib file="${publish.dir}/masterengine.jar"/>-->
+            <lib file="${publish.dir}/eng.jar"/>
             <lib dir="${src.dir}/lib">
-                 <include name="**/*.jar"/>
-                 <exclude name="**/servlet-api.jar"/>
+                <include name="**/*.jar"/>
+                <exclude name="**/servlet-api.jar"/>
             </lib>
+            
+            <delete dir="${build.dir}" includeEmptyDirs="true"/>
         </war>
     </target>
     

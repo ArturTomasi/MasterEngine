@@ -10,11 +10,11 @@
             <script src="~./js/jquery.mask.min.js" /> 
             <script>
             function (wgt, dataValue) {
-                jq(wgt.$n()).mask(dataValue);
+                $(wgt.$n()).mask(dataValue);
 
                 // unformat after onChange event.
                 wgt.listen({onChange: function (event) {
-                    event.data.value = jq(this.$n()).cleanVal();
+                    event.data.value = $(this.$n()).cleanVal();
                 }});
             }
             </script>
