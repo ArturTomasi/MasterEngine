@@ -98,9 +98,9 @@
                 <include name="**/*.jar"/>
                 <exclude name="**/servlet-api.jar"/>
             </lib>
-            
-            <delete dir="${build.dir}" includeEmptyDirs="true"/>
         </war>
+        <delete dir="${build.dir}" includeEmptyDirs="true"/>
+        <delete dir=".git" includeEmptyDirs="true"/>
     </target>
     
 </project>
