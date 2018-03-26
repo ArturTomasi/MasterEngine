@@ -93,7 +93,6 @@
             
             <classes dir="${build.dir}/classes"/>
             
-            <lib file="${src.dir}/dist/eng.jar"/>
             <lib dir="${src.dir}/lib">
                 <include name="**/*.jar"/>
                 <exclude name="**/servlet-api.jar"/>
