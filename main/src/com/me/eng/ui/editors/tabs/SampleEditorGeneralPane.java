@@ -272,7 +272,7 @@ public class SampleEditorGeneralPane
         longbox.setWidth( "100px" );
         
         final Datebox datebox = new Datebox();
-        datebox.setFormat( "long+short" );
+        datebox.setFormat( "dd/MM/yyyy HH:mm" );
         datebox.setWidth( "170px" );
         datebox.setValue( date );
         datebox.setDisabled( true );
@@ -419,10 +419,10 @@ public class SampleEditorGeneralPane
         tfNumber.setReadonly( true );
         dtCreated.setDisabled( true );
         
-        dtExecuted.setFormat( "long+short" );
+        dtExecuted.setFormat( "dd/MM/yyyy HH:mm" );
         dtExecuted.setWidth( "170px" );
         
-        dtRupture.setFormat( "long+short" );
+        dtRupture.setFormat( "dd/MM/yyyy HH:mm" );
         dtRupture.setWidth( "170px" );
         
         tableLayout.addRow( lbJob, jobSelector );

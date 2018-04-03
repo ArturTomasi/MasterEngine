@@ -84,10 +84,10 @@ public class SampleFilterPane
         
         clientComboSelector.setHflex( "true" );
           
-        dtUntil.setFormat( "long+short" );
+        dtUntil.setFormat( "dd/MM/yyyy HH:mm" );
         dtUntil.setWidth( "170px" );
           
-        dtFrom.setFormat( "long+short" );
+        dtFrom.setFormat( "dd/MM/yyyy HH:mm" );
         dtFrom.setWidth( "170px" );
         
         tableLayout.addRow( lbClient, clientComboSelector );
