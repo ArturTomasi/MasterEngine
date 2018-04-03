@@ -132,7 +132,7 @@ public enum SampleColumns
         @Override
         public Object getValueAt( Sample value )
         {
-            return SampleFormmater.newInstance().formatDate( value.getDateRupture() );
+            return SampleFormmater.newInstance().formatDate( value.getDateRupture(), "dd/MM/yyyy HH:mm" );
         }
     },
     

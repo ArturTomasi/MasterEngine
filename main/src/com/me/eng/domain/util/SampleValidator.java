@@ -75,17 +75,7 @@ public class SampleValidator
             {
                 if ( proof.getResistence() > 0 )
                 {
-                    if ( sample.getEstimatedRupture() < proof.getEstimatedRupture() )
-                    {
-                        if ( resistence > proof.getResistence() )
-                        {
-                            errors.addError( "Resistência não pode ser maior que contra prova anterior"  );
-
-                            return false;
-                        }
-                    }
-
-                    else 
+                    if ( proof.getDateRupture().before( sample.getDateRupture() ) )
                     {
                         if ( resistence < proof.getResistence() )
                         {

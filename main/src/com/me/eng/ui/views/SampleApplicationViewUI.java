@@ -24,11 +24,14 @@ import com.me.eng.services.ApplicationServices;
 import com.me.eng.domain.Client;
 import com.me.eng.domain.Sample;
 import com.me.eng.domain.SampleFilter;
+import com.me.eng.domain.reports.ListSamplesReport;
+import com.me.eng.infrastructure.FileUtils;
 import com.me.eng.ui.Callback;
 import com.me.eng.ui.apps.Action;
 import com.me.eng.ui.editors.SampleEditor;
 import com.me.eng.ui.panes.SampleFilterPane;
 import com.me.eng.ui.tables.SampleTable;
+import java.io.File;
 import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -36,6 +39,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Vlayout;
 
@@ -58,7 +62,7 @@ public class SampleApplicationViewUI
         setLabel( "Amostras" );
         setIcon( "sb_sample.png" );
         
-        addAction( "Amostras", addAction, editAction, deleteAction, proofAction );
+        addAction( "Amostras", addAction, editAction, deleteAction, proofAction, relationAction );
     }
     
     /**
@@ -73,6 +77,33 @@ public class SampleApplicationViewUI
         sampleFilterPane.setFilter( filter );
         
         loadSamples();
+    }
+    
+    private void printSamples()
+    {
+        try
+        {
+            sampleFilterPane.getFilter( filter );
+
+            filter.setOnlyRootSamples( false );
+            
+            File out = FileUtils.createTempFile( "Relação de corpos de provas.pdf" );
+
+            ListSamplesReport report = new ListSamplesReport();
+            
+            report.setSamples( ApplicationServices.getCurrent()
+                                        .getSampleRepository()
+                                        .getSamples( filter ) );
+            
+            report.generateReport( out );
+            
+            Filedownload.save( out, "application/pdf" );
+        }
+        
+        catch ( Exception e )
+        {
+            handleException( e );
+        }
     }
     
     /**
@@ -412,6 +443,15 @@ public class SampleApplicationViewUI
         public void onEvent( Event t ) throws Exception
         {
             proofSample();
+        }
+    };
+    
+    private Action relationAction = new Action( "", "Imprimir", "Imprimir relação de amostras" )
+    {
+        @Override
+        public void onEvent( Event t ) throws Exception
+        {
+            printSamples();
         }
     };
 }
