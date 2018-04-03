@@ -82,6 +82,8 @@ public class SampleTable
                     {
                         if ( ! SampleValidator.getInstance().isValidResistence( value, tf.getValue() ) )
                         {
+                            tf.setValue( null );
+                            
                             return;
                         }
                         

@@ -83,6 +83,12 @@ public class SampleFilterPane
         lbJob.setValue( "Obra:" );
         
         clientComboSelector.setHflex( "true" );
+          
+        dtUntil.setFormat( "long+short" );
+        dtUntil.setWidth( "170px" );
+          
+        dtFrom.setFormat( "long+short" );
+        dtFrom.setWidth( "170px" );
         
         tableLayout.addRow( lbClient, clientComboSelector );
         tableLayout.addRow( lbJob, jobSelector );

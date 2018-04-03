@@ -19,6 +19,7 @@
  */
 package com.me.eng.domain;
 
+import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -134,12 +135,12 @@ public class SampleFilter
         
         if ( from != null )
         {
-            query.setParameter( "from", from, TemporalType.DATE );
+            query.setParameter( "from", from, TemporalType.TIMESTAMP );
         }
         
         if ( until != null )
         {
-            query.setParameter( "until", until, TemporalType.DATE );
+            query.setParameter( "until", until, TemporalType.TIMESTAMP );
         }
         
         if ( job != null )

@@ -28,6 +28,7 @@ import com.me.eng.domain.SampleFilter;
 import com.me.eng.domain.SampleFilterBuilder;
 import com.me.eng.domain.SampleMail;
 import com.me.eng.domain.repositories.SampleRepository;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -167,8 +168,15 @@ public class SampleDAO
         
         ParameterExpression<Date> param = builder.parameter( Date.class, "date" );
         
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis( System.currentTimeMillis() );
+        calendar.set( Calendar.HOUR_OF_DAY, 23 );
+        calendar.set( Calendar.MINUTE, 59 );
+        calendar.set( Calendar.SECOND, 0 );
+        calendar.set( Calendar.MILLISECOND, 0 );
+        
         return manager.createQuery( sql )
-                .setParameter( param, new java.sql.Date( System.currentTimeMillis() ), TemporalType.DATE )
+                .setParameter( param, calendar.getTime(), TemporalType.DATE )
                 .getResultList();
     }
 
