@@ -239,6 +239,8 @@ public class SampleEditorGeneralPane
             
             for ( int i = 0; i < tfCountProof.intValue(); i++ )
             {   
+                mapProofTimes.put( i, radiogroup.getSelectedItem().getValue() );
+                
                 Long days = mapProofDates.getOrDefault( i, Sample.DEFAULT_DAYS_PROOF );
                 
                 Date date = mapProof( i, days );
