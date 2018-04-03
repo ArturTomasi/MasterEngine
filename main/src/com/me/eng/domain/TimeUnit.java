@@ -36,7 +36,10 @@ public enum TimeUnit
         @Override
         public Date plus( Date date, long amount )
         {
-            return Date.from( date.toInstant().plus( amount, ChronoUnit.DAYS ) );
+            return Date.from( LocalDateTime.ofInstant( date.toInstant(), ZoneId.systemDefault() )
+                    .plusDays(amount )
+                    .atZone( ZoneId.systemDefault() )
+                    .toInstant() );
         }
         
         @Override
