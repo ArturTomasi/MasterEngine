@@ -16,3 +16,6 @@ create table eng_licenses
 
 
 insert into core_roles values ( 3, 'recipes', 'Gerenciador de Receitas' );
+
+alter table eng_samples change dt_executed dt_executed timestamp;
+alter table eng_samples change dt_rupture  dt_executed timestamp;

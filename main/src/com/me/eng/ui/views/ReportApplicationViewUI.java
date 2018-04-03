@@ -135,7 +135,7 @@ public class ReportApplicationViewUI
     
     private String key( Sample s )
     {
-        return "#" + s.getJob().hashCode() + "#" + s.getDateRupture().hashCode();
+        return "#" + s.getJob().getId() + "#" + formmater.formatDate( s.getDateRupture() );
     }
     
     private void generateReport()

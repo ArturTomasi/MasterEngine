@@ -127,7 +127,7 @@ public class SampleEditorGeneralPane
                     Sample proof = value.createProof();
                     
                     proof.setEstimatedRupture( entry.getValue() );
-                    proof.setDateRupture( TimeUnit.values()[value.getEstimatedUnitRupture()].plus( proof.getDateExecuted(), entry.getValue() ) );
+                    proof.setDateRupture( mapProofTimes.getOrDefault( entry.getKey(), TimeUnit.DAY ).plus( proof.getDateExecuted(), entry.getValue() ) );
                 }
             }
         }
@@ -259,7 +259,7 @@ public class SampleEditorGeneralPane
     {
         mapProofDates.put( index, days );
         
-        return TimeUnit.DAY.plus( dtExecuted.getValue(), days );
+        return mapProofTimes.getOrDefault( index, TimeUnit.DAY ).plus( dtExecuted.getValue(), days );
     }
     
     private Component createProofComponent( final int index, Date date, Long days )
@@ -272,14 +272,44 @@ public class SampleEditorGeneralPane
         longbox.setWidth( "100px" );
         
         final Datebox datebox = new Datebox();
+        datebox.setFormat( "long+short" );
+        datebox.setWidth( "170px" );
         datebox.setValue( date );
         datebox.setDisabled( true );
+
+        final Radiogroup rdGroup = new Radiogroup();
+        rdGroup.setOrient( "vertical" );
+
+        for ( TimeUnit unit : TimeUnit.values() )
+        {
+            Radio radio = new Radio();
+            radio.setLabel( unit.getLabel() );
+            radio.setValue( unit );
+            radio.setSelected( unit.ordinal() == ( (TimeUnit)radiogroup.getSelectedItem().getValue() ).ordinal() );
+            rdGroup.appendChild( radio );
+        }
+
+        rdGroup.addEventListener( Events.ON_CHECK, new EventListener<Event>() 
+        {
+            @Override
+            public void onEvent(Event t) throws Exception 
+            {
+                CheckEvent e = (CheckEvent) t;
+
+                mapProofTimes.put( index, ( (Radio) e.getTarget() ).getValue() );
+
+                Long _long = mapProofDates.get( index );
+
+                datebox.setValue( mapProof( index, _long ) );
+            }
+        } );
         
         Hbox box = new Hbox();
         box.setSpacing( "0px" );
         box.setWidths( "120px,120px,75px" );
         box.appendChild( lb );
         box.appendChild( longbox );
+        box.appendChild( rdGroup );
         box.appendChild( datebox );
         
         longbox.addEventListener( Events.ON_CHANGE, (Event t) -> 
@@ -388,6 +418,12 @@ public class SampleEditorGeneralPane
                 
         tfNumber.setReadonly( true );
         dtCreated.setDisabled( true );
+        
+        dtExecuted.setFormat( "long+short" );
+        dtExecuted.setWidth( "170px" );
+        
+        dtRupture.setFormat( "long+short" );
+        dtRupture.setWidth( "170px" );
         
         tableLayout.addRow( lbJob, jobSelector );
         tableLayout.addRow( lbNumber, tfNumber );
@@ -540,4 +576,5 @@ public class SampleEditorGeneralPane
     private TableLayout tableProofLayout = new TableLayout();
     private Vbox booxProof = new Vbox();
     private HashMap<Integer, Long> mapProofDates = new HashMap();
+    private HashMap<Integer, TimeUnit> mapProofTimes = new HashMap();
 }

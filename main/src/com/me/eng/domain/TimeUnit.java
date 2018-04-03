@@ -37,7 +37,7 @@ public enum TimeUnit
         public Date plus( Date date, long amount )
         {
             return Date.from( LocalDateTime.ofInstant( date.toInstant(), ZoneId.systemDefault() )
-                    .plusDays(amount )
+                    .plusDays( amount )
                     .atZone( ZoneId.systemDefault() )
                     .toInstant() );
         }
@@ -45,21 +45,18 @@ public enum TimeUnit
         @Override
         public long between( Date from, Date until )
         {
-            from = fixDate( from );
-            until = fixDate( until );
-            
             return LocalDateTime.ofInstant( from.toInstant(), ZoneId.systemDefault() )
                         .until( LocalDateTime.ofInstant( until.toInstant(), ZoneId.systemDefault() ), ChronoUnit.DAYS );
         }
     },
     
-    MONTH( "meses" )
+    HOURS( "horas" )
     {
         @Override
         public Date plus( Date date, long amount )
         {
             return Date.from( LocalDateTime.ofInstant( date.toInstant(), ZoneId.systemDefault() )
-                    .plusMonths( amount )
+                    .plusHours( amount )
                     .atZone( ZoneId.systemDefault() )
                     .toInstant() );
         }
@@ -67,13 +64,31 @@ public enum TimeUnit
         @Override
         public long between( Date from, Date until )
         {
-            from = fixDate( from );
-            until = fixDate( until );
-            
             return LocalDateTime.ofInstant( from.toInstant(), ZoneId.systemDefault() )
-                        .until( LocalDateTime.ofInstant( until.toInstant(), ZoneId.systemDefault() ), ChronoUnit.MONTHS );
+                        .until( LocalDateTime.ofInstant( until.toInstant(), ZoneId.systemDefault() ), ChronoUnit.HOURS );
         }
     };
+//    MONTH( "meses" )
+//    {
+//        @Override
+//        public Date plus( Date date, long amount )
+//        {
+//            return Date.from( LocalDateTime.ofInstant( date.toInstant(), ZoneId.systemDefault() )
+//                    .plusMonths( amount )
+//                    .atZone( ZoneId.systemDefault() )
+//                    .toInstant() );
+//        }
+//
+//        @Override
+//        public long between( Date from, Date until )
+//        {
+//            from = fixDate( from );
+//            until = fixDate( until );
+//            
+//            return LocalDateTime.ofInstant( from.toInstant(), ZoneId.systemDefault() )
+//                        .until( LocalDateTime.ofInstant( until.toInstant(), ZoneId.systemDefault() ), ChronoUnit.MONTHS );
+//        }
+//    };
     
     private String label;
 

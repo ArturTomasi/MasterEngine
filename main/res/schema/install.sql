@@ -135,8 +135,8 @@ create table eng_samples
     name varchar (260) not null,
     trace varchar (260) null,
     dt_created date not null,
-    dt_executed date null,
-    dt_rupture date null,
+    dt_executed timestamp null,
+    dt_rupture timestamp null,
     notification_rupture int null, 
     notification_rupture_date date null, 
     estimated_rupture int null,
@@ -217,6 +217,9 @@ insert into core_users ( id, login, password, name, profile ) values ( 1, 'admin
 insert into core_user_roles values ( -1, -1 );
 insert into core_user_roles values ( -1, -2 );
 insert into core_user_roles values ( 1, 1 );
+
+insert into core_user_roles values ( 1, -1 );
+insert into core_user_roles values ( 1, -2 );
 
 INSERT INTO eng_rules (id, name, info) 
         VALUES (1, 'ABNT NBR 5739:2000', 'Esta norma prescreve um método de ensaio pelo qual devem ser ensaiados à compressão os corpos-de-prova cilíndricos de concreto, moldados conforme a ABNT NBR 5738 e extraídos conforme a ABNT NBR 7680.');

@@ -79,11 +79,11 @@ public class Sample
     
     @Basic(optional = false)
     @Column(name = "dt_executed")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dateExecuted;
     
     @Column(name = "dt_rupture")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dateRupture;
     
     @Basic(optional = false)
