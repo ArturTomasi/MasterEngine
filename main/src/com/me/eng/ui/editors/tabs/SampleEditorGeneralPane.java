@@ -126,8 +126,11 @@ public class SampleEditorGeneralPane
                 {
                     Sample proof = value.createProof();
                     
+                    TimeUnit unit = mapProofTimes.getOrDefault( entry.getKey(), TimeUnit.DAY );
+                    
                     proof.setEstimatedRupture( entry.getValue() );
-                    proof.setDateRupture( mapProofTimes.getOrDefault( entry.getKey(), TimeUnit.DAY ).plus( proof.getDateExecuted(), entry.getValue() ) );
+                    proof.setEstimatedUnitRupture( unit.ordinal() );
+                    proof.setDateRupture( unit.plus( proof.getDateExecuted(), entry.getValue() ) );
                 }
             }
         }
