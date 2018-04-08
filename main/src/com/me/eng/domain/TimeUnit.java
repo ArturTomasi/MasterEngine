@@ -105,7 +105,7 @@ public enum TimeUnit
     public abstract Date plus( Date date, long amount );
     public abstract long between( Date form, Date until );
     
-    protected Date fixDate( Date date )
+    public static Date fixDate( Date date )
     {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime( date );

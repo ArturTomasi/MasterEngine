@@ -177,10 +177,17 @@ public class Sample
                fetch = FetchType.LAZY)
     private List<SampleMail> mails = new LinkedList<>();
     
-    public Sample()
-    {
-    }
+    /**
+     * Sample
+     * 
+     */
+    public Sample(){}
 
+    /**
+     * generateMail
+     * 
+     * @return SampleMail
+     */
     public SampleMail generateMail()
     {
         SampleMail sampleMail = new SampleMail();
@@ -196,6 +203,11 @@ public class Sample
         return sampleMail;
     }
     
+    /**
+     * daysToRupture
+     * 
+     * @return long
+     */
     public long daysToRupture()
     {
         if ( dateRupture != null )
@@ -206,41 +218,81 @@ public class Sample
         return -1;
     }
 
+    /**
+     * getMails
+     * 
+     * @return List&lt;SampleMail&gt;
+     */
     public List<SampleMail> getMails()
     {
         return mails;
     }
     
+    /**
+     * getTrace
+     * 
+     * @return String
+     */
     public String getTrace()
     {
         return trace;
     }
 
+    /**
+     * setTrace
+     * 
+     * @param trace String
+     */
     public void setTrace( String trace )
     {
         this.trace = trace;
     }
     
+    /**
+     * getNotificationRuptureDate
+     * 
+     * @return Date
+     */
     public Date getNotificationRuptureDate()
     {
         return notificationRuptureDate;
     }
 
+    /**
+     * setNotificationRuptureDate
+     * 
+     * @param notificationRuptureDate Date
+     */
     public void setNotificationRuptureDate( Date notificationRuptureDate )
     {
         this.notificationRuptureDate = notificationRuptureDate;
     }
 
+    /**
+     * getNotificationRupture
+     * 
+     * @return Long
+     */
     public Long getNotificationRupture()
     {
         return notificationRupture;
     }
 
+    /**
+     * setNotificationRupture
+     * 
+     * @param notificationRupture Long
+     */
     public void setNotificationRupture( Long notificationRupture )
     {
         this.notificationRupture = notificationRupture;
     }
     
+    /**
+     * setJob
+     * 
+     * @param job Job
+     */
     public void setJob( Job job )
     {
         this.job = job;
@@ -251,181 +303,366 @@ public class Sample
         }
     }
 
+    /**
+     * getJob
+     * 
+     * @return Job
+     */
     public Job getJob()
     {
         return job;
     }
     
+    /**
+     * setNf
+     * 
+     * @param nf Integer
+     */
     public void setNf( Integer nf )
     {
         this.nf = nf;
     }
 
+    /**
+     * getNf
+     * 
+     * @return Integer
+     */
     public Integer getNf()
     {
         return nf;
     }
 
+    /**
+     * getParent
+     * 
+     * @return Sample
+     */
     public Sample getParent()
     {
         return parent;
     }
 
+    /**
+     * setParent
+     * 
+     * @param parent Sample
+     */
     public void setParent( Sample parent )
     {
         this.parent = parent;
     }
     
+    /**
+     * getId
+     * 
+     * @return Integer
+     */
     public Integer getId()
     {
         return id;
     }
 
+    /**
+     * setId
+     * 
+     * @param id Integer
+     */
     public void setId( Integer id )
     {
         this.id = id;
     }
 
+    /**
+     * getDateCreated
+     * 
+     * @return Date
+     */
     public Date getDateCreated()
     {
         return dateCreated;
     }
 
+    /**
+     * setDateCreated
+     * 
+     * @param dateCreated Date
+     */
     public void setDateCreated( Date dateCreated )
     {
         this.dateCreated = dateCreated;
     }
 
+    /**
+     * getDateExecuted
+     * 
+     * @return Date
+     */
     public Date getDateExecuted()
     {
         return dateExecuted;
     }
 
+    /**
+     * setDateExecuted
+     * 
+     * @param dateExecuted Date
+     */
     public void setDateExecuted( Date dateExecuted )
     {
         this.dateExecuted = dateExecuted;
     }
 
+    /**
+     * getDateRupture
+     * 
+     * @return Date
+     */
     public Date getDateRupture()
     {
         return dateRupture;
     }
 
+    /**
+     * setDateRupture
+     * 
+     * @param dateRupture Date
+     */
     public void setDateRupture( Date dateRupture )
     {
+        if ( estimatedUnitRupture == TimeUnit.DAY.ordinal() )
+        {
+            dateRupture = TimeUnit.fixDate( dateRupture );
+        }
+        
         this.dateRupture = dateRupture;
     }
 
+    /**
+     * getDimW
+     * 
+     * @return int
+     */
     public int getDimW()
     {
         return dimW;
     }
 
+    /**
+     * setDimW
+     * 
+     * @param dimW int
+     */
     public void setDimW( int dimW )
     {
         this.dimW = dimW;
     }
 
+    /**
+     * getDimH
+     * 
+     * @return int
+     */
     public int getDimH()
     {
         return dimH;
     }
 
+    /**
+     * setDimH
+     * 
+     * @param dimH int
+     */
     public void setDimH( int dimH )
     {
         this.dimH = dimH;
     }
 
+    /**
+     * getDimL
+     * 
+     * @return int
+     */
     public int getDimL()
     {
         return dimL;
     }
 
+    /**
+     * setDimL
+     * 
+     * @param dimL int
+     */
     public void setDimL( int dimL )
     {
         this.dimL = dimL;
     }
 
+    /**
+     * getResistence
+     * 
+     * @return Double
+     */
     public Double getResistence()
     {
         return resistence == null ? 0 : resistence;
     }
 
+    /**
+     * setResistence
+     * 
+     * @param resistence Double
+     */
     public void setResistence( Double resistence )
     {
         this.resistence = resistence;
     }
 
+    /**
+     * getRuptureType
+     * 
+     * @return Character
+     */
     public Character getRuptureType()
     {
         return ruptureType;
     }
 
+    /**
+     * setRuptureType
+     * 
+     * @param ruptureType Character
+     */
     public void setRuptureType( Character ruptureType )
     {
         this.ruptureType = ruptureType;
     }
 
+    /**
+     * getUser
+     * 
+     * @return User
+     */
     public User getUser()
     {
         return user;
     }
 
+    /**
+     * setUser
+     * 
+     * @param user User
+     */
     public void setUser( User user )
     {
         this.user = user;
     }
 
+    /**
+     * getRule
+     * 
+     * @return Rule
+     */
     public Rule getRule()
     {
         return rule;
     }
 
+    /**
+     * setRule
+     * 
+     * @param rule Rule
+     */
     public void setRule( Rule rule )
     {
         this.rule = rule;
     }
 
+    /**
+     * getClient
+     * 
+     * @return Client
+     */
     public Client getClient()
     {
         return client;
     }
 
+    /**
+     * setClient
+     * 
+     * @param client Client
+     */
     public void setClient( Client client )
     {
         this.client = client;
     }
 
+    /**
+     * getName
+     * 
+     * @return String
+     */
     public String getName()
     {
         return name;
     }
 
+    /**
+     * setName
+     * 
+     * @param name String
+     */
     public void setName( String name )
     {
         this.name = name;
     }
 
+    /**
+     * setEquipaments
+     * 
+     * @param equipaments List&lt;Equipment&gt;
+     */
     public void setEquipaments( List<Equipment> equipaments )
     {
         this.equipaments = equipaments;
     }
     
+    /**
+     * getEquipaments
+     * 
+     * @return List&lt;Equipment&gt;
+     */
     public List<Equipment> getEquipaments()
     {
         return equipaments;
     }
 
+    /**
+     * setCapstones
+     * 
+     * @param capstones List&lt;Capstone&gt;
+     */
     public void setCapstones( List<Capstone> capstones )
     {
         this.capstones = capstones;
     }
 
+    /**
+     * getCapstones
+     * 
+     * @return List&lt;Capstone&gt;
+     */
     public List<Capstone> getCapstones()
     {
         return capstones;
     }
 
+    /**
+     * getContact
+     * 
+     * @return Contact
+     */
     public Contact getContact()
     {
         if ( getJob() != null && ! getJob().getContacs().isEmpty() )
@@ -441,35 +678,71 @@ public class Sample
         return null;
     }
 
+    /**
+     * getEstimatedRupture
+     * 
+     * @return Long
+     */
     public Long getEstimatedRupture()
     {
         return estimatedRupture;
     }
 
+    /**
+     * setEstimatedRupture
+     * 
+     * @param estimatedRupture Long
+     */
     public void setEstimatedRupture( Long estimatedRupture )
     {
         this.estimatedRupture = estimatedRupture;
     }
 
+    /**
+     * getEstimatedUnitRupture
+     * 
+     * @return Integer
+     */
     public Integer getEstimatedUnitRupture()
     {
         return estimatedUnitRupture;
     }
 
+    /**
+     * setEstimatedUnitRupture
+     * 
+     * @param estimatedUnitRupture Integer
+     */
     public void setEstimatedUnitRupture( Integer estimatedUnitRupture )
     {
         this.estimatedUnitRupture = estimatedUnitRupture;
     }
 
+    /**
+     * getProofs
+     * 
+     * @return List&lt;Sample&gt;
+     */
     public List<Sample> getProofs()
     {
         return proofs;
     }
 
-    public void setProofs(List<Sample> proofs) {
+    /**
+     * setProofs
+     * 
+     * @param proofs List&lt;Sample&gt;
+     */
+    public void setProofs( List<Sample> proofs ) 
+    {
         this.proofs = proofs;
     }
     
+    /**
+     * getAmountProofs
+     * 
+     * @return int
+     */
     public int getAmountProofs()
     {
         if ( proofs == null || proofs.isEmpty() )
@@ -480,6 +753,11 @@ public class Sample
         return proofs.size();
     }
     
+    /**
+     * getAllProofs
+     * 
+     * @return List&lt;Sample&gt;
+     */
     public List<Sample> getAllProofs()
     {
         List<Sample> list = new LinkedList<>();
@@ -490,6 +768,12 @@ public class Sample
         return list;
     }
     
+    /**
+     * collectProofs
+     * 
+     * @param samples List&lt;Sample&gt;
+     * @param sample Sample
+     */
     private void collectProofs( List<Sample> samples, Sample sample )
     {
         for ( Sample proof : sample.getProofs() )
@@ -500,6 +784,11 @@ public class Sample
         }
     }
     
+    /**
+     * unbound
+     * 
+     * @return Sample
+     */
     public Sample unbound()
     {
         Sample p = parent;
@@ -514,6 +803,12 @@ public class Sample
         return p;
     }
     
+    /**
+     * createProof
+     * 
+     * @return Sample
+     * @throws Exception
+     */
     public Sample createProof() throws Exception
     {
         Sample proof = this.clone();
@@ -526,16 +821,31 @@ public class Sample
         return proof;
     }
     
+    /**
+     * getSerial
+     * 
+     * @return Serial
+     */
     public Serial getSerial()
     {
         return new Serial( this );
     }
     
+    /**
+     * isNew
+     * 
+     * @return boolean
+     */
     public boolean isNew()
     {
         return this.getId() == null || this.getId() == 0;
     }
 
+    /**
+     * hashCode
+     * 
+     * @return int
+     */
     @Override
     public int hashCode()
     {
@@ -544,6 +854,12 @@ public class Sample
         return hash;
     }
 
+    /**
+     * equals
+     * 
+     * @param object Object
+     * @return boolean
+     */
     @Override
     public boolean equals( Object object )
     {
@@ -560,12 +876,23 @@ public class Sample
         return true;
     }
     
+    /**
+     * toString
+     * 
+     * @return String
+     */
     @Override
     public String toString()
     {
         return name;
     }
 
+    /**
+     * clone
+     * 
+     * @return Sample
+     * @throws CloneNotSupportedException
+     */
     @Override
     public Sample clone() throws CloneNotSupportedException
     {

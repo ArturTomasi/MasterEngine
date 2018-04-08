@@ -121,13 +121,13 @@ public class SampleEditorGeneralPane
             value.setDimW( tfDimW.getValue() );
             value.setDimH( tfDimH.getValue() );
             value.setDateExecuted( dtExecuted.getValue() );
-            value.setDateRupture( dtRupture.getValue() );
             value.setRule( ruleSelector.getSelectedItem() );
             value.setName( sampleNameSelector.getText() );
             value.setRuptureType( ruptureTypeSelector.getSelectedValue() );
             value.setNf( tfNF.getValue() );
             value.setEstimatedRupture( tfEstimatedUnitRuptureDate.getValue() );
             value.setEstimatedUnitRupture( radiogroup.getSelectedIndex() );
+            value.setDateRupture( dtRupture.getValue() );
             value.setNotificationRupture( tfNotificationRupture.getValue() );
             value.setNotificationRuptureDate( getNotificationRuptureDate() );
             value.setTrace( tfTrace.getValue() );

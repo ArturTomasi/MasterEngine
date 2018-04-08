@@ -61,6 +61,7 @@ public class StatusBar
         imgUser.setWidth( "auto" );
         
         lbVersion.setStyle( "position: absolute; right: 10px; top: 2px" );
+        lbUser.setStyle( "color: #fff;" );
         
         Hbox hbox = new Hbox();
         hbox.setAlign( "middle" );
