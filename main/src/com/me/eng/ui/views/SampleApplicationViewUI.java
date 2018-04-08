@@ -24,13 +24,14 @@ import com.me.eng.services.ApplicationServices;
 import com.me.eng.domain.Client;
 import com.me.eng.domain.Sample;
 import com.me.eng.domain.SampleFilter;
-import com.me.eng.domain.reports.ListSamplesReport;
+import com.me.eng.domain.reports.SampleRelationReport;
 import com.me.eng.infrastructure.FileUtils;
 import com.me.eng.ui.Callback;
 import com.me.eng.ui.apps.Action;
 import com.me.eng.ui.editors.SampleEditor;
 import com.me.eng.ui.panes.SampleFilterPane;
 import com.me.eng.ui.tables.SampleTable;
+import com.me.eng.ui.util.KeyEventControl;
 import java.io.File;
 import java.sql.Date;
 import java.util.LinkedList;
@@ -62,7 +63,8 @@ public class SampleApplicationViewUI
         setLabel( "Amostras" );
         setIcon( "sb_sample.png" );
         
-        addAction( "Amostras", addAction, editAction, deleteAction, proofAction, relationAction );
+        addAction( "Amostras", addAction, editAction, deleteAction, proofAction );
+        addAction( "Relatório", relationAction );
     }
     
     /**
@@ -79,7 +81,11 @@ public class SampleApplicationViewUI
         loadSamples();
     }
     
-    private void printSamples()
+    /**
+     * printRelationSamples
+     * 
+     */
+    private void printRelationSamples()
     {
         try
         {
@@ -87,9 +93,9 @@ public class SampleApplicationViewUI
 
             filter.setOnlyRootSamples( false );
             
-            File out = FileUtils.createTempFile( "Relação de corpos de provas.pdf" );
+            File out = FileUtils.createTempFile( "SampleRelation.pdf" );
 
-            ListSamplesReport report = new ListSamplesReport();
+            SampleRelationReport report = new SampleRelationReport();
             
             report.setSamples( ApplicationServices.getCurrent()
                                         .getSampleRepository()
@@ -195,7 +201,7 @@ public class SampleApplicationViewUI
                         }
                         
                     }
-                } );
+                }, true );
             }
         }
         
@@ -226,12 +232,12 @@ public class SampleApplicationViewUI
 
                     sampleTable.updateElement( getSource() );
 
-                    for ( Sample proof : getSource().getProofs() )
+                    getSource().getProofs().forEach( (proof) ->
                     {
                         sampleTable.updateElement( proof );
-                    }
+                    } );
                 }
-            } );
+            }, false );
         }
     }
     
@@ -341,7 +347,7 @@ public class SampleApplicationViewUI
                     {
                         proof.unbound();
                     }
-                } );
+                }, false );
             }
             
             catch ( Exception e )
@@ -375,9 +381,11 @@ public class SampleApplicationViewUI
     @Override
     protected void initComponents()
     {
+        keyEventControl = new KeyEventControl( this );
+        keyEventControl.addKey( KeyEventControl.Key.CTRL_ALT_N );
+         
         sampleFilterPane = new SampleFilterPane();
         
-//        sampleTree = new SampleTree();
         sampleTable = new SampleTable();
         sampleTable.enableInplace();
         sampleTable.addContextAction( proofAction );
@@ -404,11 +412,29 @@ public class SampleApplicationViewUI
                 loadSamples();
             }
         } );
+        
+        addEventListener( KeyEventControl.Events.ON_KEY_PRESSED, new EventListener<Event>() 
+        {
+            @Override
+            public void onEvent( Event t ) throws Exception 
+            {
+                if ( t.getData() instanceof KeyEventControl.Key )
+                {
+                    switch ( KeyEventControl.Key.class.cast( t.getData() ) )
+                    {
+                        case CTRL_ALT_N : addSample(); break;
+                    }
+                }
+            }
+        } );
+        
     }
     
     private SampleFilterPane sampleFilterPane;
     
     private SampleTable sampleTable;
+    
+    private KeyEventControl keyEventControl;
     
     private Action addAction = new Action( "", "Nova", "Nova amostra" )
     {
@@ -451,7 +477,7 @@ public class SampleApplicationViewUI
         @Override
         public void onEvent( Event t ) throws Exception
         {
-            printSamples();
+            printRelationSamples();
         }
     };
 }

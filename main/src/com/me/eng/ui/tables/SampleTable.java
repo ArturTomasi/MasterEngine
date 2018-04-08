@@ -140,6 +140,11 @@ public class SampleTable
                                 .update( value );
                         
                         updateElement( value );
+                        
+                        value.getProofs().forEach( (proof) -> 
+                        {
+                            updateElement( proof );
+                        } );
                     }
                 } );
                 

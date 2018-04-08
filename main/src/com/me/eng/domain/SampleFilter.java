@@ -37,58 +37,135 @@ public class SampleFilter
     private Job job;
     private Date from;
     private Date until;
+    private String trace;
     private boolean onlyRootSamples;
 
+    /**
+     * getJob
+     * 
+     * @return Job
+     */
     public Job getJob()
     {
         return job;
     }
 
+    /**
+     * setJob
+     * 
+     * @param job Job
+     */
     public void setJob( Job job )
     {
         this.job = job;
     }
     
+    /**
+     * getFrom
+     * 
+     * @return Date
+     */
     public Date getFrom()
     {
         return from;
     }
 
+    /**
+     * setFrom
+     * 
+     * @param from Date
+     */
     public void setFrom( Date from )
     {
         this.from = from;
     }
 
+    /**
+     * getUntil
+     * 
+     * @return Date
+     */
     public Date getUntil()
     {
         return until;
     }
 
+    /**
+     * setUntil
+     * 
+     * @param until Date
+     */
     public void setUntil( Date until )
     {
         this.until = until;
     }
 
+    /**
+     * getClient
+     * 
+     * @return Client
+     */
     public Client getClient()
     {
         return client;
     }
 
+    /**
+     * setClient
+     * 
+     * @param client Client
+     */
     public void setClient( Client client )
     {
         this.client = client;
     }
 
+    /**
+     * isOnlyRootSamples
+     * 
+     * @return boolean
+     */
     public boolean isOnlyRootSamples()
     {
         return onlyRootSamples;
     }
 
+    /**
+     * setOnlyRootSamples
+     * 
+     * @param onlyRootSamples boolean
+     */
     public void setOnlyRootSamples( boolean onlyRootSamples )
     {
         this.onlyRootSamples = onlyRootSamples;
     }
+
+    /**
+     * getTrace
+     * 
+     * @return String
+     */
+    public String getTrace() 
+    {
+        return trace;
+    }
+
+    /**
+     * setTrace
+     * 
+     * @param trace String
+     */
+    public void setTrace( String trace ) 
+    {
+        this.trace = trace;
+    }
     
+    /**
+     * createQuery
+     * 
+     * @param manager EntityManager
+     * @return Query
+     */
     public Query createQuery( EntityManager manager )
     {
         String sql = "select c from " + Sample.class.getCanonicalName() + " c " + 
@@ -124,7 +201,13 @@ public class SampleFilter
                    "c.job = :job";
         }
         
-        sql += " order by c.client, c.job, c.id";
+        if ( trace != null )
+        {
+            sql += " and " +
+                   "upper( c.trace ) like upper( :trace )";
+        }
+        
+        sql += " order by c.client, c.job, c.dateRupture";
         
         Query query = manager.createQuery( sql );
         
@@ -135,17 +218,37 @@ public class SampleFilter
         
         if ( from != null )
         {
-            query.setParameter( "from", from, TemporalType.TIMESTAMP );
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime( from );
+            calendar.set( Calendar.HOUR_OF_DAY, 0 );
+            calendar.set( Calendar.MINUTE, 0 );
+            calendar.set( Calendar.SECOND, 0 );
+            calendar.set( Calendar.MILLISECOND, 0 );
+            query.setParameter( "from", calendar.getTime(), TemporalType.TIMESTAMP );
         }
         
         if ( until != null )
         {
-            query.setParameter( "until", until, TemporalType.TIMESTAMP );
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime( until );
+            calendar.set( Calendar.HOUR_OF_DAY, 23 );
+            calendar.set( Calendar.MINUTE, 59 );
+            calendar.set( Calendar.SECOND, 0 );
+            calendar.set( Calendar.MILLISECOND, 0 );
+            
+            query.setParameter( "until", calendar.getTime(), TemporalType.TIMESTAMP );
         }
         
         if ( job != null )
         {
             query.setParameter( "job", job );
+        }
+        
+        if ( trace != null )
+        {
+            trace = trace.replaceAll( "[^0-9]", "" );
+
+            query.setParameter( "trace", "%" + trace + "%" );
         }
         
         return query;

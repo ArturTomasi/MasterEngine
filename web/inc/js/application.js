@@ -1,4 +1,9 @@
 
+/**
+ * onLoginError
+ * 
+ * @return function
+ */
 function onLoginError()
 {
     $( 'input[type!=submit]' ).val( "" ).blur();

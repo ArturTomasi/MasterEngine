@@ -76,6 +76,10 @@ public class ReportApplicationViewUI
     
     private Map<String, List<Sample>> jobs;
     
+    /**
+     * ReportApplicationViewUI
+     * 
+     */
     public ReportApplicationViewUI()
     {
         setLabel( "Relatórios" );
@@ -84,6 +88,10 @@ public class ReportApplicationViewUI
         addAction( "Relatórios", generateAction, generateLetterHeadAction );
     }
     
+    /**
+     * refreshContent
+     * 
+     */
     @Override
     public void refreshContent()
     {
@@ -94,6 +102,10 @@ public class ReportApplicationViewUI
         loadSamples();
     }
     
+    /**
+     * loadSamples
+     * 
+     */
     private void loadSamples()
     {
         try
@@ -108,7 +120,7 @@ public class ReportApplicationViewUI
 
             List<Sample> result = new LinkedList();
             
-            for ( Sample s : samples )
+            samples.forEach( (s) ->
             {
                 String key = key( s );
 
@@ -122,7 +134,7 @@ public class ReportApplicationViewUI
                 items.add( s );
                 
                 jobs.put( key, items );
-            }
+            });
             
             sampleTable.setElements( result );
         }
@@ -133,16 +145,43 @@ public class ReportApplicationViewUI
         }
     }
     
+    /**
+     * key
+     * 
+     * @param s Sample
+     * @return String
+     */
     private String key( Sample s )
     {
-        return "#" + s.getJob().getId() + "#" + formmater.formatDate( s.getDateRupture() );
+        String group = "#" + formmater.formatDate( s.getDateRupture() );
+        
+        if ( s.getJob() != null )
+        {
+            group +=  "#" + s.getJob().getId();
+        }
+        
+        if ( s.getClient() != null )
+        {
+            group +=  "#" + s.getClient().getId();
+        }
+        
+        return group;
     }
     
+    /**
+     * generateReport
+     * 
+     */
     private void generateReport()
     {
         generateReport( false );
     }
     
+    /**
+     * generateReport
+     * 
+     * @param letterHead boolean
+     */
     private void generateReport( boolean letterHead )
     {
         Sample sample = sampleTable.getSelectedElement();
@@ -181,6 +220,11 @@ public class ReportApplicationViewUI
         }
     }
     
+    /**
+     * sendMails
+     * 
+     * @throws Exception
+     */
     private void sendMails() throws Exception
     {
         Prompts.confirm( "Reenviar os e-mails que já foram entregues?", 
@@ -213,6 +257,12 @@ public class ReportApplicationViewUI
         } );
     }
     
+    /**
+     * sendMails
+     * 
+     * @param samples List&lt;Sample&gt;
+     * @throws Exception
+     */
     private void sendMails( List<Sample> samples ) throws Exception
     {
         Errors errors = new Errors();
@@ -225,6 +275,12 @@ public class ReportApplicationViewUI
         errors.validate( ReportApplicationViewUI.this );
     }
     
+    /**
+     * sendMail
+     * 
+     * @param value Sample
+     * @throws Exception
+     */
     private void sendMail( Sample value ) throws Exception
     {
         Errors e = new Errors();
@@ -234,6 +290,13 @@ public class ReportApplicationViewUI
         e.validate( this );
     }
     
+    /**
+     * sendMail
+     * 
+     * @param value Sample
+     * @param e Errors
+     * @throws Exception
+     */
     private void sendMail( Sample value, Errors e ) throws Exception
     {
         if ( value.getContact() == null || value.getContact().getEmail() == null )
@@ -318,6 +381,12 @@ public class ReportApplicationViewUI
         sender.send();
     }
     
+    /**
+     * updateImageStatus
+     * 
+     * @param lastMail SampleMail
+     * @param img Image
+     */
     private void updateImageStatus( SampleMail lastMail, Image img )
     {
         Mail.Status status = Mail.Status.IDLE;
@@ -350,6 +419,10 @@ public class ReportApplicationViewUI
         img.setSrc( ResourceLocator.getImageResource( status.getIcon() ) );
     }
     
+    /**
+     * initComponents
+     * 
+     */
     protected void initComponents()
     {
         sampleFilterPane = new SampleFilterPane();

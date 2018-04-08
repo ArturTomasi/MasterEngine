@@ -19,9 +19,11 @@
  */
 package com.me.eng.domain.reports;
 
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -36,20 +38,30 @@ import java.util.List;
  *
  * @author Artur Tomasi
  */
-public class ListSamplesReport 
+public class SampleRelationReport 
 {
     private Document document;
-    private PdfWriter writer;
     
     private SampleFormmater formmater;
     
     private List<Sample> samples;
 
+    /**
+     * setSamples
+     * 
+     * @param samples List&lt;Sample&gt;
+     */
     public void setSamples( List<Sample> samples )
     {
         this.samples = samples;
     }
     
+    /**
+     * generateReport
+     * 
+     * @param out File
+     * @throws Exception
+     */
     public void generateReport( File out ) throws Exception 
     {
         formmater = SampleFormmater.newInstance();
@@ -58,9 +70,11 @@ public class ListSamplesReport
         document = new Document( PageSize.A4 );
         document.setMargins( px( 1.5f ), px( 1.5f ), px( 1.5f ), px( 1.5f ) );
         
-        writer = PdfWriter.getInstance( document, new FileOutputStream( out ) );
+        PdfWriter.getInstance( document, new FileOutputStream( out ) );
         
         document.open();
+        
+        document.add( new Paragraph( new Chunk( "RELAÇÃO DE AMOSTRAS.", FontFactory.getCalibriBoldFont( 11 ) ) ) );
         
         PdfPTable table = new PdfPTable( 7 );
         table.setSpacingBefore( 10 );
@@ -115,22 +129,35 @@ public class ListSamplesReport
         document.close();
     }
     
+    /**
+     * addSample
+     * 
+     * @param table PdfPTable
+     * @param sample Sample
+     */
     private void addSample( PdfPTable table, Sample sample )
     {
         table.addCell( createCell( formmater.formatId( sample ) ) );
         table.addCell( createCell( null ) );
         table.addCell( createCell( null ) );
         
-        PdfPCell cell =  createCell( sample.getName() );
+        PdfPCell cell =  createCell( formmater.formatName( sample ) );
         cell.setHorizontalAlignment( Element.ALIGN_LEFT );
         cell.setPaddingLeft( 3 );
         
         table.addCell( cell );
         table.addCell( createCell( formmater.formatAge( sample ) ) );
         table.addCell( createCell( sample.getNf() ) );
-        table.addCell( createCell( formmater.formatDate( sample.getDateExecuted(), "dd/MM/YYYY" ) ) );
+        
+        table.addCell( createCell( formmater.formatRupture( sample ) ) );
     }
     
+    /**
+     * createCell
+     * 
+     * @param value Object
+     * @return PdfPCell
+     */
     private PdfPCell createCell( Object value )
     {
         PdfPCell cell = new PdfPCell( new Phrase( value != null ? value.toString() : "", FontFactory.getCalibriFont( 9 ) ) );
@@ -142,6 +169,12 @@ public class ListSamplesReport
         return cell;
     }
     
+    /**
+     * px
+     * 
+     * @param cm float
+     * @return float
+     */
     private float px( float cm ) 
     {
         return cm * 36;

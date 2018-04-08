@@ -64,16 +64,33 @@ public class ItextReportGenerator
     
     private SampleFormmater formmater;
 
+    /**
+     * setNewton
+     * 
+     * @param newton Formula
+     */
     public void setNewton( Formula newton )
     {
         this.newton = newton;
     }
 
+    /**
+     * setRc
+     * 
+     * @param rc Formula
+     */
     public void setRc( Formula rc )
     {
         this.rc = rc;
     }
     
+    /**
+     * generateReport
+     * 
+     * @param report SampleReport
+     * @param out File
+     * @throws Exception
+     */
     @Override
     public void generateReport( SampleReport report, File out ) throws Exception
     {
@@ -411,6 +428,12 @@ public class ItextReportGenerator
         document.close();
     }
     
+    /**
+     * addSample
+     * 
+     * @param table PdfPTable
+     * @param sample Sample
+     */
     private void addSample( PdfPTable table, Sample sample )
     {
         table.addCell( createCell( formmater.formatId( sample ) ) );
@@ -420,9 +443,15 @@ public class ItextReportGenerator
         table.addCell( createCell( formmater.formatAge( sample ) ) );
         table.addCell( createCell( formmater.formatDate( sample.getDateExecuted(), "dd/MM/YYYY" ) ) );
         table.addCell( createCell( sample.getNf() ) );
-        table.addCell( createCell( sample.getName() ) );
+        table.addCell( createCell( formmater.formatName( sample ) ) );
     }
     
+    /**
+     * createCell
+     * 
+     * @param value Object
+     * @return PdfPCell
+     */
     private PdfPCell createCell( Object value )
     {
         PdfPCell cell = new PdfPCell( new Phrase( value != null ? value.toString() : "", FontFactory.getCalibriFont( 9 ) ) );
@@ -432,6 +461,11 @@ public class ItextReportGenerator
         return cell;
     }
     
+    /**
+     * addBreak
+     * 
+     * @throws Exception
+     */
     private void addBreak() throws Exception
     {
         document.add( Chunk.NEWLINE );
@@ -472,6 +506,12 @@ public class ItextReportGenerator
         document.add( paragraph );
     }
     
+    /**
+     * createJobSection
+     * 
+     * @param report SampleReport
+     * @throws Exception
+     */
     private void createJobSection( SampleReport report ) throws Exception
     {
         Sample root = report.getRoot();
@@ -523,6 +563,12 @@ public class ItextReportGenerator
         }
     }
     
+    /**
+     * px
+     * 
+     * @param cm float
+     * @return float
+     */
     private float px( float cm ) 
     {
         return cm * 36;

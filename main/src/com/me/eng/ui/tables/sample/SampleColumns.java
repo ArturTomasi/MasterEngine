@@ -38,7 +38,7 @@ public enum SampleColumns
         @Override
         public Object getValueAt( Sample value )
         {
-            return value.getName();
+            return SampleFormmater.newInstance().formatName( value );
         }
     },
     JOB( "Obra" )
@@ -100,6 +100,16 @@ public enum SampleColumns
                             .evaluate( value.getResistence() ) );
         }
     },
+ 
+    FCK( "FCK" )
+    {
+        @Override
+        public Object getValueAt( Sample value )
+        {
+            return SampleFormmater.newInstance().formatFCK( value );
+        }
+    },
+    
     TYPE_RUPTURE( "Tipo de Ruptura" )
     {
         @Override
@@ -132,7 +142,7 @@ public enum SampleColumns
         @Override
         public Object getValueAt( Sample value )
         {
-            return SampleFormmater.newInstance().formatDate( value.getDateRupture(), "dd/MM/yyyy HH:mm" );
+            return SampleFormmater.newInstance().formatRupture( value );
         }
     },
     

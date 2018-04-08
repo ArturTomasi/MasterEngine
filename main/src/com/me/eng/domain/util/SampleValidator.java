@@ -21,6 +21,7 @@ package com.me.eng.domain.util;
 
 import com.me.eng.application.ApplicationContext;
 import com.me.eng.domain.Sample;
+import com.me.eng.domain.SampleFormmater;
 import com.me.eng.ui.editors.Errors;
 import java.util.List;
 
@@ -32,6 +33,11 @@ public class SampleValidator
 {
     private static SampleValidator instance;
     
+    /**
+     * getInstance
+     * 
+     * @return SampleValidator
+     */
     public static final SampleValidator getInstance()
     {
         if ( instance == null )
@@ -42,8 +48,19 @@ public class SampleValidator
         return instance;
     }
     
+    /**
+     * SampleValidator
+     * 
+     */
     private SampleValidator() {}
     
+    /**
+     * isValidResistence
+     * 
+     * @param sample Sample
+     * @param resistence Double
+     * @return boolean
+     */
     public boolean isValidResistence( Sample sample, Double resistence )
     {
         Errors e = new Errors();
@@ -53,6 +70,14 @@ public class SampleValidator
         return e.validate( ApplicationContext.getInstance().getRoot() );
     }
     
+    /**
+     * isValidResistence
+     * 
+     * @param sample Sample
+     * @param resistence Double
+     * @param errors Errors
+     * @return boolean
+     */
     public boolean isValidResistence( Sample sample, Double resistence, Errors errors )
     {
         if ( resistence == null || resistence == 0 )
@@ -79,7 +104,19 @@ public class SampleValidator
                     {
                         if ( resistence < proof.getResistence() )
                         {
-                            errors.addError( "Resistência não pode ser maior que contra prova anterior"  );
+                            errors.addError( "Resistência não pode ser menor que contra prova anterior"  );
+
+                            return false;
+                        }
+                    }
+                    
+                    else if ( proof.getDateRupture().after( sample.getDateRupture() ) )
+                    {
+                        if ( resistence > proof.getResistence() )
+                        {
+                            errors.addError( "Resistência não pode ser maior que proxima contra prova\n" +
+                                             SampleFormmater.newInstance().formatId( proof ) +
+                                             " (" + SampleFormmater.newInstance().formatResistence( proof ) + ")" );
 
                             return false;
                         }
@@ -91,6 +128,12 @@ public class SampleValidator
         return true;
     }
     
+    /**
+     * dontHaveResistences
+     * 
+     * @param items List&lt;Sample&gt;
+     * @return String
+     */
     public String dontHaveResistences( List<Sample> items )
     {
         if ( ! items.isEmpty() )

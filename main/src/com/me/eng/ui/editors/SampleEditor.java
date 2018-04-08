@@ -39,13 +39,29 @@ public class SampleEditor
     extends 
         EditorPanel<Sample>
 {
-    public static void edit( Component owner, Callback<Sample> callback )
+    /**
+     * edit
+     * 
+     * @param owner Component
+     * @param callback Callback&lt;Sample&gt;
+     * @param showProofs boolean
+     */
+    public static void edit( Component owner, Callback<Sample> callback, boolean showProofs )
     {
-        DefaultEditor.createEditor( owner, new SampleEditor(), callback );
+        DefaultEditor.createEditor( owner, new SampleEditor( showProofs ), callback );
     }
     
-    public SampleEditor()
+    private boolean showProofs;
+    
+    /**
+     * SampleEditor
+     * 
+     * @param showProofs boolean
+     */
+    public SampleEditor( boolean showProofs )
     {
+        this.showProofs = showProofs;
+        
         setTitle( "Editor de Amostras" );
         setCaption( "Editor de Amostras" );
         setInfo( "Edite as propriedades da Amostra" );
@@ -53,14 +69,25 @@ public class SampleEditor
         initComponents();
     }
     
+    /**
+     * setInput
+     * 
+     * @param value Sample
+     */
     @Override
     public void setInput( Sample value )
     {
+        generalPane.setShowProofs( showProofs );
         generalPane.setInput( value );
         equipmentPane.setInput( value );
         capstonePane.setInput( value );
     }
 
+    /**
+     * getInput
+     * 
+     * @param value Sample
+     */
     @Override
     public void getInput( Sample value )
     {
@@ -69,6 +96,11 @@ public class SampleEditor
         capstonePane.getInput( value );
     }
 
+    /**
+     * validateInput
+     * 
+     * @param e Errors
+     */
     @Override
     public void validateInput( Errors e )
     {
@@ -77,6 +109,10 @@ public class SampleEditor
         capstonePane.validateInput( e );
     }
 
+    /**
+     * initComponents
+     * 
+     */
     private void initComponents()
     {
         tabbox.setHflex( "true" );

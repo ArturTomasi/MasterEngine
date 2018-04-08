@@ -59,11 +59,23 @@ public class SampleEditorGeneralPane
         SubEditorPanel<Sample>
 {
     private Sample source;
+    private boolean showProofs;
     
     public SampleEditorGeneralPane()
     {
         initComponents();
     }
+
+    public boolean isShowProofs() 
+    {
+        return showProofs;
+    }
+
+    public void setShowProofs( boolean showProofs ) 
+    {
+        this.showProofs = showProofs;
+    }
+    
     
     @Override
     public void setInput( Sample value )
@@ -143,7 +155,7 @@ public class SampleEditorGeneralPane
     
     private void initProofField()
     {
-        if ( ! source.isNew() )
+        if ( ! showProofs )
         {
             tableProofLayout.getChildren().clear();
         }
@@ -345,10 +357,10 @@ public class SampleEditorGeneralPane
             e.addError( "Norma" );
         }
         
-        if ( Objects.isNull( jobSelector.getSelectedItem() ) )
-        {
-            e.addError( "Obra" );
-        }
+//        if ( Objects.isNull( jobSelector.getSelectedItem() ) )
+//        {
+//            e.addError( "Obra" );
+//        }
         
         if ( ! Objects.isNull( dtExecuted.getValue() ) && 
              ! Objects.isNull( dtRupture.getValue() ) )
@@ -373,14 +385,14 @@ public class SampleEditorGeneralPane
     
     private void initComponents()
     {
-        lbTrace.setValue( "Traço" );
+        lbTrace.setValue( "FCK:" );
         lbJob.setValue( "Obra:" );
         lbCapstore.setValue( "Tipo de capeamento:" );
         lbRule.setValue( "Norma:" );
         lbNumber.setValue( "C.P. (Nº):" );
         lbNF.setValue( "Nota Fiscal:" );
-        lbName.setValue( "Corpo de Prova" );
-        lbResistence.setValue( "Resistência" );
+        lbName.setValue( "Corpo de Prova:" );
+        lbResistence.setValue( "Resistência:" );
         lbDimension.setValue( "Dimensão (LxA):" );
         lbX.setValue( "X" );
         lbDateCreated.setValue( "Data de cadastro:" );
