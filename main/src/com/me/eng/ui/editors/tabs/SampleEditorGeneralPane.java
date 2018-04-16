@@ -61,22 +61,41 @@ public class SampleEditorGeneralPane
     private Sample source;
     private boolean showProofs;
     
+    /**
+     * SampleEditorGeneralPane
+     * 
+     */
     public SampleEditorGeneralPane()
     {
         initComponents();
     }
 
+    /**
+     * isShowProofs
+     * 
+     * @return boolean
+     */
     public boolean isShowProofs() 
     {
         return showProofs;
     }
 
+    /**
+     * setShowProofs
+     * 
+     * @param showProofs boolean
+     */
     public void setShowProofs( boolean showProofs ) 
     {
         this.showProofs = showProofs;
     }
     
     
+    /**
+     * setInput
+     * 
+     * @param value Sample
+     */
     @Override
     public void setInput( Sample value )
     {
@@ -111,6 +130,11 @@ public class SampleEditorGeneralPane
         updateNotificationFields();
     }
 
+    /**
+     * getInput
+     * 
+     * @param value Sample
+     */
     @Override
     public void getInput( Sample value )
     {
@@ -153,6 +177,10 @@ public class SampleEditorGeneralPane
         }
     }
     
+    /**
+     * initProofField
+     * 
+     */
     private void initProofField()
     {
         if ( ! showProofs )
@@ -178,6 +206,10 @@ public class SampleEditorGeneralPane
         }
     }
     
+    /**
+     * updateRuptureDate
+     * 
+     */
     private void updateRuptureDate()
     {
         Long value = tfEstimatedUnitRuptureDate.getValue();
@@ -194,6 +226,10 @@ public class SampleEditorGeneralPane
         updateNotificationFields();
     }
     
+    /**
+     * updateEstimatedRuptureUnit
+     * 
+     */
     private void updateEstimatedRuptureUnit()
     {
         if ( dtRupture.getValue() != null )
@@ -211,6 +247,10 @@ public class SampleEditorGeneralPane
         updateNotificationFields();
     }
     
+    /**
+     * updateRuptureFields
+     * 
+     */
     private void updateRuptureFields()
     {
         boolean enabled = dtExecuted.getValue() != null;
@@ -225,6 +265,10 @@ public class SampleEditorGeneralPane
         dtRupture.setDisabled( ! enabled );   
     }
     
+    /**
+     * updateNotificationFields
+     * 
+     */
     private void updateNotificationFields()
     {
         if ( tfNotificationRupture.getValue() != null )
@@ -243,9 +287,13 @@ public class SampleEditorGeneralPane
         }
     }
     
+    /**
+     * updateProofFields
+     * 
+     */
     private void updateProofFields()
     {
-        if ( tfCountProof.intValue() > 0 && dtExecuted.getValue() != null )
+        if ( dtExecuted.getValue() != null )
         {
             booxProof.getChildren().clear();
             
@@ -262,6 +310,11 @@ public class SampleEditorGeneralPane
         }
     }
 
+    /**
+     * getNotificationRuptureDate
+     * 
+     * @return Date
+     */
     private Date getNotificationRuptureDate()
     {
         if ( dtRupture.getValue() != null && tfNotificationRupture.getValue() != null )
@@ -272,6 +325,13 @@ public class SampleEditorGeneralPane
         return null;
     }
     
+    /**
+     * mapProof
+     * 
+     * @param index int
+     * @param days long
+     * @return Date
+     */
     private Date mapProof( int index, long days )
     {
         mapProofDates.put( index, days );
@@ -279,6 +339,14 @@ public class SampleEditorGeneralPane
         return mapProofTimes.getOrDefault( index, TimeUnit.DAY ).plus( dtExecuted.getValue(), days );
     }
     
+    /**
+     * createProofComponent
+     * 
+     * @param index int
+     * @param date Date
+     * @param days Long
+     * @return Component
+     */
     private Component createProofComponent( final int index, Date date, Long days )
     {
         Label lb = new Label( "#" + (index + 1) + " Contra Prova" );
@@ -342,6 +410,11 @@ public class SampleEditorGeneralPane
         return box;
     }
 
+    /**
+     * validateInput
+     * 
+     * @param e Errors
+     */
     @Override
     public void validateInput( Errors e )
     {
@@ -356,11 +429,6 @@ public class SampleEditorGeneralPane
         {
             e.addError( "Norma" );
         }
-        
-//        if ( Objects.isNull( jobSelector.getSelectedItem() ) )
-//        {
-//            e.addError( "Obra" );
-//        }
         
         if ( ! Objects.isNull( dtExecuted.getValue() ) && 
              ! Objects.isNull( dtRupture.getValue() ) )
@@ -383,6 +451,10 @@ public class SampleEditorGeneralPane
         }
     }
     
+    /**
+     * initComponents
+     * 
+     */
     private void initComponents()
     {
         lbTrace.setValue( "FCK:" );

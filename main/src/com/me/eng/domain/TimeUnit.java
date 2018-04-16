@@ -45,8 +45,10 @@ public enum TimeUnit
         @Override
         public long between( Date from, Date until )
         {
-            return LocalDateTime.ofInstant( from.toInstant(), ZoneId.systemDefault() )
-                        .until( LocalDateTime.ofInstant( until.toInstant(), ZoneId.systemDefault() ), ChronoUnit.DAYS );
+            return LocalDateTime.ofInstant( from.toInstant() .truncatedTo( ChronoUnit.DAYS ), ZoneId.systemDefault() )
+                   .until( 
+                   LocalDateTime.ofInstant( until.toInstant().truncatedTo( ChronoUnit.DAYS ), ZoneId.systemDefault() ), 
+                   ChronoUnit.DAYS );
         }
     },
     
@@ -65,46 +67,60 @@ public enum TimeUnit
         public long between( Date from, Date until )
         {
             return LocalDateTime.ofInstant( from.toInstant(), ZoneId.systemDefault() )
-                        .until( LocalDateTime.ofInstant( until.toInstant(), ZoneId.systemDefault() ), ChronoUnit.HOURS );
+                   .until( 
+                   LocalDateTime.ofInstant( until.toInstant(), ZoneId.systemDefault() ), 
+                   ChronoUnit.HOURS );
         }
     };
-//    MONTH( "meses" )
-//    {
-//        @Override
-//        public Date plus( Date date, long amount )
-//        {
-//            return Date.from( LocalDateTime.ofInstant( date.toInstant(), ZoneId.systemDefault() )
-//                    .plusMonths( amount )
-//                    .atZone( ZoneId.systemDefault() )
-//                    .toInstant() );
-//        }
-//
-//        @Override
-//        public long between( Date from, Date until )
-//        {
-//            from = fixDate( from );
-//            until = fixDate( until );
-//            
-//            return LocalDateTime.ofInstant( from.toInstant(), ZoneId.systemDefault() )
-//                        .until( LocalDateTime.ofInstant( until.toInstant(), ZoneId.systemDefault() ), ChronoUnit.MONTHS );
-//        }
-//    };
     
     private String label;
 
+    /**
+     * TimeUnit
+     * 
+     * @param label String
+     */
     private TimeUnit( String label )
     {
         this.label = label;
     }
 
+    /**
+     * getLabel
+     * 
+     * @return String
+     */
     public String getLabel()
     {
         return label;
     }
     
+    /**
+     * Date
+     * 
+     * @param date Date
+     * @param amount long
+     * @return abstract
+     * @ignored plus
+     */
     public abstract Date plus( Date date, long amount );
+    
+    /**
+     * long
+     * 
+     * @param form Date
+     * @param until Date
+     * @return abstract
+     * @ignored between
+     */
     public abstract long between( Date form, Date until );
     
+    /**
+     * fixDate
+     * 
+     * @param date Date
+     * @return Date
+     */
     public static Date fixDate( Date date )
     {
         Calendar calendar = Calendar.getInstance();
