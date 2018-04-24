@@ -41,7 +41,7 @@ public class BuildInfo
      */
     public static String getVersion()
     {
-        return 	NUMBER  + "." + RELEASE + "." + HOTFIX  + " - " + BUILD;
+        return 	"Over Line - " + NUMBER  + "." + RELEASE + "." + HOTFIX;
     }
     
     /**
