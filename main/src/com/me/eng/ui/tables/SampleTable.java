@@ -23,6 +23,8 @@ import com.me.eng.services.ApplicationServices;
 import com.me.eng.ui.tables.sample.SampleColumns;
 import com.me.eng.domain.Sample;
 import com.me.eng.domain.util.SampleValidator;
+import com.me.eng.ui.events.EventFactory;
+import com.me.eng.ui.events.EventLookup;
 import com.me.eng.ui.selectors.RuptureTypeSelector;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
@@ -43,21 +45,54 @@ public class SampleTable
      */
     public SampleTable()
     {
-        setTableCellRenderer( new TableCellRenderer<Sample>()
+        EventFactory.subscribe( EventLookup.UPDATE_SAMPLE, this::performUpdate );
+        EventFactory.subscribe( EventLookup.DELETE_SAMPLE, this::performDelete );
+        
+        setTableCellRenderer( (TableCellRenderer<Sample>) (Sample value, Column column, Listcell cell) -> 
         {
-            @Override
-            public void render( Sample value, Column column, Listcell cell )
+            String style = "font-size: 10px;";
+            
+            if ( ! value.getProofs().isEmpty() )
             {
-                String style = "font-size: 10px;";
-                
-                if ( ! value.getProofs().isEmpty() )
-                {
-                    style += "font-weight: bold";
-                }
-                
-                cell.setStyle( style );
+                style += "font-weight: bold";
             }
+            
+            cell.setStyle( style );
         } );
+    }
+    
+    /**
+     * performUpdate
+     * 
+     * @param source Object
+     */
+    public void performUpdate( Object source )
+    {
+        if ( source instanceof Sample )
+        {
+            Sample s = Sample.class.cast( source );
+            
+            updateElement( s );
+
+            s.getProofs().forEach( this::updateElement );
+        }
+    }
+    
+    /**
+     * performDelete
+     * 
+     * @param source Object
+     */
+    public void performDelete( Object source )
+    {
+        if ( source instanceof Sample )
+        {
+            Sample sample = (Sample) source;
+            
+            removeElement( sample );
+            
+            updateElement( sample.unbound() );
+        }
     }
     
     /**
@@ -75,26 +110,22 @@ public class SampleTable
             {
                 Doublebox tf = new Doublebox();
                 
-                EventListener e = new EventListener()
+                EventListener e = (EventListener) (Event t) -> 
                 {
-                    @Override
-                    public void onEvent( Event t ) throws Exception
+                    if ( ! SampleValidator.getInstance().isValidResistence( value, tf.getValue() ) )
                     {
-                        if ( ! SampleValidator.getInstance().isValidResistence( value, tf.getValue() ) )
-                        {
-                            tf.setValue( null );
-                            
-                            return;
-                        }
+                        tf.setValue( null );
                         
-                        value.setResistence( tf.getValue() );
-                        
-                        ApplicationServices.getCurrent()
-                                .getSampleRepository()
-                                .update( value );
-                        
-                        updateElement( value );
+                        return;
                     }
+                    
+                    value.setResistence( tf.getValue() );
+                    
+                    ApplicationServices.getCurrent()
+                            .getSampleRepository()
+                            .update( value );
+                    
+                    EventFactory.publish( EventLookup.UPDATE_SAMPLE, value );
                 };
                 
                 String style = "font-size: 10px;";
@@ -139,12 +170,7 @@ public class SampleTable
                                 .getSampleRepository()
                                 .update( value );
                         
-                        updateElement( value );
-                        
-                        value.getProofs().forEach( (proof) -> 
-                        {
-                            updateElement( proof );
-                        } );
+                        EventFactory.publish( EventLookup.UPDATE_SAMPLE, value );
                     }
                 } );
                 

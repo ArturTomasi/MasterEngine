@@ -29,6 +29,8 @@ import com.me.eng.infrastructure.FileUtils;
 import com.me.eng.ui.Callback;
 import com.me.eng.ui.apps.Action;
 import com.me.eng.ui.editors.SampleEditor;
+import com.me.eng.ui.events.EventFactory;
+import com.me.eng.ui.events.EventLookup;
 import com.me.eng.ui.panes.SampleFilterPane;
 import com.me.eng.ui.tables.SampleTable;
 import com.me.eng.ui.util.KeyEventControl;
@@ -230,12 +232,7 @@ public class SampleApplicationViewUI
                             .getSampleRepository()
                             .update( getSource() );
 
-                    sampleTable.updateElement( getSource() );
-
-                    getSource().getProofs().forEach( (proof) ->
-                    {
-                        sampleTable.updateElement( proof );
-                    } );
+                    EventFactory.publish( EventLookup.UPDATE_SAMPLE, getSource() );
                 }
             }, false );
         }
@@ -270,21 +267,19 @@ public class SampleApplicationViewUI
                 {
                     if ( ( (Integer) e.getData() ) == Messagebox.YES )
                     {
+                        EventFactory.publish( EventLookup.DELETE_SAMPLE, sample.clone() );
+                        
                         Sample parent = sample.unbound();
                         
                         ApplicationServices.getCurrent()
                                 .getSampleRepository()
                                 .delete( sample );
-
-                        sampleTable.removeElement( sample );
                         
                         if ( parent != null )
                         {
                             ApplicationServices.getCurrent()
                                 .getSampleRepository()
                                 .update( parent );
-                            
-                            sampleTable.updateElement( parent );
                         }
                     }
                 }
