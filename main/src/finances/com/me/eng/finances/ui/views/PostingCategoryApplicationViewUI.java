@@ -33,7 +33,7 @@ import org.zkoss.zk.ui.event.Event;
  *
  * @author Artur Tomasi
  */
-public class CategoryApplicationViewUI 
+public class PostingCategoryApplicationViewUI 
     extends 
         ApplicationViewUI
 {
@@ -42,7 +42,7 @@ public class CategoryApplicationViewUI
      * CategoryApplicationViewUI
      * 
      */
-    public CategoryApplicationViewUI()
+    public PostingCategoryApplicationViewUI()
     {
         setLabel( "Categorias" );
         setIcon( "finances/sb_categories.png" );
