@@ -47,7 +47,7 @@
 	<tstamp>
    	    <format property="today" pattern="dd/MM/yyyy" />
 	</tstamp>
-        <replace file="${src.dir}/main/core/src/com/me/eng/BuildInfo.java" failOnNoReplacements="true">
+        <replace file="${src.dir}/main/src/core/com/me/eng/BuildInfo.java" failOnNoReplacements="true">
             <replacefilter token="@number@"  value="${number}"/>
             <replacefilter token="@release@" value="${release}"/>
             <replacefilter token="@hotfix@"  value="${hotfix}"/>
