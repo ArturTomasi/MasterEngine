@@ -19,10 +19,10 @@
  */
 package test;
 
-import com.me.eng.domain.Sample;
-import com.me.eng.domain.repositories.SampleRepository;
-import com.me.eng.infrastructure.JPAManager;
-import com.me.eng.infrastructure.SampleDAO;
+import com.me.eng.samples.domain.Sample;
+import com.me.eng.samples.repositories.SampleRepository;
+import com.me.eng.core.infrastructure.JPAManager;
+import com.me.eng.samples.infrastructure.SampleDAO;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 

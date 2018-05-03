@@ -19,7 +19,7 @@
  */
 package test;
 
-import com.me.eng.domain.Security;
+import com.me.eng.core.domain.Security;
 
 /**
  *

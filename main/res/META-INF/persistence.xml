@@ -2,19 +2,26 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="default" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>com.me.eng.domain.Capstone</class>
-    <class>com.me.eng.domain.City</class>
-    <class>com.me.eng.domain.Client</class>
-    <class>com.me.eng.domain.Contact</class>
-    <class>com.me.eng.domain.Equipment</class>
-    <class>com.me.eng.domain.Job</class>
-    <class>com.me.eng.domain.Role</class>
-    <class>com.me.eng.domain.Rule</class>
-    <class>com.me.eng.domain.Sample</class>
-    <class>com.me.eng.domain.SampleMail</class>
-    <class>com.me.eng.domain.State</class>
-    <class>com.me.eng.domain.User</class>
-    <class>com.me.eng.domain.License</class>
+    <!--FINANCE-->
+    <class>com.me.eng.finances.domain.PostingCategory</class>
+    <class>com.me.eng.finances.domain.Posting</class>
+
+    <!--SAMPLES-->
+    <class>com.me.eng.samples.domain.Capstone</class>
+    <class>com.me.eng.samples.domain.Equipment</class>
+    <class>com.me.eng.samples.domain.Job</class>
+    <class>com.me.eng.samples.domain.Rule</class>
+    <class>com.me.eng.samples.domain.Sample</class>
+    <class>com.me.eng.samples.domain.SampleMail</class>
+    
+    <!--CORE-->
+    <class>com.me.eng.core.domain.Contact</class>
+    <class>com.me.eng.core.domain.Client</class>
+    <class>com.me.eng.core.domain.State</class>
+    <class>com.me.eng.core.domain.City</class>
+    <class>com.me.eng.core.domain.Role</class>
+    <class>com.me.eng.core.domain.User</class>
+    <class>com.me.eng.core.domain.License</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/eng_homolog?autoReconnect=true&amp;zeroDateTimeBehavior=convertToNull&amp;characterEncoding=utf8"/>

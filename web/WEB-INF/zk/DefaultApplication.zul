@@ -1,5 +1,5 @@
 <zk>
-    <window apply="com.me.eng.ui.apps.DefaultApplicationUIController" sclass="default-app-window">
+    <window apply="com.me.eng.core.ui.apps.DefaultApplicationUIController" sclass="default-app-window">
    
         <script type="text/javascript">
             zk.afterMount( function()
@@ -12,7 +12,7 @@
         </script>
         
 
-        <div id="applicationPane"  use="com.me.eng.ui.apps.DefaultApplicationUIPane"/>
+        <div id="applicationPane"  use="com.me.eng.core.ui.apps.DefaultApplicationUIPane"/>
 
     </window>
 </zk>

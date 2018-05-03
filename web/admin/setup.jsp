@@ -2,4 +2,4 @@
 
 <%@taglib prefix="me" tagdir="/WEB-INF/tags/"%>
 
-<me:application module="eng_application" title="Configurações" ui="com.me.eng.ui.apps.SetupApplicationUI"></me:application>
+<me:application module="eng_application" title="Configurações" ui="com.me.eng.core.ui.apps.SetupApplicationUI"></me:application>

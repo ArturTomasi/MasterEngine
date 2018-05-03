@@ -10,10 +10,6 @@
       http://jboss.org/schema/weld/beans_1_1.xsd">
     
     <interceptors>
-            <class>com.me.eng.infrastructure.TransactionalManager</class>
+            <class>com.me.eng.core.infrastructure.TransactionalManager</class>
     </interceptors>
-    
-<!--    <weld:scan>
-        <weld:include name="com.mn.engcivil.*" />
-    </weld:scan>-->
 </beans> 

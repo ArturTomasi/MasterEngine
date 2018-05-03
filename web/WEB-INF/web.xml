@@ -147,6 +147,10 @@
         <location>/error/403.jsp</location>
     </error-page>
     <error-page>
+        <error-code>408</error-code>
+        <location>/error/403.jsp</location>
+    </error-page>
+    <error-page>
         <error-code>404</error-code>
         <location>/error/404.jsp</location>
     </error-page>

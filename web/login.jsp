@@ -10,4 +10,4 @@
 
 <%@taglib prefix="me" tagdir="/WEB-INF/tags/"%>
 
-<me:application title="Login" page="WEB-INF/zk/LoginApplication.zul" ui="com.me.eng.ui.apps.AdministratorApplicationUI"></me:application>
+<me:application title="Login" page="WEB-INF/zk/LoginApplication.zul" ui="com.me.eng.core.ui.apps.AdministratorApplicationUI"></me:application>

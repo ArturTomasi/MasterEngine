@@ -19,9 +19,9 @@
  */
 package test;
 
-import com.me.eng.application.ConfigurationManager;
-import com.me.eng.infrastructure.Mail;
-import com.me.eng.infrastructure.SendMail;
+import com.me.eng.core.application.ConfigurationManager;
+import com.me.eng.core.infrastructure.Mail;
+import com.me.eng.core.infrastructure.SendMail;
 import java.io.File;
 import java.io.FileInputStream;
 
