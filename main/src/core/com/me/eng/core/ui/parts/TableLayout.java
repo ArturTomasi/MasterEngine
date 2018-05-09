@@ -33,19 +33,33 @@ public class TableLayout
     extends 
         Table
 {
+    /**
+     * setWidths
+     * 
+     * @param widths String...
+     */
     public void setWidths( String... widths )
     {
-        for ( Tr tr : (List<Tr>) (List) getChildren() )
+        getChildren().forEach( (tr) ->
         {
-            for ( int index = 0; index < widths.length; index++ )
+            List childs = tr.getChildren();
+            
+            for ( int i = 0; i < childs.size() && i < widths.length; i++ )
             {
-                Td td = (Td) tr.getChildren().get( index );
-                
-                td.setDynamicProperty( "width", widths[ index ] );
+               Td td = (Td)childs.get( i );
+               
+               td.setDynamicProperty( "width", widths[ i ] );
             }
-        }
+        } );
     }
     
+    /**
+     * setColspan
+     * 
+     * @param row int
+     * @param col int
+     * @param colspan int
+     */
     public void setColspan( int row, int col, int colspan )
     {
         Tr tr = (Tr) getChildren().get( row );
@@ -53,6 +67,11 @@ public class TableLayout
         td.setDynamicProperty( "colspan", colspan );
     }
     
+    /**
+     * addRow
+     * 
+     * @param components Component...
+     */
     public void addRow( Component... components )
     {
         Tr tr = new Tr();

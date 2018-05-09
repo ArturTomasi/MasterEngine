@@ -19,7 +19,6 @@
  */
 package com.me.eng.finances.ui.editors;
 
-import com.me.eng.core.domain.User;
 import com.me.eng.core.ui.Callback;
 import com.me.eng.core.ui.editors.DefaultEditor;
 import com.me.eng.core.ui.editors.EditorPanel;
@@ -27,7 +26,6 @@ import com.me.eng.core.ui.editors.Errors;
 import com.me.eng.core.ui.parts.TableLayout;
 import com.me.eng.finances.domain.PostingCategory;
 import com.me.eng.finances.domain.PostingType;
-import org.zkforge.ckez.CKeditor;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Label;
@@ -50,8 +48,8 @@ public class PostingCategoryEditor
     public static void edit( Component owner, Callback<PostingCategory> callback )
     {
         DefaultEditor editor = DefaultEditor.createEditor( owner, new PostingCategoryEditor(), callback );
-        editor.setWidth( "80%" );
-        editor.setHeight( "80%" );
+        editor.setWidth( "800px" );
+        editor.setHeight( "600px" );
     }
 
     /**
@@ -60,8 +58,8 @@ public class PostingCategoryEditor
      */
     public PostingCategoryEditor() 
     {
-        setCaption( "Editor de categorias" );
         setTitle( "Editor de categorias" );
+        setIcon( "finances/sb_categories.png" );
         setInfo( "Edite as categorias de um lançamento financeiro" );
         
         initComponents();
@@ -123,17 +121,20 @@ public class PostingCategoryEditor
         {
             typesField.appendItem( s.toString() );
         }
-        
-        infoField.setAutoHeight( true );
 
-        tableLayout.setWidths( "80px", "100%" );
-        
+        nameField.setWidth( "100%" );
+        infoField.setWidth( "100%" );
+        infoField.setRows( 20 );
+                
+        typesField.setReadonly( true );
+
         tableLayout.addRow( lbName, nameField );
         tableLayout.addRow( lbType, typesField );
         tableLayout.addRow( lbInfo );
         tableLayout.addRow( infoField );
         
         tableLayout.setColspan( 3, 0, 2 );
+        tableLayout.setWidths( "80px", "100%" );
         
         appendChild( tableLayout );
     }
@@ -145,6 +146,6 @@ public class PostingCategoryEditor
     private Label lbInfo = new Label( "Informações: " );
     
     private Textbox nameField    = new Textbox();
+    private Textbox infoField    = new Textbox();
     private Combobox  typesField = new Combobox();
-    private CKeditor infoField   = new CKeditor();
 }

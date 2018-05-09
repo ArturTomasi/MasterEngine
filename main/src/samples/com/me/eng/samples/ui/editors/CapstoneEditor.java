@@ -36,6 +36,12 @@ public class CapstoneEditor
     extends 
         EditorPanel<Capstone>
 {
+    /**
+     * edit
+     * 
+     * @param owner Component
+     * @param callback Callback&lt;Capstone&gt;
+     */
     public static void edit( Component owner, Callback<Capstone> callback )
     {
         DefaultEditor editor = DefaultEditor.createEditor( owner, new CapstoneEditor(), callback );
@@ -43,27 +49,44 @@ public class CapstoneEditor
         editor.setHeight( "250px" );
     }
     
+    /**
+     * CapstoneEditor
+     * 
+     */
     public CapstoneEditor()
     {
-        setCaption( "Editor de Tipo de Capeamento" );
         setTitle( "Editor de Tipo de Capeamento" );
         setInfo( "Definir Tipo de Capeamento" );
         
         initComponents();
     }
 
+    /**
+     * setInput
+     * 
+     * @param value Capstone
+     */
     @Override
     public void setInput( Capstone value )
     {
         tfName.setValue( value.getName() );
     }
 
+    /**
+     * getInput
+     * 
+     * @param value Capstone
+     */
     @Override
     public void getInput( Capstone value )
     {
         value.setName( tfName.getValue() );
     }
     
+    /**
+     * initComponents
+     * 
+     */
     private void initComponents()
     {
         lbName.setValue( "Nome:" );

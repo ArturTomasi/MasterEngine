@@ -30,10 +30,7 @@
     
     <target name="clean">
         <delete dir="${build.dir}" includeEmptyDirs="true"/>
-        <!--<delete dir="${src.dir}" includeEmptyDirs="true"/>-->
         <delete dir="${publish.dir}" includeEmptyDirs="true"/>
-        
-        <!--copydir src="parts" dest="${src.dir}"/>-->
     </target>
     
     <target name="update.build.info">

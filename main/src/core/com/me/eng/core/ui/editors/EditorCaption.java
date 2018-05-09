@@ -19,8 +19,10 @@
  */
 package com.me.eng.core.ui.editors;
 
+import com.me.eng.core.application.ResourceLocator;
 import org.zkoss.zul.Div;
-import org.zkoss.zul.Html;
+import org.zkoss.zul.Hlayout;
+import org.zkoss.zul.Image;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Separator;
 import org.zkoss.zul.Vlayout;
@@ -33,10 +35,15 @@ public class EditorCaption
     extends 
         Div
 {
-    private String caption;
-    private String icon;
-    private String info;
+    private String caption, icon, info;
 
+    /**
+     * EditorCaption
+     * 
+     * @param icon String
+     * @param caption String
+     * @param info String
+     */
     public EditorCaption( String icon, String caption, String info )
     {
         this.caption = caption;
@@ -46,24 +53,43 @@ public class EditorCaption
         initComponents();
     }
     
+    /**
+     * initComponents
+     * 
+     */
     private void initComponents()
     {
         setVflex( "true" );
         setHflex( "true" );
+        setStyle( "background-color: #3568d8;" );
         
         Label lbCaption = new Label( caption );
-        lbCaption.setStyle( "font-weight: bold;" );
+        lbCaption.setStyle( "font-weight: bold; font-size: 16px;" );
         
         Label lbInfo = new Label( info );
-        lbInfo.setStyle( "color: #64728E; margin-left: 5px" );
+        lbInfo.setStyle( "color: #fff;" );
+        
+        Image img = new Image( ResourceLocator.getImageResource( icon ) );
+        img.setStyle( "width: 45px;" );
         
         Vlayout vlayout = new Vlayout();
         vlayout.setHflex( "true" );
         vlayout.setVflex( "true" );
+        vlayout.setStyle( "padding-top: 5px;" );
         vlayout.appendChild( lbCaption );
         vlayout.appendChild( lbInfo );
-        vlayout.setStyle( "margin-left: 25px; margin-top: 5px" );
+
         
-        appendChild( vlayout );
+        Separator sep = new Separator( "vertical" );
+        sep.setStyle( "border: 1px solid #fff; height: 45px; width: 1px; margin: 0px 5px;" );
+        
+        Hlayout hlayout = new Hlayout();
+        hlayout.setHflex( "true" );
+        hlayout.setVflex( "true" );
+        hlayout.appendChild( img );
+        hlayout.appendChild( sep );
+        hlayout.appendChild( vlayout );
+        
+        appendChild( hlayout );
     }
 }

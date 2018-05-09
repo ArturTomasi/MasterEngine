@@ -62,6 +62,22 @@ public class ResourceLocator
     }
     
     /**
+     * getImageResource
+     * 
+     * @param path String
+     * @return String
+     */
+    public static String getFullImageResource( String path )
+    {
+        if ( ! path.startsWith( "/img" ) )
+        {
+            path = "/img/" + path;
+        }
+        
+        return ApplicationContext.getContextPath() + path;
+    }
+    
+    /**
      * getResourceAsArray
      * 
      * @param path String

@@ -116,7 +116,7 @@ public class ScriptApplicationViewUI
     private Textbox inputBox = new Textbox();
     private Textbox outputBox = new Textbox();
     
-    private Action runAction = new Action( "", "Executar", "Executa o texto escrito no painel" )
+    private Action runAction = new Action( "core/tb_run.png", "Executar", "Executa o texto escrito no painel" )
     {
         @Override
         public void onEvent( Event t ) throws Exception 

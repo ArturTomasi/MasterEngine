@@ -66,7 +66,7 @@ public class SampleEditor
         this.showProofs = showProofs;
         
         setTitle( "Editor de Amostras" );
-        setCaption( "Editor de Amostras" );
+        setIcon( "samples/sb_sample.png" );
         setInfo( "Edite as propriedades da Amostra" );
         
         initComponents();

@@ -36,6 +36,12 @@ public class EquipmentEditor
     extends 
         EditorPanel<Equipment>
 {
+    /**
+     * edit
+     * 
+     * @param owner Component
+     * @param callback Callback&lt;Equipment&gt;
+     */
     public static void edit( Component owner, Callback<Equipment> callback )
     {
         EquipmentEditor equipmentEditor = new EquipmentEditor();
@@ -43,29 +49,44 @@ public class EquipmentEditor
         DefaultEditor.createEditor( owner, equipmentEditor, callback );
     }
     
+    /**
+     * EquipmentEditor
+     * 
+     */
     private EquipmentEditor()
     {
-        setCaption( "Editor de Equipamento" );
         setTitle( "Editor de Equipamentos" );
         setInfo( "Definir Equipamento" );
         
         initComponents();
     }
 
+    /**
+     * setInput
+     * 
+     * @param value Equipment
+     */
     @Override
     public void setInput( Equipment value )
     {
         tfName.setValue( value.getName() );
-//        tfInfo.setValue( value.getInfo() );
     }
 
+    /**
+     * getInput
+     * 
+     * @param value Equipment
+     */
     @Override
     public void getInput( Equipment value )
     {
         value.setName( tfName.getValue() );
-//        value.setInfo( tfInfo.getValue() );
     }
     
+    /**
+     * initComponents
+     * 
+     */
     private void initComponents()
     {
         lbName.setValue( "Nome:" );

@@ -26,6 +26,7 @@ import com.me.eng.core.ui.util.Prompts;
 import com.me.eng.core.ui.views.ApplicationViewUI;
 import com.me.eng.finances.domain.PostingCategory;
 import com.me.eng.finances.ui.editors.PostingCategoryEditor;
+import com.me.eng.finances.ui.lists.PostingCategoryList;
 import com.me.eng.finances.ui.tables.CategoryTable;
 import org.zkoss.zk.ui.event.Event;
 
@@ -152,7 +153,7 @@ public class PostingCategoryApplicationViewUI
         appendChild( table );
     }
     
-    private CategoryTable table = new CategoryTable();
+    private PostingCategoryList table = new PostingCategoryList();
     
     private Action addAction = new Action( "core/tb_add.png", "Novo", "Nova categoria de lançamento!" ) 
     {

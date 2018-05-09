@@ -212,7 +212,7 @@ public class ClientReportApplicationViewUI
     
     private ClientTable clientTable = new ClientTable();
     
-    private Action addAction = new Action( "", "Adicionar", "Adicionar cliente" )
+    private Action addAction = new Action( "core/tb_add.png", "Adicionar", "Adicionar cliente" )
     {
         
         @Override
@@ -222,7 +222,7 @@ public class ClientReportApplicationViewUI
         }
     };
     
-    private Action editAction = new Action( "", "Editar", "Editar cliente selecionado" )
+    private Action editAction = new Action( "core/tb_edit.png", "Editar", "Editar cliente selecionado" )
     {
         
         @Override
@@ -232,7 +232,7 @@ public class ClientReportApplicationViewUI
         }
     };
     
-    private Action deleteAction = new Action( "", "Excluir", "Excluir cliente selecionado" )
+    private Action deleteAction = new Action( "core/tb_delete.png", "Excluir", "Excluir cliente selecionado" )
     {
         
         @Override

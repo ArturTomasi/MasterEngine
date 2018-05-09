@@ -21,15 +21,14 @@ package com.me.eng.core.ui.tables;
 
 import com.me.eng.core.application.ApplicationContext;
 import com.me.eng.core.ui.apps.Action;
+import com.me.eng.core.ui.lists.ListModel;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
-import org.zkoss.zul.AbstractListModel;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listcell;
 import org.zkoss.zul.Listhead;
@@ -38,7 +37,6 @@ import org.zkoss.zul.Listitem;
 import org.zkoss.zul.ListitemRenderer;
 import org.zkoss.zul.Menuitem;
 import org.zkoss.zul.Menupopup;
-import org.zkoss.zul.event.ListDataEvent;
 
 /**
  *
@@ -49,109 +47,7 @@ public abstract class AbstractTable<T>
     extends 
         Listbox
 {
-    private class Model
-        extends 
-            AbstractListModel<T>
-    {
-        private List<T> items = Collections.emptyList();
-        
-        /**
-         * setItems
-         * 
-         * @param items List&lt;T&gt;
-         */
-        public void setItems( List<T> items )
-        {
-            this.items = items;
-            
-            fireEvent( ListDataEvent.CONTENTS_CHANGED, 0, -1 );
-        }
-
-        /**
-         * getItems
-         * 
-         * @return List&lt;T&gt;
-         */
-        public List<T> getItems()
-        {
-            return items;
-        }
-        
-        /**
-         * addItem
-         * 
-         * @param e T
-         * @param index int
-         */
-        public void addItem( T e, int index )
-        {
-            this.items.add( index, e );
-            
-            fireEvent( ListDataEvent.INTERVAL_ADDED, index, index );
-        }
-        
-        /**
-         * updateItem
-         * 
-         * @param e T
-         */
-        public void updateItem( T e )
-        {
-            int index = this.items.indexOf( e );
-            
-            if ( index != -1 )
-            {
-                if ( this.items.remove( e ) )
-                {
-                    this.items.add( index, e );
-                    
-                    fireEvent( ListDataEvent.CONTENTS_CHANGED, index, index );
-                }
-            }
-        }
-        
-        /**
-         * removeItem
-         * 
-         * @param e T
-         */
-        public void removeItem( T e )
-        {
-            int index = this.items.indexOf( e );
-            
-            if ( index != -1 )
-            {
-                this.items.remove( index );
-                
-                fireEvent( ListDataEvent.INTERVAL_REMOVED, index, index );
-            }
-        }
-        
-        /**
-         * getElementAt
-         * 
-         * @param i int
-         * @return T
-         */
-        @Override
-        public T getElementAt( int i )
-        {
-            return items.get( i );
-        }
-
-        /**
-         * getSize
-         * 
-         * @return int
-         */
-        @Override
-        public int getSize()
-        {
-            return items.size();
-        }
-    };
-    
-    private Model model = new Model();
+    private ListModel model = new ListModel();
     
     private TableCellRenderer tableRenderer;
     

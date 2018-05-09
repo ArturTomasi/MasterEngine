@@ -29,6 +29,21 @@ public abstract class EditorPanel<T>
     extends 
         DefaultInputPane
 {
+    /**
+     * void
+     * 
+     * @param value T
+     * @return abstract
+     * @ignored setInput
+     */
     public abstract void setInput( T value );
+
+    /**
+     * void
+     * 
+     * @param value T
+     * @return abstract
+     * @ignored getInput
+     */
     public abstract void getInput( T value );
 }

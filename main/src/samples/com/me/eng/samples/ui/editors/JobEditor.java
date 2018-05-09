@@ -41,6 +41,12 @@ public class JobEditor
     extends 
         EditorPanel<Job>
 {
+    /**
+     * edit
+     * 
+     * @param owner Component
+     * @param callback Callback&lt;Job&gt;
+     */
     public static void edit( Component owner, Callback<Job> callback )
     {
         DefaultEditor editor = DefaultEditor.createEditor( owner, new JobEditor(), callback );
@@ -48,15 +54,23 @@ public class JobEditor
         editor.setHeight( "600px" );
     }
     
+    /**
+     * JobEditor
+     * 
+     */
     public JobEditor()
     {
-        setCaption( "Editor de Obras" );
         setTitle( "Editor de Obras" );
         setInfo( "Definir Obra" );
         
         initComponents();
     }
 
+    /**
+     * setInput
+     * 
+     * @param value Job
+     */
     @Override
     public void setInput( Job value )
     {
@@ -64,6 +78,11 @@ public class JobEditor
         contactPane.setInput( value );
     }
 
+    /**
+     * getInput
+     * 
+     * @param value Job
+     */
     @Override
     public void getInput( Job value )
     {
@@ -71,12 +90,21 @@ public class JobEditor
         contactPane.getInput( value );
     }
 
+    /**
+     * validateInput
+     * 
+     * @param e Errors
+     */
     @Override
     public void validateInput( Errors e )
     {
         generalPane.validateInput( e );
     }
     
+    /**
+     * initComponents
+     * 
+     */
     private void initComponents()
     {
         tabbox.setHflex( "true" );

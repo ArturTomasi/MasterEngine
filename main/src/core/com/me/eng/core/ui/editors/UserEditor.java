@@ -62,7 +62,7 @@ public class UserEditor
      */
     public UserEditor()
     {
-        setCaption( "Editor de usuário" );
+        setIcon( "core/sb_user.png" );
         setTitle( "Editor de usuário" );
         setInfo( "Edite as informações do usuário" );
         

@@ -36,6 +36,12 @@ public class ContactEditor
     extends 
         EditorPanel<Contact>
 {
+    /**
+     * edit
+     * 
+     * @param owner Component
+     * @param callback Callback&lt;Contact&gt;
+     */
     public static void edit( Component owner, Callback<Contact> callback )
     {
         DefaultEditor editor = DefaultEditor.createEditor( owner, new ContactEditor(), callback );
@@ -43,15 +49,23 @@ public class ContactEditor
         editor.setHeight( "300px" );
     }
     
+    /**
+     * ContactEditor
+     * 
+     */
     public ContactEditor()
     {
         setTitle( "Editor de Contatos" );
-        setCaption( "Editor de Contatos" );
         setInfo( "Edita as propriedades do Contato" );
         
         initComponents();
     }
     
+    /**
+     * setInput
+     * 
+     * @param value Contact
+     */
     @Override
     public void setInput( Contact value )
     {
@@ -60,6 +74,11 @@ public class ContactEditor
         tfMail.setValue( value.getEmail() );
     }
 
+    /**
+     * getInput
+     * 
+     * @param value Contact
+     */
     @Override
     public void getInput( Contact value )
     {
@@ -68,6 +87,10 @@ public class ContactEditor
         value.setEmail( tfMail.getValue() );
     }
     
+    /**
+     * initComponents
+     * 
+     */
     private void initComponents()
     {
         lbName.setValue( "Nome:" );

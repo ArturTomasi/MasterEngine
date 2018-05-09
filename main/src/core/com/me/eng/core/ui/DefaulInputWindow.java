@@ -20,6 +20,7 @@
 package com.me.eng.core.ui;
 
 import com.me.eng.core.application.ApplicationContext;
+import com.me.eng.core.application.ResourceLocator;
 import com.me.eng.core.ui.editors.EditorCaption;
 import com.me.eng.core.ui.editors.Errors;
 import org.zkoss.zk.ui.Component;
@@ -29,7 +30,9 @@ import org.zkoss.zul.Borderlayout;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Center;
 import org.zkoss.zul.Hlayout;
+import org.zkoss.zul.Image;
 import org.zkoss.zul.North;
+import org.zkoss.zul.South;
 import org.zkoss.zul.Vlayout;
 import org.zkoss.zul.West;
 import org.zkoss.zul.Window;
@@ -51,12 +54,12 @@ public abstract class DefaulInputWindow<T extends DefaultInputPane, V>
         {
             DefaulInputWindow window = runtime.newInstance();
 
-            window.setTitle( defaultPane.getTitle() );
             window.setWidth( "600px" );
             window.setHeight( "85%" );
-            window.setClosable( true );
+            window.setClosable( false );
             window.callback = callback;
 
+            
             window.setDefaultPane( defaultPane );
 
             window.setParent( owner );
@@ -87,11 +90,10 @@ public abstract class DefaulInputWindow<T extends DefaultInputPane, V>
         
         editorPanel.setVflex( "true" );
         
-        vlayout.appendChild( editorPanel );
-        vlayout.appendChild( buttonsPane );
+        borderlayout.getCenter().appendChild( editorPanel );
         
         borderlayout.getNorth().appendChild( new EditorCaption( editorPanel.getIcon(),
-                                                                editorPanel.getCaption(),
+                                                                editorPanel.getTitle(),
                                                                 editorPanel.getInfo() ) );
         
         setInput( callback.getSource() );
@@ -155,38 +157,33 @@ public abstract class DefaulInputWindow<T extends DefaultInputPane, V>
     private void initComponents()
     {
         okButton.setLabel( "OK" );
+        okButton.setImage( ResourceLocator.getImageResource( "core/tb_ok.png" ) );
+        
         cancelButton.setLabel( "Cancelar" );
-        
-        vlayout.setHflex( "true" );
-        vlayout.setVflex( "true" );
-        vlayout.setSpacing( "45px" );
+        cancelButton.setImage( ResourceLocator.getImageResource( "core/tb_cancel.png" ) );
 
-        okButton.setWidth( "80px" );
-        cancelButton.setWidth( "80px" );
+        okButton.setSclass( "default-editor-btn" );
+        cancelButton.setSclass( "default-editor-btn" );
         
-        buttonsPane.setWidth( "170px" );
-        buttonsPane.setHeight( "30px" );
+        buttonsPane.setSclass( "default-editor-btn-pane" );
         buttonsPane.setSpacing( "5px" );
-        buttonsPane.setStyle( "position: absolute; right: 10px; bottom: 5px" );
         buttonsPane.appendChild( okButton );
         buttonsPane.appendChild( cancelButton );
         
         borderlayout.appendChild( new North() );
         borderlayout.appendChild( new Center() );
-        borderlayout.appendChild( new West() );
+        borderlayout.appendChild( new South() );
         
-        borderlayout.getNorth().setHeight( "50px" );
+        borderlayout.getNorth().setHeight( "65px" );
         borderlayout.getNorth().setBorder( "none" );
-        borderlayout.getNorth().setStyle( "border-bottom: 1px solid lightgray" );
-        
-        borderlayout.getWest().setWidth( "20px" );
-        borderlayout.getWest().setBorder( "none" );
-        borderlayout.getWest().setStyle( "background-color: rgba(48, 67, 105, 0.75)" );
+        borderlayout.getNorth().setStyle( "background-color: #3568d8; padding: 10px 20px; color: #fff;" );
         
         borderlayout.getCenter().setBorder( "none" );
-        borderlayout.getCenter().setStyle( "padding-left: 10px; padding-top: 10px" );
+        borderlayout.getCenter().setStyle( "padding: 10px;" );
         
-        borderlayout.getCenter().appendChild( vlayout );
+        borderlayout.getSouth().setHeight( "50px" );
+        borderlayout.getSouth().setStyle( "border: 0px; background-color: #c6c6c6;" );
+        borderlayout.getSouth().appendChild( buttonsPane );
         
         appendChild( borderlayout );
         
@@ -211,7 +208,6 @@ public abstract class DefaulInputWindow<T extends DefaultInputPane, V>
     
     private Hlayout buttonsPane = new Hlayout();
     private Borderlayout borderlayout = new Borderlayout();
-    private Vlayout vlayout = new Vlayout();
     private Button okButton = new Button();
     private Button cancelButton = new Button();
 }

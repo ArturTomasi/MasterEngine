@@ -36,6 +36,12 @@ public class RuleEditor
     extends 
         EditorPanel<Rule>
 {
+    /**
+     * edit
+     * 
+     * @param owner Component
+     * @param callback Callback&lt;Rule&gt;
+     */
     public static void edit( Component owner, Callback<Rule> callback )
     {
         RuleEditor ruleEditor = new RuleEditor();
@@ -43,15 +49,23 @@ public class RuleEditor
         DefaultEditor.createEditor( owner, ruleEditor, callback );
     }
     
+    /**
+     * RuleEditor
+     * 
+     */
     private RuleEditor()
     {
-        setCaption( "Editor de Normas" );
         setTitle( "Editor de Normas" );
         setInfo( "Definir normas" );
         
         initComponents();
     }
 
+    /**
+     * setInput
+     * 
+     * @param value Rule
+     */
     @Override
     public void setInput( Rule value )
     {
@@ -59,6 +73,11 @@ public class RuleEditor
         tfInfo.setValue( value.getInfo() );
     }
 
+    /**
+     * getInput
+     * 
+     * @param value Rule
+     */
     @Override
     public void getInput( Rule value )
     {
@@ -66,6 +85,10 @@ public class RuleEditor
         value.setInfo( tfInfo.getValue() );
     }
     
+    /**
+     * initComponents
+     * 
+     */
     private void initComponents()
     {
         lbName.setValue( "Nome:" );

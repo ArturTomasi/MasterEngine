@@ -547,7 +547,7 @@ public class SampleEditorGeneralPane
         booxProof.setVflex( "true" );
         booxProof.setHflex( "true" );
         booxProof.setSpacing( "5px" );
-        booxProof.setStyle( "border: 1px solid #cfcfcf; padding: 5px;" );
+        booxProof.setStyle( "padding: 5px;" );
         
         tableProofLayout.setStyle( "width: 100%" );
         tableProofLayout.addRow( lbCountProof, tfCountProof );

@@ -192,7 +192,7 @@ public class UserApplicationViewUI
     
     private UserTable userTable;
     
-    private Action addAction = new Action( "", "Novo", "Novo usuário" )
+    private Action addAction = new Action( "core/tb_add.png", "Novo", "Novo usuário" )
     {
         @Override
         public void onEvent( Event t ) throws Exception
@@ -201,7 +201,7 @@ public class UserApplicationViewUI
         }
     };
     
-    private Action editAction = new Action( "", "Editar", "Editar usuário selecionad" )
+    private Action editAction = new Action( "core/tb_edit.png", "Editar", "Editar usuário selecionad" )
     {
         @Override
         public void onEvent( Event t ) throws Exception
@@ -210,7 +210,7 @@ public class UserApplicationViewUI
         }
     };
     
-    private Action deleteAction = new Action( "", "Excluir", "Excluir usuário selecionado" )
+    private Action deleteAction = new Action( "core/tb_delete.png", "Excluir", "Excluir usuário selecionado" )
     {
         @Override
         public void onEvent( Event t ) throws Exception

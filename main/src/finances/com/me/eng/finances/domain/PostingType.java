@@ -25,20 +25,31 @@ package com.me.eng.finances.domain;
  */
 public enum PostingType
 {
-    INCOMING    ( "Receitas" ),
-    OUTCOMING   ( "Despesas");
+    REVENUE    ( "Receitas", "finances/fi_revenue.png" ),
+    COST       ( "Despesas", "finances/fi_cost.png" );
 
-    private String name;
+    private String name, icon;
     
     /**
      * PostingType
      * 
      */
-    private PostingType( String name ) 
+    private PostingType( String name, String icon ) 
     {
         this.name = name;
+        this.icon = icon;
     }
 
+    /**
+     * icon
+     * 
+     * @return String
+     */
+    public String icon()
+    {
+        return icon;
+    }
+    
     /**
      * toString
      * 

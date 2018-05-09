@@ -43,6 +43,8 @@ public class ApplicationContext
 {
     private static ApplicationContext instance;
     
+    private static String contextPath = "/eng";
+    
     /**
      * getInstance
      * 
@@ -56,6 +58,26 @@ public class ApplicationContext
         }
         
         return instance;
+    }
+
+    /**
+     * getContextPath
+     * 
+     * @return String
+     */
+    public static String getContextPath()
+    {
+        return contextPath;
+    }
+
+    /**
+     * setContextPath
+     * 
+     * @param contextPath String
+     */
+    public static void setContextPath( String contextPath )
+    {
+        ApplicationContext.contextPath = contextPath;
     }
     
     /**

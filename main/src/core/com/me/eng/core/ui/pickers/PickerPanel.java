@@ -30,13 +30,21 @@ public abstract class PickerPanel<T>
     extends 
         DefaultInputPane
 {
+    /**
+     * PickerPanel
+     * 
+     */
     public PickerPanel()
     {
-        setTitle( "Seleção de Item" );
-        setCaption( "Selecione um item" );
+        setTitle( "Selecione um item" );
         setInfo( "Selecione um item da lista abaixo" );
     }
 
+    /**
+     * validateInput
+     * 
+     * @param e Errors
+     */
     @Override
     public void validateInput( Errors e )
     {
@@ -46,7 +54,20 @@ public abstract class PickerPanel<T>
         }
     }
     
+    /**
+     * void
+     * 
+     * @param source T
+     * @return abstract
+     * @ignored setSelectedItem
+     */
     public abstract void setSelectedItem( T source );
     
+    /**
+     * T
+     * 
+     * @return abstract
+     * @ignored getSelectedItem
+     */
     public abstract T getSelectedItem();
 }

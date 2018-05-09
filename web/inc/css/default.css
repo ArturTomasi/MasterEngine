@@ -2,17 +2,21 @@ body, html
 {
     margin: 0px !important;
     padding: 0px !important;
-    background: radial-gradient(#fefefe 0%,#304367 200%);
+    background-image: url('../../img/core/background.jpg');
+    background-repeat: round;
 }
 
 .login-center
 {
     width: 500px !important;
     margin: auto;
-    transform: translate(-50%, -65%);
+    transform: translate(-50%, -50%);
     position: absolute;
-    top: 45%;
+    top: 50%;
     left: 50%;
+    background-color: rgb(48, 67, 105, 0.6);
+    padding: 75px;
+    border-radius: 50px;
 }
 
 
@@ -41,7 +45,8 @@ body, html
     text-align: center;
     font-size: 45px;
     font-weight: bold;
-    color: #304368;
+    color: #fff;
+    font-family: Arial,Sans-serif;
 }
 
 .error-login
@@ -50,12 +55,11 @@ body, html
     color: #fff !important;
     border-radius: 8px;
     display: none;
-    width: 100%;
+    width: 500px;
     background-color: indianred;
     margin: auto;
     position: absolute;
-    bottom: -15px;
-    left: 0;
+    left: 75px;
     text-align: center;
     padding: 5px 0px;
 }
@@ -63,13 +67,16 @@ body, html
 .btn-login
 {
     color: #fff !important;
-    background-color: #304368;
+/*    background-color: #304368;*/
+    background: url(../../img/core/background.jpg);
     border: 2px solid #304368 !important;
     font-weight: bold !important;
     border-radius: 10px !important;
     margin-top: 7px;
     height: 45px !important;
     width: 100%;
+    background-position-x: -500px;
+    background-position-y: -100px;
 }
 
 .input-login
@@ -89,7 +96,8 @@ body, html
 
 .default-app-pane-south
 {
-    background-color: rgb(48, 67, 105);
+    background-image: url('../../img/core/background.jpg');
+    background-position: -350px;
 }
 
 .default-app-window .z-window-content,
@@ -107,7 +115,8 @@ body, html
 
 .default-app-pane-north
 {
-    background-color: rgb(48, 67, 105);
+    background-image: url('../../img/core/background.jpg');
+    background-position: -350px;
 }
 
 .default-app-view-button
@@ -166,21 +175,53 @@ body, html
     border: 1px solid lightgray;
 }
 
-.login-app .z-window-content
+.z-window-content
 {
     background: #ffffff; /* Old browsers */
-    background: -moz-linear-gradient(top,  #ffffff 0%, #f6f6f6 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(top,  #ffffff 0%,#f6f6f6 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to bottom,  #ffffff 0%,#f6f6f6 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=0 ); /* IE6-9 */
 }
 
 .default-editor
 {
-    background-color: rgba(100, 114, 142, 0.95);
+    background-color: #3568d8;
+    border-radius: 20px !important;
+}
+
+.default-editor-btn-pane
+{
+    position: absolute;
+    right: 10px;
+    bottom: 0px;
+    height: 40px;
+}
+
+.default-editor-btn, 
+.default-editor-btn:hover
+{
+    width: 115px;
+    height: 33px;
+    text-align: center;
+    line-height: 25px;
+    background-color: blue;
+    background-image: none;
+    color: #fff;
+    font-family: Arial,sans-serif;
+    font-size: 12px;
+    border-radius: 10px;
+}
+
+
+.default-editor-btn img
+{
+    width: 25px;
+    float: left;
+}
+
+.default-editor .z-window-content
+{
+    padding: 0px !important;
 }
 
 .default-editor .z-window-header
 {
-    color: white;
+    color: #fff;
 }

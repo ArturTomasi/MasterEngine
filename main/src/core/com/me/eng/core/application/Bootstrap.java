@@ -42,6 +42,8 @@ public class Bootstrap
     @Override
     public void contextInitialized( ServletContextEvent sce )
     {
+        ApplicationContext.setContextPath( sce.getServletContext().getContextPath() );
+        
         NotificationManager.getInstance().start();
         
         LicenseManager.getInstance().load();

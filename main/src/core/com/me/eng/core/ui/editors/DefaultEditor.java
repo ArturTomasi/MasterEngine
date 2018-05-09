@@ -31,17 +31,35 @@ public class DefaultEditor<V>
     extends 
         DefaulInputWindow<EditorPanel, V>
 {
+    /**
+     * createEditor
+     * 
+     * @param owner Component
+     * @param editorPanel EditorPanel
+     * @param callback Callback
+     * @return DefaultEditor
+     */
     public static DefaultEditor createEditor( Component owner, EditorPanel editorPanel, Callback callback )
     {
         return createInputWindow( owner, DefaultEditor.class, editorPanel, callback );
     }
 
+    /**
+     * setInput
+     * 
+     * @param source V
+     */
     @Override
     protected void setInput( V source )
     {
         defaultPane.setInput( source );
     }
     
+    /**
+     * getInput
+     * 
+     * @param source V
+     */
     @Override
     protected void getInput( V source )
     {

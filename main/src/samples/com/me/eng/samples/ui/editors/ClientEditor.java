@@ -49,7 +49,7 @@ public class ClientEditor
     public ClientEditor()
     {
         setTitle( "Editor de Clientes" );
-        setCaption( "Editor de Clientes" );
+        setIcon( "core/sb_client.png" );
         setInfo( "Edite as propriedades do Cliente" );
         
         initComponents();

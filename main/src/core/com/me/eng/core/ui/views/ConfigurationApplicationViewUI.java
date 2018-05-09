@@ -96,7 +96,7 @@ public class ConfigurationApplicationViewUI
     private ConfigurationTree configurationTree = new ConfigurationTree();
 
         
-    private Action saveAction = new Action( "", "Salvar", "Salvar configurações" )
+    private Action saveAction = new Action( "core/tb_save.png", "Salvar", "Salvar configurações" )
     {
         @Override
         public void onEvent( Event t ) throws Exception

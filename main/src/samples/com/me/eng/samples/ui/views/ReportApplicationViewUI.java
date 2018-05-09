@@ -533,7 +533,7 @@ public class ReportApplicationViewUI
     private SampleFilterPane sampleFilterPane;
     private SampleTable sampleTable;
     
-    private Action generateAction = new Action( "", "Gerar", "Gerar Relatório" )
+    private Action generateAction = new Action( "core/tb_printer.png", "Gerar", "Gerar Relatório" )
     {
         @Override
         public void onEvent( Event t ) throws Exception
@@ -542,7 +542,7 @@ public class ReportApplicationViewUI
         }
     };
     
-    private Action generateLetterHeadAction = new Action( "", "Gerar para papel timbrado", "Gerar Relatório para papel timbrado" )
+    private Action generateLetterHeadAction = new Action( "core/tb_printer.png", "Gerar para papel timbrado", "Gerar Relatório para papel timbrado" )
     {
         @Override
         public void onEvent( Event t ) throws Exception

@@ -26,60 +26,86 @@ import org.zkoss.zul.Div;
 /**
  *
  * @author Matheus
+ * @param <T>
  */
 public abstract class DefaultInputPane<T>
     extends 
         Div
 {
-    private String title;
-    private String icon;
-    private String info;
-    private String caption;
+    private String title, info, icon = "core/tb_default_editor.png";
 
+    /**
+     * getTitle
+     * 
+     * @return String
+     */
     public String getTitle()
     {
         return title;
     }
 
+    /**
+     * setTitle
+     * 
+     * @param title String
+     */
     public void setTitle( String title )
     {
         this.title = title;
     }
 
+    /**
+     * getIcon
+     * 
+     * @return String
+     */
     public String getIcon()
     {
         return icon;
     }
 
+    /**
+     * setIcon
+     * 
+     * @param icon String
+     */
     public void setIcon( String icon )
     {
         this.icon = icon;
     }
 
+    /**
+     * getInfo
+     * 
+     * @return String
+     */
     public String getInfo()
     {
         return info;
     }
 
+    /**
+     * setInfo
+     * 
+     * @param info String
+     */
     public void setInfo( String info )
     {
         this.info = info;
     }
-
-    public String getCaption()
-    {
-        return caption;
-    }
-
-    public void setCaption( String caption )
-    {
-        this.caption = caption;
-    }
     
-    public void validateInput( Errors e )
-    {
-    }
+    /**
+     * validateInput
+     * 
+     * @param e Errors
+     */
+    public void validateInput( Errors e ){}
     
+    /**
+     * handleException
+     * 
+     * @param e Exception
+     */
     protected void handleException( Exception e )
     {
         ApplicationContext.getInstance().handleException( e );

@@ -42,7 +42,7 @@ public class PendenciesApplicationViewUI
     public PendenciesApplicationViewUI()
     {
         setLabel( "Pendências" );
-        setIcon( "samples/sb_pendencies.png" );
+        setIcon( "samples/ai_pendencies.png" );
     }
     
     /**

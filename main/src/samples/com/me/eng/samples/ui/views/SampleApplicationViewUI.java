@@ -462,7 +462,7 @@ public class SampleApplicationViewUI
         }
     };
     
-    private Action relationAction = new Action( "core/tb_pdf.png", "Imprimir", "Imprimir relação de amostras" )
+    private Action relationAction = new Action( "core/tb_printer.png", "Imprimir", "Imprimir relação de amostras" )
     {
         @Override
         public void onEvent( Event t ) throws Exception
