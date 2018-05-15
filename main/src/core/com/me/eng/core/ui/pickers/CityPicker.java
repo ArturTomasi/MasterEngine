@@ -17,14 +17,12 @@
  *  stipulated in the agreement/contract under which
  *  the program(s) have been supplied.
  */
-package com.me.eng.samples.ui.pickers;
+package com.me.eng.core.ui.pickers;
 
 import com.me.eng.core.services.ApplicationServices;
 import com.me.eng.core.domain.City;
 import com.me.eng.core.ui.Callback;
 import com.me.eng.core.ui.parts.SearchField;
-import com.me.eng.core.ui.pickers.DefaultPicker;
-import com.me.eng.core.ui.pickers.PickerPanel;
 import com.me.eng.samples.ui.tables.CityTable;
 import com.me.eng.core.ui.util.Utils;
 import org.zkoss.zk.ui.Component;
@@ -39,6 +37,12 @@ public class CityPicker
     extends 
         PickerPanel<City>
 {
+    /**
+     * pick
+     * 
+     * @param owner Component
+     * @param callback Callback&lt;City&gt;
+     */
     public static void pick( Component owner, Callback<City> callback )
     {
         CityPicker picker = new CityPicker();
@@ -46,6 +50,10 @@ public class CityPicker
         DefaultPicker.createPicker( owner, picker, callback );
     }
     
+    /**
+     * CityPicker
+     * 
+     */
     public CityPicker()
     {
         initComponents();
@@ -63,18 +71,32 @@ public class CityPicker
         }
     }
 
+    /**
+     * setSelectedItem
+     * 
+     * @param source City
+     */
     @Override
     public void setSelectedItem( City source )
     {
         cityTable.setSelectedElement( source );
     }
     
+    /**
+     * getSelectedItem
+     * 
+     * @return City
+     */
     @Override
     public City getSelectedItem()
     {
         return cityTable.getSelectedElement();
     }
     
+    /**
+     * search
+     * 
+     */
     private void search()
     {
         City found = Utils.search( searchField.getText(), 
@@ -87,6 +109,10 @@ public class CityPicker
         }
     }
     
+    /**
+     * initComponents
+     * 
+     */
     private void initComponents()
     {
         cityTable.setCheckmark( true );

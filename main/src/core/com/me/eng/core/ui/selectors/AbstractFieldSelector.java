@@ -38,16 +38,30 @@ public abstract class AbstractFieldSelector<T>
 {
     private T source;
 
+    /**
+     * AbstractFieldSelector
+     * 
+     */
     public AbstractFieldSelector()
     {
         initComponents();
     }
     
+    /**
+     * setEnableClearButton
+     * 
+     * @param enabled boolean
+     */
     public void setEnableClearButton( boolean enabled )
     {
         clearButton.setVisible( enabled );
     }
     
+    /**
+     * setSelectedItem
+     * 
+     * @param source T
+     */
     public void setSelectedItem( T source )
     {
         this.source = source;
@@ -55,11 +69,20 @@ public abstract class AbstractFieldSelector<T>
         tfValue.setText( Objects.isNull( source ) ? "" : source.toString() );
     }
     
+    /**
+     * getSelectedItem
+     * 
+     * @return T
+     */
     public T getSelectedItem()
     {
         return source;
     }
     
+    /**
+     * initComponents
+     * 
+     */
     private void initComponents()
     {
         openButton.setLabel( "Abrir" );
@@ -110,5 +133,12 @@ public abstract class AbstractFieldSelector<T>
     private Toolbarbutton openButton = new Toolbarbutton();
     private Toolbarbutton clearButton = new Toolbarbutton();
     
-    protected abstract void chooseItem( Callback callback );
+    /**
+     * void
+     * 
+     * @param callback Callback&lt;T&gt;
+     * @return abstract
+     * @ignored chooseItem
+     */
+    protected abstract void chooseItem( Callback<T> callback );
 }

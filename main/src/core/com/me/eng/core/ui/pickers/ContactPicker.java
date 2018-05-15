@@ -17,7 +17,7 @@
  *  stipulated in the agreement/contract under which
  *  the program(s) have been supplied.
  */
-package com.me.eng.samples.ui.pickers;
+package com.me.eng.core.ui.pickers;
 
 import com.me.eng.core.domain.Client;
 import com.me.eng.core.domain.Contact;

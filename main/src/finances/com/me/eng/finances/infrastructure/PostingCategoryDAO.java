@@ -22,6 +22,7 @@ package com.me.eng.finances.infrastructure;
 import com.me.eng.core.infrastructure.EntityDAO;
 import com.me.eng.finances.domain.PostingCategory;
 import com.me.eng.finances.repositories.PostingCategoryRepository;
+import java.util.List;
 
 /**
  *
@@ -39,5 +40,16 @@ public class PostingCategoryDAO
     public PostingCategoryDAO()
     {
         super( PostingCategory.class );
+    }
+    
+    /**
+     * findAll
+     * 
+     * @return List&lt;PostingCategory&gt;
+     */
+    @Override
+    public List<PostingCategory> findAll()
+    {
+        return manager.createQuery( "select c from " + persistentClass.getSimpleName() + " c order by c.type, c.name", persistentClass ).getResultList();
     }
 }

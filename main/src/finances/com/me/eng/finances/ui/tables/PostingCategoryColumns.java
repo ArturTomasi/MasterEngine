@@ -26,7 +26,7 @@ import com.me.eng.finances.domain.PostingCategory;
  *
  * @author Artur Tomasi
  */
-public enum CategoryColumns 
+public enum PostingCategoryColumns 
     implements 
         Column<PostingCategory>
 {
@@ -55,7 +55,7 @@ public enum CategoryColumns
      * 
      * @param label String
      */
-    private CategoryColumns( String label )
+    private PostingCategoryColumns( String label )
     {
         this.label = label;
     }

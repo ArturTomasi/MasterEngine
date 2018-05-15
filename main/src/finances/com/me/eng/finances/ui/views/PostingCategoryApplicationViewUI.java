@@ -27,7 +27,6 @@ import com.me.eng.core.ui.views.ApplicationViewUI;
 import com.me.eng.finances.domain.PostingCategory;
 import com.me.eng.finances.ui.editors.PostingCategoryEditor;
 import com.me.eng.finances.ui.lists.PostingCategoryList;
-import com.me.eng.finances.ui.tables.CategoryTable;
 import org.zkoss.zk.ui.event.Event;
 
 /**

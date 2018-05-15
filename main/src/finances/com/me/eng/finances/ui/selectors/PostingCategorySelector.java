@@ -1,5 +1,5 @@
 /*
- *  Filename:    CompletionType
+ *  Filename:    PostingCategorySelector
  *
  *  Author:      Artur Tomasi
  *  EMail:       tomasi.artur@gmail.com
@@ -17,41 +17,29 @@
  *  stipulated in the agreement/contract under which
  *  the program(s) have been supplied.
  */
-package com.me.eng.finances.domain;
+package com.me.eng.finances.ui.selectors;
+
+import com.me.eng.core.ui.Callback;
+import com.me.eng.core.ui.selectors.AbstractFieldSelector;
+import com.me.eng.finances.domain.PostingCategory;
+import com.me.eng.finances.ui.pickers.PostingCategoryPicker;
 
 /**
  *
  * @author Artur Tomasi
  */
-public enum CompletionType 
+public class PostingCategorySelector 
+    extends 
+        AbstractFieldSelector<PostingCategory>
 {
-    CASH            ( "Dinheiro" ),
-    CARD            ( "Cartão" ),
-    VOUCHER         ( "Vale" ),
-    SERVICES        ( "Serviço" ),
-    OTHER           ( "Outros" );
-    
-    private String name;
-    
     /**
-     * CompletionType
+     * chooseItem
      * 
-     */
-    private CompletionType( String name ) 
-    {
-        this.name = name;
-    }
-
-    /**
-     * toString
-     * 
-     * @return String
+     * @param callback Callback&lt;PostingCategory&gt;
      */
     @Override
-    public String toString() 
+    protected void chooseItem( Callback<PostingCategory> callback )
     {
-        return name;
+        PostingCategoryPicker.pick( this, callback );
     }
-    
-    
 }

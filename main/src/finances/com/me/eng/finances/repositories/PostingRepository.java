@@ -1,5 +1,5 @@
 /*
- *  Filename:    CategoryTable
+ *  Filename:    PostingRepository
  *
  *  Author:      Artur Tomasi
  *  EMail:       tomasi.artur@gmail.com
@@ -17,36 +17,15 @@
  *  stipulated in the agreement/contract under which
  *  the program(s) have been supplied.
  */
-package com.me.eng.finances.ui.tables;
+package com.me.eng.finances.repositories;
 
-import com.me.eng.core.ui.tables.AbstractTable;
-import com.me.eng.core.ui.tables.Column;
-import com.me.eng.finances.domain.PostingCategory;
+import com.me.eng.core.repositories.EntityRepository;
+import com.me.eng.finances.domain.Posting;
 
 /**
  *
  * @author Artur Tomasi
  */
-public class CategoryTable 
+public interface PostingRepository 
     extends 
-        AbstractTable<PostingCategory>
-{
-    /**
-     * CategoryTable
-     * 
-     */
-    public CategoryTable() 
-    {
-    }
-    
-    /**
-     * getColumns
-     * 
-     * @return Column[]
-     */
-    @Override
-    protected Column[] getColumns() 
-    {
-        return CategoryColumns.values();
-    }
-}
+        EntityRepository<Posting> {}

@@ -24,3 +24,15 @@ function onLoginError()
         }, 3000 ) );
     } );
 }
+
+
+function shake( parent )
+{
+    var self = $( parent.$n() );
+    
+    self.effect( 'shake', function() {
+        setTimeout( function() { 
+            self.fadeOut( "slow", function(){ self.remove() } );            
+        }, 3000 );
+    } ); 
+};

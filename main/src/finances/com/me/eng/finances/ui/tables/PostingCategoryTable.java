@@ -1,5 +1,5 @@
 /*
- *  Filename:    PostingDAO
+ *  Filename:    CategoryTable
  *
  *  Author:      Artur Tomasi
  *  EMail:       tomasi.artur@gmail.com
@@ -17,39 +17,36 @@
  *  stipulated in the agreement/contract under which
  *  the program(s) have been supplied.
  */
-package com.me.eng.finances.infrastructure;
+package com.me.eng.finances.ui.tables;
 
-import com.me.eng.core.infrastructure.EntityDAO;
-import com.me.eng.finances.domain.Posting;
-import com.me.eng.finances.repositories.PostingRepository;
-import java.util.List;
+import com.me.eng.core.ui.tables.AbstractTable;
+import com.me.eng.core.ui.tables.Column;
+import com.me.eng.finances.domain.PostingCategory;
 
 /**
  *
  * @author Artur Tomasi
  */
-public class PostingDAO
-   extends 
-        EntityDAO<Posting>
-            implements 
-                PostingRepository
+public class PostingCategoryTable 
+    extends 
+        AbstractTable<PostingCategory>
 {
     /**
-     * PostingDAO
+     * CategoryTable
+     * 
      */
-    public PostingDAO()
+    public PostingCategoryTable() 
     {
-        super( Posting.class );
     }
     
     /**
-     * findAll
+     * getColumns
      * 
-     * @return List&lt;User&gt;
+     * @return Column[]
      */
     @Override
-    public List<Posting> findAll()
+    protected Column[] getColumns() 
     {
-        return manager.createQuery( "select p from " + persistentClass.getSimpleName() + " p" ).getResultList();
+        return PostingCategoryColumns.values();
     }
 }

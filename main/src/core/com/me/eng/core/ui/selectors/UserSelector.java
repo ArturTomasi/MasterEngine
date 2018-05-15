@@ -1,5 +1,5 @@
 /*
- *  Filename:    CompletionType
+ *  Filename:    UserSelector
  *
  *  Author:      Artur Tomasi
  *  EMail:       tomasi.artur@gmail.com
@@ -17,41 +17,28 @@
  *  stipulated in the agreement/contract under which
  *  the program(s) have been supplied.
  */
-package com.me.eng.finances.domain;
+package com.me.eng.core.ui.selectors;
+
+import com.me.eng.core.domain.User;
+import com.me.eng.core.ui.Callback;
+import com.me.eng.core.ui.pickers.UserPicker;
 
 /**
  *
  * @author Artur Tomasi
  */
-public enum CompletionType 
+public class UserSelector 
+    extends 
+        AbstractFieldSelector<User>
 {
-    CASH            ( "Dinheiro" ),
-    CARD            ( "Cartão" ),
-    VOUCHER         ( "Vale" ),
-    SERVICES        ( "Serviço" ),
-    OTHER           ( "Outros" );
-    
-    private String name;
-    
     /**
-     * CompletionType
+     * chooseItem
      * 
-     */
-    private CompletionType( String name ) 
-    {
-        this.name = name;
-    }
-
-    /**
-     * toString
-     * 
-     * @return String
+     * @param callback Callback&lt;User&gt;
      */
     @Override
-    public String toString() 
+    protected void chooseItem( Callback<User> callback )
     {
-        return name;
+        UserPicker.pick( this, callback );
     }
-    
-    
 }

@@ -145,7 +145,7 @@ public abstract class ApplicationViewUI
         {
             initComponents();
             
-            init = true;
+            init = true; 
         }
     }
     

@@ -30,11 +30,8 @@ import org.zkoss.zul.Borderlayout;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Center;
 import org.zkoss.zul.Hlayout;
-import org.zkoss.zul.Image;
 import org.zkoss.zul.North;
 import org.zkoss.zul.South;
-import org.zkoss.zul.Vlayout;
-import org.zkoss.zul.West;
 import org.zkoss.zul.Window;
 
 /**
@@ -45,6 +42,18 @@ public abstract class DefaulInputWindow<T extends DefaultInputPane, V>
     extends 
         Window
 {
+    /**
+     * extends
+     * 
+     * @param owner Component
+     * @param runtime Class&lt;E&gt;
+     * @param defaultPane DefaultInputPane
+     * @param callback Callback
+     * @return &lt;E
+     * @ignored DefaulInputWindow&gt;
+     * @ignored E
+     * @ignored createInputWindow
+     */
     protected static <E extends DefaulInputWindow> E createInputWindow( Component owner, 
                                                                Class<E> runtime,
                                                                DefaultInputPane defaultPane, 
@@ -77,6 +86,10 @@ public abstract class DefaulInputWindow<T extends DefaultInputPane, V>
     protected Callback<V> callback;
     protected T defaultPane;
     
+    /**
+     * DefaulInputWindow
+     * 
+     */
     protected DefaulInputWindow()
     {
         setSclass( "default-editor" );
@@ -84,6 +97,11 @@ public abstract class DefaulInputWindow<T extends DefaultInputPane, V>
         initComponents();
     }
     
+    /**
+     * setDefaultPane
+     * 
+     * @param editorPanel T
+     */
     private void setDefaultPane( T editorPanel )
     {
         this.defaultPane = editorPanel;
@@ -99,19 +117,38 @@ public abstract class DefaulInputWindow<T extends DefaultInputPane, V>
         setInput( callback.getSource() );
     }
 
+    /**
+     * setInput
+     * 
+     * @param source V
+     */
     protected void setInput( V source )
     {
     }
     
+    /**
+     * getInput
+     * 
+     * @param source V
+     */
     protected void getInput( V source )
     {
     }
 
+    /**
+     * validateInput
+     * 
+     * @param e Errors
+     */
     private void validateInput( Errors e )
     {
         defaultPane.validateInput( e );
     }
     
+    /**
+     * acceptInput
+     * 
+     */
     private void acceptInput()
     {
         Errors e = new Errors();
@@ -136,6 +173,10 @@ public abstract class DefaulInputWindow<T extends DefaultInputPane, V>
         }
     }
     
+    /**
+     * cancelInput
+     * 
+     */
     private void cancelInput()
     {
         try
@@ -154,6 +195,10 @@ public abstract class DefaulInputWindow<T extends DefaultInputPane, V>
         }
     }
     
+    /**
+     * initComponents
+     * 
+     */
     private void initComponents()
     {
         okButton.setLabel( "OK" );

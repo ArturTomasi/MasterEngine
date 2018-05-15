@@ -22,7 +22,7 @@ package com.me.eng.samples.ui.selectors;
 import com.me.eng.core.domain.City;
 import com.me.eng.core.ui.Callback;
 import com.me.eng.core.ui.selectors.AbstractFieldSelector;
-import com.me.eng.samples.ui.pickers.CityPicker;
+import com.me.eng.core.ui.pickers.CityPicker;
 
 /**
  *

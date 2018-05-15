@@ -19,8 +19,12 @@
  */
 package com.me.eng.core.ui.util;
 
+import com.me.eng.core.application.ApplicationContext;
 import com.me.eng.core.ui.Callback;
+import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zul.Div;
+import org.zkoss.zul.Html;
 import org.zkoss.zul.Messagebox;
 
 /**
@@ -50,5 +54,34 @@ public class Prompts
                     callback.cancelInput();
             }
         } );
+    }
+    
+    /**
+     * info
+     * 
+     * @param info String
+     */
+    public static void info( String info )
+    {
+        info( ApplicationContext.getInstance().getRoot(), info );
+    }
+    
+    /**
+     * info
+     * 
+     * @param parent Component
+     * @param info String
+     */
+    public static void info( Component parent, String info )
+    {
+        Html html = new Html( "<div class=\"me-prompts-info-text\">" + info + "</div>" );
+
+        Div div = new Div();
+        div.setZclass( "me-prompts-info" );
+        div.appendChild( html );
+        
+        div.setWidgetListener( "onBind", "shake( this );" );
+
+        parent.appendChild( div );
     }
 }

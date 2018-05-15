@@ -54,6 +54,19 @@ public class TableLayout
     }
     
     /**
+     * setRowHeight
+     * 
+     * @param height String
+     */
+    public void setRowHeight( String height )
+    {
+        getChildren().forEach( (tr) ->
+        {
+            ( (Tr) tr ).setDynamicProperty( "height", height ); 
+        } );
+    }
+    
+    /**
      * setColspan
      * 
      * @param row int
