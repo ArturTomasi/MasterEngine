@@ -37,14 +37,14 @@ create table fin_postings
     ref_category             int not null, 
     ref_user                 int not null,
     completion_type          int ,
-    ref_client               int not null,
+    ref_company              int not null,
     ref_posting              int ,
 
     primary key ( id ),
     foreign key fk_posting_users (ref_user) references core_users (id),
     foreign key fk_postings_ref_posting (ref_posting) references fin_postings (id),
     foreign key fk_postings_ref_category (ref_category) references fin_posting_categories (id),
-    foreign key fk_postings_ref_client (ref_client) references core_clients (id)
+    foreign key fk_postings_ref_company(ref_company) references fin_companies(id)
 );
 
 
@@ -88,3 +88,23 @@ insert into fin_posting_categories ( name, info, posting_type ) values ( 'INTERN
 insert into fin_posting_categories ( name, info, posting_type ) values ( 'MANUTENÇAO CASA',  '', 1 );
 insert into fin_posting_categories ( name, info, posting_type ) values ( 'MANUTENÇAO CARRO', '', 1 );
 
+
+create table fin_companies
+(
+    id                       int             not null auto_increment,
+    name                     varchar ( 200 ) not null,
+    info                     text,
+    contact                  varchar ( 255 ),
+    
+    primary key( id )
+);
+
+insert into fin_companies ( id, name, info, contact ) values ( null, 'UNIVATES'            , null, 'art@interact.com.br' );
+insert into fin_companies ( id, name, info, contact ) values ( null, 'HOSPITAL'            , null, 'art@interact.com.br' );
+insert into fin_companies ( id, name, info, contact ) values ( null, 'RODOVIÁRIA LAJEADO'  , null, 'art@interact.com.br' );
+insert into fin_companies ( id, name, info, contact ) values ( null, 'RODOVIÁRIA PROGRESSO', null, 'art@interact.com.br' );
+insert into fin_companies ( id, name, info, contact ) values ( null, 'FEIER IMÓVEIS'       , null, 'art@interact.com.br' );
+insert into fin_companies ( id, name, info, contact ) values ( null, 'ARRUDA E MUNHOZ'     , null, 'art@interact.com.br' );
+insert into fin_companies ( id, name, info, contact ) values ( null, 'SUBMARINO'           , null, 'art@interact.com.br' );
+insert into fin_companies ( id, name, info, contact ) values ( null, 'WALMART'             , null, 'art@interact.com.br' );
+insert into fin_companies ( id, name, info, contact ) values ( null, 'INTERACT SOLUTIONS'  , null, 'art@interact.com.br' );

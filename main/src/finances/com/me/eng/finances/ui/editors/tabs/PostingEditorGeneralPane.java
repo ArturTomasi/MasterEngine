@@ -25,6 +25,7 @@ import com.me.eng.core.ui.editors.tabs.SubEditorPanel;
 import com.me.eng.core.ui.parts.TableLayout;
 import com.me.eng.core.ui.selectors.UserSelector;
 import com.me.eng.finances.domain.Posting;
+import com.me.eng.finances.ui.selectors.CompanySelector;
 import com.me.eng.finances.ui.selectors.CompletionTypeSelector;
 import com.me.eng.finances.ui.selectors.PostingCategorySelector;
 import org.zkoss.zk.ui.event.Event;
@@ -74,6 +75,7 @@ public class PostingEditorGeneralPane
         source.setRepeat( ckRepeat.isChecked() );
         source.setPortionTotal( portionTotalFiled.getValue() );
         source.setCategory( postingCategoryCombo.getSelectedItem() );
+        source.setCompany( companyCombo.getSelectedItem() );
     }
 
     /**
@@ -95,6 +97,7 @@ public class PostingEditorGeneralPane
         userCombo.setSelectedItem( source.getOwner() == null ? ApplicationContext.getInstance().getActiveUser() : source.getOwner() );
         completionTypeCombo.setSelectedItem( source.getCompletionType() );
         postingCategoryCombo.setSelectedItem( source.getCategory() );
+        companyCombo.setSelectedItem( source.getCompany() );
     }
 
     /**
@@ -122,6 +125,9 @@ public class PostingEditorGeneralPane
         
         if ( postingCategoryCombo.getSelectedItem() == null )
             e.addError( "Categoria de lançamento" );
+        
+        if ( companyCombo.getSelectedItem() == null )
+            e.addError( "Companhia" );
     }
     
      
@@ -152,6 +158,8 @@ public class PostingEditorGeneralPane
         portionTotalFiled.setWidth( "200px" );
         realDateFiled.setWidth( "200px" );
         estimateDateField.setWidth( "200px" );
+        companyCombo.setHflex( null );
+        companyCombo.setWidth( "651px" );
         
         realValueField.setFormat( "R$ ##0.00" );
         estimateValueField.setFormat( "R$ ##0.00" );
@@ -161,6 +169,7 @@ public class PostingEditorGeneralPane
         grid.addRow( lbEstimateDate, estimateDateField, lbRealDate, realDateFiled );
         grid.addRow( lbEstimateValue, estimateValueField, lbRealValue, realValueField );
         grid.addRow( lbCategory, postingCategoryCombo );
+        grid.addRow( lbCompany, companyCombo );
         grid.addRow( lbCompletion, completionTypeCombo );
         grid.addRow( lbUser, userCombo );
         grid.addRow( ckRepeat, ckCompletionAuto, lbPortion, portionTotalFiled );
@@ -172,6 +181,7 @@ public class PostingEditorGeneralPane
         grid.setColspan( 3, 1, 3 );
         grid.setColspan( 4, 1, 3 );
         grid.setColspan( 5, 1, 3 );
+        grid.setColspan( 6, 1, 3 );
         
         appendChild( grid );
         
@@ -229,8 +239,7 @@ public class PostingEditorGeneralPane
 
     private Label lbUser                                    = new Label( "Responsável: " );
     private UserSelector userCombo                          = new UserSelector();
-//    private Label lbEntity                          = new Label( "Entidade", true );
-//    private EntitySelector entityCombo                   = new EntitySelector();
-//    
     
+    private Label lbCompany                                 = new Label( "Companhia: " );
+    private CompanySelector companyCombo                    = new CompanySelector();
 }

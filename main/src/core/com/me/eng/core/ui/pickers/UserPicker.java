@@ -50,7 +50,10 @@ public class UserPicker
         picker.setInfo( "Selecione um usuário!" );
         picker.setIcon( "core/sb_user.png" );
         
-        DefaultPicker.createPicker( owner, picker, callback ).setHeight( "350px" );
+        DefaultPicker _picker = DefaultPicker.createPicker( owner, picker, callback );
+        
+        _picker.setHeight( "350px" );
+        _picker.setWidth( "450px" );
         
     }
     
@@ -125,6 +128,8 @@ public class UserPicker
         vlayout.setSpacing( "10px" );
         vlayout.appendChild( searchField );
         vlayout.appendChild( userTable );
+        
+        userTable.removeColumn( UserTable.Columns.LOGIN );
         
         appendChild( vlayout );
         

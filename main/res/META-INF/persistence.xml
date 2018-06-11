@@ -5,6 +5,7 @@
     <!--FINANCE-->
     <class>com.me.eng.finances.domain.PostingCategory</class>
     <class>com.me.eng.finances.domain.Posting</class>
+    <class>com.me.eng.finances.domain.Company</class>
 
     <!--SAMPLES-->
     <class>com.me.eng.samples.domain.Capstone</class>

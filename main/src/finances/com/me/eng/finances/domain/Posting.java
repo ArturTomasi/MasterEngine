@@ -19,7 +19,6 @@
  */
 package com.me.eng.finances.domain;
 
-import com.me.eng.core.domain.Client;
 import com.me.eng.core.domain.User;
 import java.io.Serializable;
 import java.util.Date;
@@ -110,9 +109,9 @@ public class Posting
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private PostingCategory category;
     
-    @JoinColumn(name = "ref_client", referencedColumnName = "id")
+    @JoinColumn(name = "ref_company", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Client client;
+    private Company company;
     
     @JoinColumn(name = "ref_user", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -410,23 +409,23 @@ public class Posting
     }
 
     /**
-     * getClient
+     * getCompany
      * 
      * @return Client
      */
-    public Client getClient() 
+    public Company getCompany() 
     {
-        return client;
+        return company;
     }
 
     /**
      * setClient
      * 
-     * @param client Client
+     * @param company Company
      */
-    public void setClient( Client client )
+    public void setCompany( Company company )
     {
-        this.client = client;
+        this.company = company;
     }
 
     /**

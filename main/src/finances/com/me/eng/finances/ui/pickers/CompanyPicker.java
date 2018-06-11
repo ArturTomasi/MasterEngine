@@ -1,5 +1,5 @@
 /*
- *  Filename:    CompletionTypePicker
+ *  Filename:    CompanyPicker
  *
  *  Author:      Artur Tomasi
  *  EMail:       tomasi.artur@gmail.com
@@ -19,14 +19,14 @@
  */
 package com.me.eng.finances.ui.pickers;
 
+import com.me.eng.core.services.ApplicationServices;
 import com.me.eng.core.ui.Callback;
 import com.me.eng.core.ui.parts.SearchField;
 import com.me.eng.core.ui.pickers.DefaultPicker;
 import com.me.eng.core.ui.pickers.PickerPanel;
 import com.me.eng.core.ui.util.Utils;
-import com.me.eng.finances.domain.CompletionType;
-import com.me.eng.finances.ui.lists.CompletionTypeList;
-import java.util.Arrays;
+import com.me.eng.finances.domain.Company;
+import com.me.eng.finances.ui.tables.CompanyTable;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zul.Vlayout;
@@ -35,9 +35,9 @@ import org.zkoss.zul.Vlayout;
  *
  * @author Artur Tomasi
  */
-public class CompletionTypePicker 
+public class CompanyPicker 
     extends 
-        PickerPanel<CompletionType>
+        PickerPanel<Company>
 {
     /**
      * pick
@@ -45,27 +45,27 @@ public class CompletionTypePicker
      * @param owner Component
      * @param callback Callback&lt;CompletionType&gt;
      */
-    public static void pick( Component owner, Callback<CompletionType> callback )
+    public static void pick( Component owner, Callback<Company> callback )
     {
-        CompletionTypePicker picker = new CompletionTypePicker();
-        picker.setTitle( "Tipos de Finalização" );
-        picker.setInfo( "Selecione o tipo de finalização do lançamento finaceiro!" );
-        picker.setIcon( "finances/fi_completion_type.png" );
+        CompanyPicker picker = new CompanyPicker();
+        picker.setTitle( "Companhias" );
+        picker.setInfo( "Selecione a companhia do lançamento finaceiro!" );
+        picker.setIcon( "finances/fi_company.png" );
         
         DefaultPicker.createPicker( owner, picker, callback ).setHeight( "400px" );
     }
     
     /**
-     * CompletionTypePicker
+     * CompanyPicker
      * 
      */
-    public CompletionTypePicker()
+    public CompanyPicker()
     {
         initComponents();
         
         try
         {
-            typesList.setElements( Arrays.asList( CompletionType.values() ) );
+            companyTable.setElements( ApplicationServices.getCurrent().getCompanyRepository().findAll() );
         }
         
         catch ( Exception e )
@@ -77,23 +77,23 @@ public class CompletionTypePicker
     /**
      * setSelectedItem
      * 
-     * @param source CompletionType
+     * @param source Company
      */
     @Override
-    public void setSelectedItem( CompletionType source )
+    public void setSelectedItem( Company source )
     {
-        typesList.setSelectedElement( source );
+        companyTable.setSelectedElement( source );
     }
     
     /**
      * getSelectedItem
      * 
-     * @return CompletionType
+     * @return Company
      */
     @Override
-    public CompletionType getSelectedItem()
+    public Company getSelectedItem()
     {
-        return typesList.getSelectedElement();
+        return companyTable.getSelectedElement();
     }
     
     /**
@@ -102,13 +102,13 @@ public class CompletionTypePicker
      */
     private void search()
     {
-        CompletionType found = Utils.search( searchField.getText(), 
-                                   typesList.getSelectedElement(), 
-                                   typesList.getElements(), 
-                                   (CompletionType value) -> value.toString() );
+        Company found = Utils.search( searchField.getText(), 
+                                   companyTable.getSelectedElement(), 
+                                   companyTable.getElements(), 
+                                   (Company value) -> value.toString() );
         if ( found != null )
         {
-            typesList.setSelectedElement( found );
+            companyTable.setSelectedElement( found );
         }
     }
     
@@ -121,7 +121,7 @@ public class CompletionTypePicker
         Vlayout vlayout = new Vlayout();
         vlayout.setSpacing( "10px" );
         vlayout.appendChild( searchField );
-        vlayout.appendChild( typesList );
+        vlayout.appendChild( companyTable );
         
         appendChild( vlayout );
         
@@ -129,5 +129,5 @@ public class CompletionTypePicker
     }
     
     private SearchField searchField = new SearchField();
-    private CompletionTypeList typesList = new CompletionTypeList();
+    private CompanyTable companyTable = new CompanyTable();
 }

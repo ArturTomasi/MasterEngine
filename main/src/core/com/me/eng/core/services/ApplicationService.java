@@ -29,7 +29,9 @@ import com.me.eng.core.repositories.RoleRepository;
 import com.me.eng.samples.repositories.RuleRepository;
 import com.me.eng.samples.repositories.SampleRepository;
 import com.me.eng.core.repositories.UserRepository;
+import com.me.eng.finances.repositories.CompanyRepository;
 import com.me.eng.finances.repositories.PostingCategoryRepository;
+import com.me.eng.finances.repositories.PostingRepository;
 import java.io.Serializable;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -75,6 +77,12 @@ public class ApplicationService
     
     @Inject
     private PostingCategoryRepository postingCategoryRepository;
+    
+    @Inject
+    private PostingRepository postingRepository;
+    
+    @Inject
+    private CompanyRepository companyRepository;
 
     /**
      * getCityRepository
@@ -184,5 +192,25 @@ public class ApplicationService
     public PostingCategoryRepository getPostingCategoryRepository() 
     {
         return postingCategoryRepository;
+    }
+
+    /**
+     * getCompanyRepository
+     * 
+     * @return CompanyRepository
+     */
+    public CompanyRepository getCompanyRepository() 
+    {
+        return companyRepository;
+    }
+
+    /**
+     * getPostingRepository
+     * 
+     * @return PostingRepository
+     */
+    public PostingRepository getPostingRepository() 
+    {
+        return postingRepository;
     }
 }
