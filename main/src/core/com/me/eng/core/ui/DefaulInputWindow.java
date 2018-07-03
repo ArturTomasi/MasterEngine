@@ -62,14 +62,13 @@ public abstract class DefaulInputWindow<T extends DefaultInputPane, V>
         try
         {
             DefaulInputWindow window = runtime.newInstance();
+            window.callback = callback;
 
+            window.setDefaultPane( defaultPane );
+            
             window.setWidth( "600px" );
             window.setHeight( "85%" );
             window.setClosable( false );
-            window.callback = callback;
-
-            
-            window.setDefaultPane( defaultPane );
 
             window.setParent( owner );
             window.onModal();
@@ -110,11 +109,32 @@ public abstract class DefaulInputWindow<T extends DefaultInputPane, V>
         
         borderlayout.getCenter().appendChild( editorPanel );
         
-        borderlayout.getNorth().appendChild( new EditorCaption( editorPanel.getIcon(),
-                                                                editorPanel.getTitle(),
-                                                                editorPanel.getInfo() ) );
+        refreshCaption();
         
         setInput( callback.getSource() );
+    }
+
+    /**
+     * getDefaultPane
+     * 
+     * @return T
+     */
+    public T getDefaultPane() 
+    {
+        return defaultPane;
+    }
+    
+    /**
+     * refreshCaption
+     * 
+     */
+    public void refreshCaption()
+    {
+        borderlayout.getNorth().getChildren().clear();
+        
+        borderlayout.getNorth().appendChild( new EditorCaption( defaultPane.getIcon(),
+                                                                defaultPane.getTitle(),
+                                                                defaultPane.getInfo() ) );
     }
 
     /**
@@ -149,7 +169,7 @@ public abstract class DefaulInputWindow<T extends DefaultInputPane, V>
      * acceptInput
      * 
      */
-    private void acceptInput()
+    protected void acceptInput()
     {
         Errors e = new Errors();
         

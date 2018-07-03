@@ -27,6 +27,7 @@ import com.me.eng.core.ui.tables.UserTable;
 import com.me.eng.core.ui.util.Utils;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Vlayout;
 
 /**
@@ -45,16 +46,12 @@ public class UserPicker
      */
     public static void pick( Component owner, Callback<User> callback )
     {
-        UserPicker picker = new UserPicker();
+        DefaultPicker picker = DefaultPicker.createPicker( owner, new UserPicker(), callback );
         picker.setTitle( "Usuários" );
         picker.setInfo( "Selecione um usuário!" );
         picker.setIcon( "core/sb_user.png" );
-        
-        DefaultPicker _picker = DefaultPicker.createPicker( owner, picker, callback );
-        
-        _picker.setHeight( "350px" );
-        _picker.setWidth( "450px" );
-        
+        picker.setHeight( "350px" );
+        picker.setWidth( "450px" );
     }
     
     /**
@@ -137,6 +134,8 @@ public class UserPicker
         {
             search();
         } );
+        
+        userTable.addEventListener( Events.ON_SELECT, (Event t ) -> close() );
     }
     
     private SearchField searchField = new SearchField();

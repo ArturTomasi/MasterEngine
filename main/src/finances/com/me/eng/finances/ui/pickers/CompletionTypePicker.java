@@ -29,6 +29,7 @@ import com.me.eng.finances.ui.lists.CompletionTypeList;
 import java.util.Arrays;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Vlayout;
 
 /**
@@ -47,12 +48,11 @@ public class CompletionTypePicker
      */
     public static void pick( Component owner, Callback<CompletionType> callback )
     {
-        CompletionTypePicker picker = new CompletionTypePicker();
+        DefaultPicker picker = DefaultPicker.createPicker( owner, new CompletionTypePicker(), callback );
         picker.setTitle( "Tipos de Finalização" );
         picker.setInfo( "Selecione o tipo de finalização do lançamento finaceiro!" );
         picker.setIcon( "finances/fi_completion_type.png" );
-        
-        DefaultPicker.createPicker( owner, picker, callback ).setHeight( "400px" );
+        picker.setHeight( "400px" );
     }
     
     /**
@@ -126,6 +126,8 @@ public class CompletionTypePicker
         appendChild( vlayout );
         
         searchField.addEventListener( SearchField.Events.ON_SEARCH, (Event t) -> search() );
+        
+        typesList.addEventListener( Events.ON_SELECT, (Event t) -> close() );
     }
     
     private SearchField searchField = new SearchField();

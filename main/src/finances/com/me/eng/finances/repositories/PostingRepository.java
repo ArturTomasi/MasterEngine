@@ -28,4 +28,36 @@ import com.me.eng.finances.domain.Posting;
  */
 public interface PostingRepository 
     extends 
-        EntityRepository<Posting> {}
+        EntityRepository<Posting> 
+{
+
+    /**
+     * Posting
+     * 
+     * @param current Posting
+     * @return abstract
+     * @throws Exception
+     * @ignored getLastPosting
+     */
+    public abstract Posting getLastPosting( Posting current ) throws Exception;
+    
+    /**
+     * void
+     * 
+     * @param posting Posting
+     * @return abstract
+     * @throws Exception
+     * @ignored updateNextPortion
+     */
+    public abstract void updateNextPortion( Posting posting ) throws Exception;
+    
+    /**
+     * void
+     * 
+     * @param posting Posting
+     * @return abstract
+     * @throws Exception
+     * @ignored deleteNextPortions
+     */
+    public abstract void deleteNextPortions( Posting posting ) throws Exception;
+}

@@ -21,6 +21,7 @@ package com.me.eng.core.ui.pickers;
 
 import com.me.eng.core.ui.Callback;
 import com.me.eng.core.ui.DefaulInputWindow;
+import com.me.eng.core.ui.util.GenericObserver;
 import org.zkoss.zk.ui.Component;
 
 /**
@@ -41,11 +42,52 @@ public class DefaultPicker<V>
      */
     public static DefaultPicker createPicker( Component owner, PickerPanel pickerPanel, Callback callback )
     {
-        pickerPanel.setSelectedItem( callback.getSource() );
+        DefaultPicker picker = createInputWindow( owner, DefaultPicker.class, pickerPanel, callback );
         
-        return createInputWindow( owner, DefaultPicker.class, pickerPanel, callback );
+        pickerPanel.setSelectedItem( callback.getSource() );
+     
+        pickerPanel.onClose( (Object s) ->  picker.acceptInput() );
+        
+        return picker;
     }
 
+    /**
+     * setTitle
+     * 
+     * @param title String
+     */
+    @Override
+    public void setTitle( String title ) 
+    {
+        getDefaultPane().setTitle( title );
+        
+        refreshCaption();
+    } 
+    
+    /**
+     * setInfo
+     * 
+     * @param info String
+     */
+    public void setInfo( String info ) 
+    {
+        getDefaultPane().setInfo( info );
+        
+        refreshCaption();
+    }
+    
+    /**
+     * setIcon
+     * 
+     * @param icon String
+     */
+    public void setIcon( String icon ) 
+    {
+        getDefaultPane().setIcon( icon );
+        
+        refreshCaption();
+    } 
+    
     /**
      * getInput
      * 

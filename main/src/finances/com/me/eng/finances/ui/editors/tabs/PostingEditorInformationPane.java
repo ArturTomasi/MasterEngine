@@ -69,7 +69,7 @@ public class PostingEditorInformationPane
     private void initComponents()
     {
         infoField.setWidth( "100%" );
-        infoField.setRows( 20 );
+        infoField.setRows( 15 );
         
         appendChild( infoField );
     }

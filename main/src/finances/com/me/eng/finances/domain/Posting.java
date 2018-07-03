@@ -22,6 +22,8 @@ package com.me.eng.finances.domain;
 import com.me.eng.core.domain.User;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,7 +48,7 @@ import javax.persistence.TemporalType;
 @Table( name = "fin_postings" )
 public class Posting 
     implements 
-        Serializable
+        Serializable, Cloneable
 {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
@@ -99,10 +101,12 @@ public class Posting
     
     @Enumerated( EnumType.ORDINAL )
     @Basic(optional = false)
+    @Column( name = "state" )
     private PostingState state = PostingState.REGISTRED;
     
     @Enumerated( EnumType.ORDINAL )
     @Basic(optional = false)
+    @Column(name = "completion_type")
     private CompletionType completionType = CompletionType.CASH;
     
     @JoinColumn(name = "ref_category", referencedColumnName = "id")
@@ -121,6 +125,7 @@ public class Posting
     @JoinColumn(name = "ref_posting")
     private Posting parent;
 
+    private List<Posting> childs = new LinkedList();
     /**
      * Posting
      * 
@@ -467,4 +472,44 @@ public class Posting
     {
         this.parent = parent;
     }
+    
+    /**
+     * addChild
+     * 
+     * @param value Posting
+     */
+    public void addChild( Posting value )
+    {
+        childs.add( value );
+    }
+
+    /**
+     * getChilds
+     * 
+     * @return List&lt;Posting&gt;
+     */
+    public List<Posting> getChilds() 
+    {
+        return childs;
+    }
+
+    /**
+     * clone
+     * 
+     * @return Posting
+     * @throws CloneNotSupportedException
+     */
+    @Override
+    public Posting clone() throws CloneNotSupportedException 
+    {
+        Posting clone = (Posting)super.clone();
+        clone.setId( -1 );
+        clone.setRealDate( null );
+        clone.setRealValue( null );
+        clone.setState( PostingState.REGISTRED );
+        
+        return clone;
+    }
+    
+    
 }

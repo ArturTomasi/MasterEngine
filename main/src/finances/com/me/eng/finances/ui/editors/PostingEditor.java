@@ -26,7 +26,10 @@ import com.me.eng.core.ui.editors.Errors;
 import com.me.eng.finances.domain.Posting;
 import com.me.eng.finances.ui.editors.tabs.PostingEditorGeneralPane;
 import com.me.eng.finances.ui.editors.tabs.PostingEditorInformationPane;
+import com.me.eng.finances.ui.editors.tabs.PostingEditorValuesPane;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Tabpanel;
@@ -41,19 +44,69 @@ public class PostingEditor
     extends 
         EditorPanel<Posting>
 {
+    public static enum Mode
+    {
+        FINISH( "800px", "350px" ),
+        EDIT(   "800px", "450px" ),
+        NEW(    "800px", "450px" );
+        
+        private String width, height;
+
+        /**
+         * Mode
+         * 
+         * @param width String
+         * @param height String
+         */
+        private Mode( String width, String height )
+        {
+            this.width = width;
+            this.height = height;
+        }
+
+        /**
+         * getWidth
+         * 
+         * @return String
+         */
+        public String getWidth() 
+        {
+            return width;
+        }
+
+        /**
+         * getHeight
+         * 
+         * @return String
+         */
+        public String getHeight()
+        {
+            return height;
+        }
+    }
+    
+    
     /**
      * edit
      * 
      * @param owner Component
-     * @param callback Callback&lt;PostingCategory&gt;
+     * @param mode Mode
+     * @param callback Callback&lt;Posting&gt;
      */
-    public static void edit( Component owner, Callback<Posting> callback )
+    public static void edit( Component owner, Mode mode, Callback<Posting> callback )
     {
-        DefaultEditor editor = DefaultEditor.createEditor( owner, new PostingEditor(), callback );
-        editor.setWidth( "800px" );
-        editor.setHeight( "600px" );
+        PostingEditor panel = new PostingEditor();
+        panel.setMode( mode );
+        panel.setSource( callback.getSource() );
+        
+        DefaultEditor editor = DefaultEditor.createEditor( owner, panel, callback );
+        editor.setWidth( mode.getWidth() );
+        editor.setHeight( mode.getHeight() );
     }
-
+    
+    private Mode mode;
+    private Posting source;
+    
     /**
      * PostingEditor
      * 
@@ -68,6 +121,26 @@ public class PostingEditor
     }
 
     /**
+     * setMode
+     * 
+     * @param mode Mode
+     */
+    public void setMode( Mode mode ) 
+    {
+        this.mode = mode;
+    }
+
+    /**
+     * setSource
+     * 
+     * @param source Posting
+     */
+    public void setSource( Posting source )
+    {
+        this.source = source;
+    }
+    
+    /**
      * validateInput
      * 
      * @param e Errors
@@ -75,8 +148,19 @@ public class PostingEditor
     @Override
     public void validateInput( Errors e ) 
     {
-        generalPane.validateInput( e );
-        infoPane.validateInput( e );
+        switch ( mode )
+        {
+            case NEW:
+            case EDIT:
+                generalPane.validateInput( e );
+                valuesPane.validateInput( e );
+                infoPane.validateInput( e );
+            break;
+            case FINISH:
+                generalPane.validateInput( e );
+                infoPane.validateInput( e );
+            break;
+        }   
     }
     
     /**
@@ -88,7 +172,15 @@ public class PostingEditor
     public void setInput( Posting value ) 
     {
         generalPane.setInput( value );
+        generalPane.loadField( mode );
+        valuesPane.setInput( value );
         infoPane.setInput( value );
+        
+        if ( mode == Mode.NEW )
+        {
+            updateValuesTab();
+        }
+
     }
 
     /**
@@ -99,9 +191,33 @@ public class PostingEditor
     @Override
     public void getInput( Posting value ) 
     {
-        generalPane.getInput( value );
-        infoPane.getInput( value );
+        switch ( mode )
+        {
+            case NEW:
+            case EDIT:
+                generalPane.getInput( value );
+                valuesPane.getInput( value );
+                infoPane.getInput( value );
+            break;
+            case FINISH:
+                generalPane.getInput( value );
+                infoPane.getInput( value );
+            break;
+        }   
     }
+    
+    /**
+     * updateValuesTab
+     * 
+     */
+    private void updateValuesTab()
+    {
+        valuesPane.setInput( source );
+
+        valuesTab.setVisible( mode == Mode.NEW &&  source.isRepeat() &&
+                              source.getEstimateDate() != null );
+    }
+    
     
     /**
      * initComponents
@@ -115,9 +231,11 @@ public class PostingEditor
         tabbox.appendChild( new Tabs() );
         tabbox.appendChild( new Tabpanels() );
         
-        tabbox.getTabs().appendChild( new Tab( "Geral" ) );
-//        tabbox.getTabs().appendChild( new Tab( "Valores" ) );
-        tabbox.getTabs().appendChild( new Tab( "Informações" ) );
+        tabbox.getTabs().appendChild( generalTab );
+        tabbox.getTabs().appendChild( valuesTab );
+        tabbox.getTabs().appendChild( infoTab );
+     
+        valuesTab.setVisible( false );
         
         Tabpanel generalTabpanel = new Tabpanel();
         generalTabpanel.appendChild( generalPane );
@@ -125,16 +243,35 @@ public class PostingEditor
         Tabpanel infoTabPanel = new Tabpanel();
         infoTabPanel.appendChild( infoPane );
         
+        Tabpanel valuesTabPanel = new Tabpanel();
+        valuesTabPanel.appendChild( valuesPane );
         
         tabbox.getTabpanels().appendChild( generalTabpanel );
+        tabbox.getTabpanels().appendChild( valuesTabPanel );
         tabbox.getTabpanels().appendChild( infoTabPanel );
         
         appendChild( tabbox );
+        
+        generalPane.addEventListener( PostingEditorGeneralPane.Events.ON_CHANGE_VALUES, (Event t) ->
+        {
+            source = (Posting)t.getData();
+            
+            updateValuesTab();
+        } );
+        
+        valuesTab.addEventListener( Events.ON_SELECT, (Event t) ->
+        {
+            generalPane.getInput( source );
+            valuesPane.setInput( source );
+        } );
     }
     
-    private Tabbox tabbox = new Tabbox();
-     
-     
-    private PostingEditorGeneralPane generalPane = new PostingEditorGeneralPane();
+    private Tabbox tabbox   = new Tabbox();
+    private Tab generalTab  = new Tab( "Geral" );
+    private Tab valuesTab   = new Tab( "Valores" );
+    private Tab infoTab     = new Tab( "Informações" );
+
+    private PostingEditorGeneralPane generalPane  = new PostingEditorGeneralPane();
     private PostingEditorInformationPane infoPane = new PostingEditorInformationPane();
+    private PostingEditorValuesPane valuesPane    = new PostingEditorValuesPane();
 }

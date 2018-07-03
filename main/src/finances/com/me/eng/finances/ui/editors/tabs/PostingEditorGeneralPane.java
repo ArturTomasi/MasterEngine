@@ -24,12 +24,15 @@ import com.me.eng.core.ui.editors.Errors;
 import com.me.eng.core.ui.editors.tabs.SubEditorPanel;
 import com.me.eng.core.ui.parts.TableLayout;
 import com.me.eng.core.ui.selectors.UserSelector;
+import com.me.eng.core.ui.util.Prompts;
+import com.me.eng.finances.controllers.PostingController;
 import com.me.eng.finances.domain.Posting;
+import com.me.eng.finances.ui.editors.PostingEditor;
 import com.me.eng.finances.ui.selectors.CompanySelector;
 import com.me.eng.finances.ui.selectors.CompletionTypeSelector;
 import com.me.eng.finances.ui.selectors.PostingCategorySelector;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Doublebox;
@@ -45,6 +48,17 @@ public class PostingEditorGeneralPane
     extends 
         SubEditorPanel<Posting>
 {
+    public static class Events
+    {
+        public static final String ON_CHANGE_VALUES = "onChangeValues";
+        public static final String ON_CHANGE        = org.zkoss.zk.ui.event.Events.ON_CHANGE;
+        public static final String ON_CHECK         = org.zkoss.zk.ui.event.Events.ON_CHECK;
+    }
+    
+    private PostingEditor.Mode mode;
+    
+    private Posting source;
+    
     /**
      * PostingEditorGeneralPane
      * 
@@ -63,7 +77,7 @@ public class PostingEditorGeneralPane
     @Override
     public void getInput( Posting source )
     {
-        source.setName( nameField.getName() );
+        source.setName( nameField.getValue() );
         source.setRealDate( realDateFiled.getValue() );
         source.setEstimateDate( estimateDateField.getValue() );
         source.setRealDate( realDateFiled.getValue() );
@@ -76,6 +90,8 @@ public class PostingEditorGeneralPane
         source.setPortionTotal( portionTotalFiled.getValue() );
         source.setCategory( postingCategoryCombo.getSelectedItem() );
         source.setCompany( companyCombo.getSelectedItem() );
+        
+        source.setState( PostingController.getInstance().makeState( source ) );
     }
 
     /**
@@ -86,11 +102,11 @@ public class PostingEditorGeneralPane
     @Override
     public void setInput( Posting source ) 
     {
+        this.source = source;
+        
         nameField.setText( source.getName() );
-        realValueField.setValue( source.getRealValue() );
         estimateValueField.setValue( source.getEstimateValue() );
         estimateDateField.setValue( source.getEstimateDate() );
-        realDateFiled.setValue( source.getRealDate() );
         portionTotalFiled.setValue( source.getPortionTotal() );
         ckRepeat.setChecked( source.isRepeat() );
         ckCompletionAuto.setChecked( source.isCompletionAuto() );
@@ -98,36 +114,107 @@ public class PostingEditorGeneralPane
         completionTypeCombo.setSelectedItem( source.getCompletionType() );
         postingCategoryCombo.setSelectedItem( source.getCategory() );
         companyCombo.setSelectedItem( source.getCompany() );
+        
+        if( mode == PostingEditor.Mode.FINISH )
+        {
+            realDateFiled.setValue( source.getEstimateDate() );
+            realValueField.setValue( source.getEstimateValue() );
+        }
     }
 
     /**
      * validateInput
      * 
-     * @param e Errors
+     * @param errors Errors
      */
     @Override
-    public void validateInput( Errors e )
+    public void validateInput( Errors errors )
     {
+        boolean notFinish = mode != PostingEditor.Mode.FINISH;
+        
+        if( notFinish && estimateDateField.getValue() == null )
+            errors.addError( "A data estimada não pode estar vazia !" );
+      
+        if( notFinish && ! estimateValueField.isValid() )
+            errors.addError( "O valor estimado está inválido !" );
+        
         if ( ! nameField.isValid() )
-            e.addError( "Nome" );
+            errors.addError( "O Nome não pode estar vazio!" );
         
-        if ( ! estimateValueField.isValid() )
-            e.addError( "Valor estimado" );
+        if( ( ckCompletionAuto.isChecked() || ! notFinish ) && completionTypeCombo.getSelectedItem() == null )
+            errors.addError( "O tipo de finalização não pode estar vazio" );
         
-        if ( ! estimateDateField.isValid() )
-            e.addError( "Data estimada" );
+        if( realDateFiled.getValue() != null && completionTypeCombo.getSelectedItem() == null )
+            errors.addError( "O tipo de finalização não pode estar vazio" );
         
-        if ( userCombo.getSelectedItem() == null )
-            e.addError( "Usuário" );
+        if( notFinish && companyCombo.getSelectedItem() == null )
+            errors.addError( "A companhia do lançamento não pode estar vazio" );
         
-        if ( completionTypeCombo.getSelectedItem() == null )
-            e.addError( "Tipo de Finalização" );
+        if( notFinish && userCombo.getSelectedItem() == null )
+            errors.addError( "A responsável do lançamento não de estar vazio" );
         
-        if ( postingCategoryCombo.getSelectedItem() == null )
-            e.addError( "Categoria de lançamento" );
+        if( notFinish && postingCategoryCombo.getSelectedItem() == null )
+            errors.addError( "A categoria do lançamento não pode estar vazio" );
         
-        if ( companyCombo.getSelectedItem() == null )
-            e.addError( "Companhia" );
+        if( ! notFinish && ! realValueField.isValid()  )
+            errors.addError( "O valor real não pode estar vazia !" );
+        
+        if( ! notFinish &&  realDateFiled.getValue() == null )
+            errors.addError( "A data real não pode estar vazia !" );
+        
+        if( notFinish && realDateFiled.getValue() != null && ! realValueField.isValid() )
+            errors.addError( "A valor real não pode ser 0!" );
+
+        if( notFinish && realValueField.isValid() &&  realDateFiled.getValue() == null )
+            errors.addError( "A data real não pode estar vazia !" );
+    }
+    
+    /**
+     * loadField
+     * 
+     * @param mode PostingEditor.Mode
+     */
+    public void loadField( PostingEditor.Mode mode )
+    {
+        this.mode = mode;
+        
+        ckRepeat.setDisabled( mode != PostingEditor.Mode.NEW );
+        portionTotalFiled.setDisabled( ( source == null || ! source.isRepeat() ) && mode == PostingEditor.Mode.NEW );
+        
+        if( mode == PostingEditor.Mode.FINISH )
+        {
+            grid.getChildren().clear();
+            
+            nameField.setDisabled( true );
+            
+            grid.addRow( lbName, nameField );
+            
+            grid.addRow( lbRealDate, realDateFiled );
+            grid.addRow( lbRealValue, realValueField );
+            grid.addRow( lbCategory, postingCategoryCombo );
+            grid.addRow( lbCompletion, completionTypeCombo );
+
+            grid.setStyle( "width: 100%;" );
+            grid.setRowHeight( "30px" );
+
+            grid.setColspan( 0, 1, 3 );
+            grid.setColspan( 1, 1, 3 );
+            grid.setColspan( 2, 1, 3 );
+            grid.setColspan( 3, 1, 3 );
+            
+            setInput( source ); //refresh postings
+        }
+        
+        else if ( mode != PostingEditor.Mode.FINISH && mode != PostingEditor.Mode.NEW )
+        {
+            ckRepeat.setDisabled( true );
+            lbPortion.setValue( "Parcela: " + source.getPortion() + " de " + source.getPortionTotal() );
+            portionTotalFiled.setVisible( false ); 
+            
+            grid.setColspan( 7, 2, 2 );
+        }
+        
+        completionTypeCombo.getParent().getParent().setVisible( mode == PostingEditor.Mode.FINISH );
     }
     
      
@@ -137,13 +224,32 @@ public class PostingEditorGeneralPane
      */
     private void showCompletionType()
     {
-        boolean visible = ckCompletionAuto.isChecked()|| realDateFiled.getValue() != null || realValueField.isValid();
+        boolean visible = ckCompletionAuto.isChecked() || realDateFiled.getValue() != null || realValueField.getValue() != null;
         
-        completionTypeCombo.setVisible( visible );
-        
-        lbCompletion.setVisible( visible );
+        completionTypeCombo.getParent().getParent().setVisible( visible );
     }
     
+    
+    /**
+     * fireEvent
+     * 
+     */
+    private void fireEvent()
+    {
+        getInput( source );
+        
+        if( source.getEstimateDate() != null )
+        {
+            Executions.getCurrent().postEvent( new Event( Events.ON_CHANGE_VALUES, this, source ) );
+        }
+        
+        else
+        {
+            Prompts.info( "Para selecionar está opção é necessário preencher uma data estimada" );
+            
+            ckRepeat.setChecked( false );
+        }
+    }
     
     /**
      * initComponents
@@ -151,7 +257,9 @@ public class PostingEditorGeneralPane
      */
     private void initComponents()
     {
+        setStyle( "overflow-x: hidden !important;" );
         nameField.setWidth( "100%" );
+        lbName.setStyle( "width: 115px; display: block;" );
         
         realValueField.setWidth( "200px" );
         estimateValueField.setWidth( "200px" );
@@ -159,11 +267,12 @@ public class PostingEditorGeneralPane
         realDateFiled.setWidth( "200px" );
         estimateDateField.setWidth( "200px" );
         companyCombo.setHflex( null );
-        companyCombo.setWidth( "651px" );
+        companyCombo.setWidth( "640px" );
         
         realValueField.setFormat( "R$ ##0.00" );
         estimateValueField.setFormat( "R$ ##0.00" );
         portionTotalFiled.setConstraint( "no empty,min 1 max 12" );
+        
         
         grid.addRow( lbName, nameField );
         grid.addRow( lbEstimateDate, estimateDateField, lbRealDate, realDateFiled );
@@ -185,26 +294,17 @@ public class PostingEditorGeneralPane
         
         appendChild( grid );
         
-        ckRepeat.addEventListener( Events.ON_CHECK, (Event t) ->
+        ckRepeat.addEventListener( Events.ON_CHECK, e ->
         {
             portionTotalFiled.setDisabled( ! ckRepeat.isChecked() );
-//            fireEvent();
+            fireEvent();
         } );
         
-        ckRepeat.addEventListener( Events.ON_CHECK, (Event t) ->
-        {
-            showCompletionType();
-        } );
+        ckCompletionAuto.addEventListener( Events.ON_CHECK, e -> showCompletionType() );
         
-        realDateFiled.addEventListener( Events.ON_CHANGE, (Event t) ->
-        {
-            showCompletionType();
-        } );
+        realDateFiled.addEventListener( Events.ON_CHANGE, e -> showCompletionType() );
        
-        realValueField.addEventListener( Events.ON_CHANGE, (Event t) -> 
-        {
-            showCompletionType();
-        } );
+        realValueField.addEventListener( Events.ON_CHANGE, e -> showCompletionType() );
         
     }
     

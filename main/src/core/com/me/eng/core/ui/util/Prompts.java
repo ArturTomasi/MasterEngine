@@ -36,12 +36,13 @@ public class Prompts
     /**
      * confirm
      * 
+     * @param title String
      * @param message String
      * @param callback Callback
      */
-    public static void confirm( String message, final Callback callback )
+    public static void confirm( String title, String message, final Callback callback )
     {
-        Messagebox.show( message, "Confirmação", Messagebox.YES | Messagebox.NO, 
+        Messagebox.show( message, title , Messagebox.YES | Messagebox.NO, 
                          Messagebox.QUESTION,  (Event e) ->
         {
             switch ( (Integer) e.getData() )
@@ -54,6 +55,17 @@ public class Prompts
                     callback.cancelInput();
             }
         } );
+    }
+    
+    /**
+     * confirm
+     * 
+     * @param message String
+     * @param callback Callback
+     */
+    public static void confirm( String message, final Callback callback )
+    {   
+        confirm( "Confirmação", message, callback );
     }
     
     /**

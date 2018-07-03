@@ -29,6 +29,7 @@ import com.me.eng.finances.domain.PostingCategory;
 import com.me.eng.finances.ui.tables.PostingCategoryTable;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Vlayout;
 
 /**
@@ -47,14 +48,12 @@ public class PostingCategoryPicker
      */
     public static void pick( Component owner, Callback<PostingCategory> callback )
     {
-        PostingCategoryPicker picker = new PostingCategoryPicker();
+        DefaultPicker picker = DefaultPicker.createPicker( owner, new PostingCategoryPicker(), callback );
         picker.setTitle( "Categorias de Lançamento" );
         picker.setInfo( "Selecione um categoria de lançamento!" );
         picker.setIcon( "finances/sb_categories.png" );
-        
-        DefaultPicker window = DefaultPicker.createPicker( owner, picker, callback );
-        window.setHeight( "550px" );
-        window.setWidth( "350px" );
+        picker.setHeight( "550px" );
+        picker.setWidth( "350px" );
         
     }
     
@@ -132,10 +131,9 @@ public class PostingCategoryPicker
         
         appendChild( vlayout );
         
-        searchField.addEventListener( SearchField.Events.ON_SEARCH, (Event t) ->
-        {
-            search();
-        } );
+        searchField.addEventListener( SearchField.Events.ON_SEARCH, (Event t) -> search() );
+        
+        postingaCategoryTable.addEventListener( Events.ON_SELECT, (Event t ) -> close() );
     }
     
     private SearchField searchField = new SearchField();

@@ -29,6 +29,7 @@ import com.me.eng.finances.domain.Company;
 import com.me.eng.finances.ui.tables.CompanyTable;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Vlayout;
 
 /**
@@ -47,12 +48,11 @@ public class CompanyPicker
      */
     public static void pick( Component owner, Callback<Company> callback )
     {
-        CompanyPicker picker = new CompanyPicker();
+        DefaultPicker picker = DefaultPicker.createPicker( owner, new CompanyPicker(), callback );
         picker.setTitle( "Companhias" );
         picker.setInfo( "Selecione a companhia do lançamento finaceiro!" );
         picker.setIcon( "finances/fi_company.png" );
-        
-        DefaultPicker.createPicker( owner, picker, callback ).setHeight( "400px" );
+        picker.setHeight( "400px" );
     }
     
     /**
@@ -73,7 +73,7 @@ public class CompanyPicker
             handleException( e );
         }
     }
-
+    
     /**
      * setSelectedItem
      * 
@@ -119,6 +119,9 @@ public class CompanyPicker
     private void initComponents()
     {
         Vlayout vlayout = new Vlayout();
+        vlayout.setVflex( "true" );
+        vlayout.setHflex( "true" );
+        
         vlayout.setSpacing( "10px" );
         vlayout.appendChild( searchField );
         vlayout.appendChild( companyTable );
@@ -126,6 +129,8 @@ public class CompanyPicker
         appendChild( vlayout );
         
         searchField.addEventListener( SearchField.Events.ON_SEARCH, (Event t) -> search() );
+        
+        companyTable.addEventListener( Events.ON_SELECT, (Event t ) -> close() );
     }
     
     private SearchField searchField = new SearchField();

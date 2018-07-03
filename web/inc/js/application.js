@@ -36,3 +36,20 @@ function shake( parent )
         }, 3000 );
     } ); 
 };
+
+
+function copyClipboard( text )
+{
+    var elem = document.createElement( 'textarea' );
+    
+    elem.style = "display: none;";
+    elem.value = text;
+    
+    document.body.appendChild( elem );
+    
+    elem.select();
+
+    document.execCommand( "copy" );
+    
+    elem.remove();
+}

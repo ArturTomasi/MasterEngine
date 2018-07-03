@@ -21,6 +21,7 @@ package com.me.eng.core.ui.pickers;
 
 import com.me.eng.core.ui.DefaultInputPane;
 import com.me.eng.core.ui.editors.Errors;
+import com.me.eng.core.ui.util.GenericObserver;
 
 /**
  *
@@ -30,6 +31,8 @@ public abstract class PickerPanel<T>
     extends 
         DefaultInputPane
 {
+    private GenericObserver<T> closeListener;
+    
     /**
      * PickerPanel
      * 
@@ -39,7 +42,7 @@ public abstract class PickerPanel<T>
         setTitle( "Selecione um item" );
         setInfo( "Selecione um item da lista abaixo" );
     }
-
+    
     /**
      * validateInput
      * 
@@ -70,4 +73,26 @@ public abstract class PickerPanel<T>
      * @ignored getSelectedItem
      */
     public abstract T getSelectedItem();
+
+    /**
+     * onClose
+     * 
+     * @param observer GenericObserver&lt;T&gt;
+     */
+    public void onClose( GenericObserver<T> observer )
+    {
+        closeListener = observer;
+    }
+    
+    /**
+     * close
+     * 
+     */
+    public void close()
+    {
+        if ( closeListener != null )
+        {
+            closeListener.notify( getSelectedItem() );
+        }
+    }
 }
