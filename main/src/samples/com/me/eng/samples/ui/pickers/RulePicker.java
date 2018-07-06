@@ -19,12 +19,10 @@
  */
 package com.me.eng.samples.ui.pickers;
 
-import com.me.eng.core.application.ApplicationContext;
 import com.me.eng.core.services.ApplicationServices;
 import com.me.eng.samples.domain.Rule;
 import com.me.eng.samples.repositories.RuleRepository;
 import com.me.eng.core.ui.Callback;
-import com.me.eng.core.ui.apps.Action;
 import com.me.eng.core.ui.pickers.DefaultPicker;
 import com.me.eng.core.ui.pickers.PickerPanel;
 import com.me.eng.samples.ui.editors.RuleEditor;
@@ -34,7 +32,6 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Hlayout;
-import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Toolbarbutton;
 import org.zkoss.zul.Vlayout;
 
@@ -46,11 +43,21 @@ public class RulePicker
     extends 
         PickerPanel<Rule>
 {
+    /**
+     * pick
+     * 
+     * @param owner Component
+     * @param callback Callback&lt;Rule&gt;
+     */
     public static void pick( Component owner, Callback<Rule> callback )
     {
         DefaultPicker.createPicker( owner, new RulePicker(), callback );
     }
     
+    /**
+     * RulePicker
+     * 
+     */
     private RulePicker()
     {
         initComponents();
@@ -58,6 +65,10 @@ public class RulePicker
         loadRules();
     }
     
+    /**
+     * loadRules
+     * 
+     */
     private void loadRules()
     {
         try
@@ -73,30 +84,49 @@ public class RulePicker
         }
     }
 
+    /**
+     * setSelectedItem
+     * 
+     * @param source Rule
+     */
     @Override
     public void setSelectedItem( Rule source )
     {
         ruleTable.setSelectedElement( source );
     }
 
+    /**
+     * getSelectedItem
+     * 
+     * @return Rule
+     */
     @Override
     public Rule getSelectedItem()
     {
         return ruleTable.getSelectedElement();
     }
     
+    /**
+     * getSelectedRule
+     * 
+     * @return Rule
+     */
     private Rule getSelectedRule()
     {
         Rule rule = getSelectedItem();
         
         if ( rule == null )
         {
-            Messagebox.show( "Selecione uma Norma!" );
+            Prompts.alert( "Selecione uma Norma!" );
         }
         
         return rule;
     }
     
+    /**
+     * initComponents
+     * 
+     */
     private void initComponents()
     {
         btAdd.setLabel( "Novo" );
@@ -206,7 +236,7 @@ public class RulePicker
                                 
                                 if ( v > 0 )
                                 {
-                                    Messagebox.show( "Esta norma está em uso por " + v + " amostra(s).\n" + 
+                                    Prompts.alert( "Esta norma está em uso por " + v + " amostra(s).\n" + 
                                                      "Não é possível proceder com a exclusão." ); 
                                 }
                                 

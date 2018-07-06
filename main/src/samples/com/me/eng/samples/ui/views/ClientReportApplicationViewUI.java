@@ -28,7 +28,6 @@ import com.me.eng.samples.ui.tables.ClientTable;
 import com.me.eng.core.ui.util.Prompts;
 import com.me.eng.core.ui.views.ApplicationViewUI;
 import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zul.Messagebox;
 
 /**
  *
@@ -147,7 +146,7 @@ public class ClientReportApplicationViewUI
             
             if ( samples > 0 )
             {
-                Messagebox.show( "Este cliente possui " + samples + " amostra(s) registradas.\n" + 
+                Prompts.alert( "Este cliente possui " + samples + " amostra(s) registradas.\n" + 
                                  "Não é possível proceder com esta exclusão." );
                 
                 return;
@@ -187,7 +186,7 @@ public class ClientReportApplicationViewUI
         
         if ( client == null )
         {
-            Messagebox.show( "Selecione um cliente!" );
+            Prompts.alert( "Selecione um cliente!" );
         }
         
         return client;

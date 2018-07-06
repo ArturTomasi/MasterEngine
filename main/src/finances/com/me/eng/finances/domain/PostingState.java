@@ -25,13 +25,28 @@ package com.me.eng.finances.domain;
  */
 public enum PostingState 
 {
-    REGISTRED(),
-    PROGRESS(),
-    FINISHED();
+    REGISTRED   ( "fi_registred.png" ),
+    PROGRESS    ( "fi_running.png" ),
+    FINISHED    ( "fi_finished.png" );
 
+    private String icon;
+    
     /**
      * PostingState
      * 
      */
-    private PostingState() {}
+    private PostingState( String icon ) 
+    {
+        this.icon = icon;
+    }
+    
+    /**
+     * icon
+     * 
+     * @return String
+     */
+    public String icon()
+    {
+        return "finances/" + icon;
+    }
 }

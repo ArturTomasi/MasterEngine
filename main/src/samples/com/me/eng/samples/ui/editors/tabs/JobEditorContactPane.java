@@ -32,7 +32,6 @@ import java.util.List;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Hlayout;
-import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Toolbarbutton;
 import org.zkoss.zul.Vlayout;
 
@@ -45,11 +44,20 @@ public class JobEditorContactPane
 {
     private Job job;
     
+    /**
+     * JobEditorContactPane
+     * 
+     */
     public JobEditorContactPane()
     {
         initComponents();
     }
     
+    /**
+     * getInput
+     * 
+     * @param source Job
+     */
     @Override
     public void getInput( Job source )
     {
@@ -65,6 +73,11 @@ public class JobEditorContactPane
         source.setContacs( items );
     }
 
+    /**
+     * setInput
+     * 
+     * @param source Job
+     */
     @Override
     public void setInput( Job source )
     {
@@ -77,18 +90,27 @@ public class JobEditorContactPane
         contactTable.setElements( items );
     }
     
+    /**
+     * getSelectedContact
+     * 
+     * @return Contact
+     */
     private Contact getSelectedContact()
     {
         Contact contact = contactTable.getSelectedElement();
         
         if ( contact == null )
         {
-            Messagebox.show( "Selecione um contato!" );
+            Prompts.alert( "Selecione um contato!" );
         }
         
         return contact;
     }
     
+    /**
+     * initComponents
+     * 
+     */
     private void initComponents()
     {
         btAdd.setLabel( "Adicionar" );

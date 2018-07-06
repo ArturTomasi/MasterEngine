@@ -133,40 +133,40 @@ public class PostingEditorGeneralPane
         boolean notFinish = mode != PostingEditor.Mode.FINISH;
         
         if( notFinish && estimateDateField.getValue() == null )
-            errors.addError( "A data estimada não pode estar vazia !" );
+            errors.addError( "A data estimada não pode estar vazia!" );
       
         if( notFinish && ! estimateValueField.isValid() )
-            errors.addError( "O valor estimado está inválido !" );
+            errors.addError( "O valor estimado está inválido!" );
         
         if ( ! nameField.isValid() )
             errors.addError( "O Nome não pode estar vazio!" );
         
         if( ( ckCompletionAuto.isChecked() || ! notFinish ) && completionTypeCombo.getSelectedItem() == null )
-            errors.addError( "O tipo de finalização não pode estar vazio" );
+            errors.addError( "O tipo de finalização não pode estar vazio!" );
         
         if( realDateFiled.getValue() != null && completionTypeCombo.getSelectedItem() == null )
-            errors.addError( "O tipo de finalização não pode estar vazio" );
+            errors.addError( "O tipo de finalização não pode estar vazio!" );
         
         if( notFinish && companyCombo.getSelectedItem() == null )
-            errors.addError( "A companhia do lançamento não pode estar vazio" );
+            errors.addError( "A companhia do lançamento não pode estar vazio!" );
         
         if( notFinish && userCombo.getSelectedItem() == null )
-            errors.addError( "A responsável do lançamento não de estar vazio" );
+            errors.addError( "A responsável do lançamento não de estar vazio!" );
         
         if( notFinish && postingCategoryCombo.getSelectedItem() == null )
-            errors.addError( "A categoria do lançamento não pode estar vazio" );
+            errors.addError( "A categoria do lançamento não pode estar vazio!" );
         
-        if( ! notFinish && ! realValueField.isValid()  )
-            errors.addError( "O valor real não pode estar vazia !" );
+        if( ! notFinish && realValueField.getValue() == null )
+            errors.addError( "O valor real não pode estar vazia!" );
         
         if( ! notFinish &&  realDateFiled.getValue() == null )
-            errors.addError( "A data real não pode estar vazia !" );
+            errors.addError( "A data real não pode estar vazia!" );
         
-        if( notFinish && realDateFiled.getValue() != null && ! realValueField.isValid() )
+        if( notFinish && realDateFiled.getValue() != null && realValueField.getValue() == null )
             errors.addError( "A valor real não pode ser 0!" );
 
-        if( notFinish && realValueField.isValid() &&  realDateFiled.getValue() == null )
-            errors.addError( "A data real não pode estar vazia !" );
+        if( notFinish && realValueField.getValue() != null &&  realDateFiled.getValue() == null )
+            errors.addError( "A data real não pode estar vazia!" );
     }
     
     /**

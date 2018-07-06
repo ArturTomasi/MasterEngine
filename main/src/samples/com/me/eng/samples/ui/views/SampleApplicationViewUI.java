@@ -33,6 +33,7 @@ import com.me.eng.core.ui.events.EventLookup;
 import com.me.eng.samples.ui.panes.SampleFilterPane;
 import com.me.eng.samples.ui.tables.SampleTable;
 import com.me.eng.core.ui.util.KeyEventControl;
+import com.me.eng.core.ui.util.Prompts;
 import com.me.eng.core.ui.views.ApplicationViewUI;
 import java.sql.Date;
 import java.util.LinkedList;
@@ -42,7 +43,6 @@ import java.util.logging.Logger;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Filedownload;
-import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Vlayout;
 
 /**
@@ -144,7 +144,7 @@ public class SampleApplicationViewUI
 
             if ( ! Client.isPersisted( client ) )
             {
-                Messagebox.show( "Selecione um cliente!" );
+                Prompts.alert( "Selecione um cliente!" );
             }
 
             else
@@ -245,37 +245,30 @@ public class SampleApplicationViewUI
         {
             if ( ! sample.getProofs().isEmpty() )
             {
-                Messagebox.show( "Não é possível a exclusão desta Amostra.\n" + 
+                Prompts.alert( "Não é possível a exclusão desta Amostra.\n" + 
                                  "Você deve excluir a(s) Contra(s) prova(s) primeiro." );
                 
                 return;
             }
             
-            Messagebox.show( "Realmente excluir a Amostra " + sample.getId() + " ?", 
-                         "Confirmação", 
-                         Messagebox.YES | Messagebox.NO, 
-                         Messagebox.QUESTION, 
-                         new EventListener<Event>()
+            Prompts.confirm( "Realmente excluir a Amostra " + sample.getId() + " ?", new Callback()
             {
                 @Override
-                public void onEvent( Event e ) throws Exception
+                public void acceptInput() throws Exception 
                 {
-                    if ( ( (Integer) e.getData() ) == Messagebox.YES )
+                    EventFactory.publish( EventLookup.DELETE_SAMPLE, sample.clone() );
+
+                    Sample parent = sample.unbound();
+
+                    ApplicationServices.getCurrent()
+                            .getSampleRepository()
+                            .delete( sample );
+
+                    if ( parent != null )
                     {
-                        EventFactory.publish( EventLookup.DELETE_SAMPLE, sample.clone() );
-                        
-                        Sample parent = sample.unbound();
-                        
                         ApplicationServices.getCurrent()
-                                .getSampleRepository()
-                                .delete( sample );
-                        
-                        if ( parent != null )
-                        {
-                            ApplicationServices.getCurrent()
-                                .getSampleRepository()
-                                .update( parent );
-                        }
+                            .getSampleRepository()
+                            .update( parent );
                     }
                 }
             } );
@@ -296,7 +289,7 @@ public class SampleApplicationViewUI
             {
                 if ( sample.getParent() != null )
                 {
-                    Messagebox.show( "Esta já é uma contra prova!" );
+                    Prompts.alert( "Esta já é uma contra prova!" );
                     return;
                 }
                 
@@ -358,7 +351,7 @@ public class SampleApplicationViewUI
         
         if ( sample == null )
         {
-            Messagebox.show( "Selecione uma amostra!" );
+            Prompts.alert( "Selecione uma amostra!" );
         }
         
         return sample;

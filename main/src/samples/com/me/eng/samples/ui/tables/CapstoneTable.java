@@ -28,7 +28,6 @@ import com.me.eng.core.ui.tables.ActionColumn;
 import com.me.eng.core.ui.tables.Column;
 import com.me.eng.samples.ui.editors.CapstoneEditor;
 import com.me.eng.core.ui.util.Prompts;
-import org.zkoss.zul.Messagebox;
 
 /**
  *
@@ -125,7 +124,7 @@ public class CapstoneTable
                         
                         if ( v > 0 )
                         {
-                            Messagebox.show( "Este Tipo de capeamento está em uso por " + v + " amostra(s).\n" + 
+                            Prompts.alert( "Este Tipo de capeamento está em uso por " + v + " amostra(s).\n" + 
                                              "Não é possível proceder com a exclusão." );
                         }
                         

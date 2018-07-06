@@ -28,7 +28,6 @@ import com.me.eng.core.ui.tables.ActionColumn;
 import com.me.eng.core.ui.tables.Column;
 import com.me.eng.samples.ui.editors.EquipmentEditor;
 import com.me.eng.core.ui.util.Prompts;
-import org.zkoss.zul.Messagebox;
 
 /**
  *
@@ -128,7 +127,7 @@ public class EquipmentTable
                         
                         if ( v > 0 )
                         {
-                            Messagebox.show( "Este equipamento está em uso por " + v + " amostra(s).\n" + 
+                            Prompts.alert( "Este equipamento está em uso por " + v + " amostra(s).\n" + 
                                              "Não é possível proceder com a exclusão." );  
                         }
                         

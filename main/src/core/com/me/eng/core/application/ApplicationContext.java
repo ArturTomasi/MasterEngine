@@ -24,6 +24,7 @@ import com.google.common.base.Strings;
 import com.me.eng.samples.domain.SampleFilter;
 import com.me.eng.core.domain.User;
 import com.me.eng.core.license.controller.LicenseManager;
+import com.me.eng.core.ui.util.Prompts;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.security.Principal;
@@ -97,8 +98,14 @@ public class ApplicationContext
         }
         
         return filter;
-        
     }
+
+    /**
+     * ApplicationContext
+     * 
+     */
+    private ApplicationContext() {}
+
     
     /**
      * getActiveUser
@@ -175,7 +182,7 @@ public class ApplicationContext
         
         String msg = Strings.isNullOrEmpty( e.getMessage() ) ? "Erro" : e.getMessage();
         
-        Messagebox.show( msg, "Erro inesperado", Messagebox.OK, Messagebox.ERROR );
+//        Prompts.alert( msg, "Erro inesperado", Messagebox.OK, Messagebox.ERROR );
     }
     
     /**

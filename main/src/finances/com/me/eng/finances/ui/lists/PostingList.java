@@ -19,7 +19,9 @@
  */
 package com.me.eng.finances.ui.lists;
 
+import com.me.eng.core.application.ResourceLocator;
 import com.me.eng.core.ui.lists.AbstractList;
+import com.me.eng.core.util.Formatter;
 import com.me.eng.finances.domain.Posting;
 
 /**
@@ -46,7 +48,37 @@ public class PostingList
     @Override
     public String doContent( Posting source )
     {
-        return source.getName();
+        StringBuilder sb = new StringBuilder();
+        
+        sb.append( "<html>" )
+          .append(  "<table class=\"posting-list\">" )
+          .append(      "<tr>" )
+          .append(          "<td rowspan=\"3\" class=\"icon\">" ).append( "<img src=\"" ).append( ResourceLocator.getFullImageResource( source.getState().icon() ) ).append( "\"></td>" )
+          .append(          "<td colspan=\"8\" class=\"title\">" ).append( source ).append( "</td>" )
+          .append(      "</tr>" )
+          .append(          "</td>" )
+          .append(      "<tr>" )
+          .append(          "<td class=\"info\" style=\"width: 60px\">" ).append( "Data: ").append( "</td>" )
+          .append(          "<td class=\"value\" style=\"width: 150px\">" ).append( Formatter.getInstance().formatDate( source.getEstimateDate() ) ).append( "</td>" )
+          .append(          "<td class=\"info\">" ).append( "Companhia: ").append( "</td>" )
+          .append(          "<td class=\"value\" style=\"width: 300px\">" ).append( source.getCompany() ).append( "</td>" )
+          .append(          "<td class=\"info\" style=\"width: auto; visibility: " ).append( source.isCompletionAuto() ? "visible" : "hidden" ).append( "\">" )
+          .append(              "Finaliza automaticamente" )
+          .append(          "</td>" )
+          .append(      "</tr>" )
+          .append(      "<tr>" )
+          .append(          "<td class=\"info\" style=\"width: 60px\">" ).append( "Valor: ").append( "</td>" )
+          .append(          "<td class=\"value\" style=\"width: 150px\">" ).append( Formatter.getInstance().formatCurrency( source.getEstimateValue() ) ).append( "</td>" )
+          .append(          "<td class=\"info\">" ).append( "Categoria: " ).append( "</td>" )
+          .append(          "<td class=\"value\" style=\"width: 300px\">" ).append( source.getCategory() ).append( "</td>" )
+          .append(          "<td class=\"info\" style=\"width: auto; visibility: " ).append( source.isRepeat() ? "visible" : "hidden" ).append( "\">" )
+          .append(              "Parcela: " ).append( source.getPortion() ).append( " de " ).append( source.getPortionTotal() )
+          .append(          "</td>" )
+          .append(      "</tr>" )
+          .append(  "</table>" )
+          .append( "</html>" );
+        
+        return sb.toString();
     }
     
 }

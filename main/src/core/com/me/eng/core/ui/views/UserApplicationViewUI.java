@@ -28,7 +28,6 @@ import com.me.eng.core.ui.editors.UserEditor;
 import com.me.eng.core.ui.tables.UserTable;
 import com.me.eng.core.ui.util.Prompts;
 import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Vlayout;
 
 /**
@@ -78,7 +77,7 @@ public class UserApplicationViewUI
         
         if ( user == null )
         {
-            Messagebox.show( "Selecione um usuário!" );
+            Prompts.alert( "Selecione um usuário!" );
         }
         
         return user;
@@ -142,13 +141,13 @@ public class UserApplicationViewUI
         {
             if ( user.equals( ApplicationContext.getInstance().getActiveUser() ) )
             {
-                Messagebox.show( "Não é possível excluir o usuário ativo!" );
+                Prompts.alert( "Não é possível excluir o usuário ativo!" );
                 return;
             }
             
             if ( user.isSystemUser() )
             {
-                Messagebox.show( "Este é o usuário Administrador e não pode ser removido!" );
+                Prompts.alert( "Este é o usuário Administrador e não pode ser removido!" );
                 return;
             }
             

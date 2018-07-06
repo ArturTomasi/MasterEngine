@@ -45,7 +45,7 @@ public class PostingEditorValuesPane
     private Posting posting;
     private HashMap<Integer, Datebox> mapDates    = new HashMap();
     private HashMap<Integer, Doublebox> mapValues = new HashMap();
-    private Calendar calendar = Calendar.getInstance();
+    private Calendar calendar = Calendar.getInstance( new Locale( "pt", "BR" ) );
     /**
      * PostingEditorValuesPane
      * 
@@ -150,14 +150,26 @@ public class PostingEditorValuesPane
         {
             grid.getChildren().clear();
 
-            grid.addRow( new Label( "Parcelas" ), new Label( "Data Estimada" ), new Label( "Valor Estimado" ) );
+            Label lbPortion = new Label( "Parcelas" );
+            Label lbDate    = new Label( "Data Estimada" );
+            Label lbValue   = new Label( "Valor Estimado" );
+
+            String lbStyle = "font-weight: bold; font-size: 14px;";
+            
+            lbPortion.setStyle( lbStyle );
+            lbDate.setStyle( lbStyle );
+            lbValue.setStyle( lbStyle );
+            
+            grid.addRow( lbPortion, lbDate, lbValue  );
 
             calendar.setTime( posting.getEstimateDate() );
             
             for ( int i = 0; i < posting.getPortionTotal() - 1; i++ )
             {
                 Datebox dateField   = new Datebox();
+                dateField.setWidth( "95%" );
                 Doublebox numberField = new Doublebox();
+                numberField.setWidth( "95%" );
                 numberField.setFormat( "R$ ##0.00" );
                 
                 if( mapDates.get( i ) != null && mapValues.get( i ) != null ) //Troca de abas
@@ -179,8 +191,11 @@ public class PostingEditorValuesPane
                 mapDates.put( i,  dateField );
                 mapValues.put( i, numberField );
                 
-                grid.addRow( new Label( calendar.getDisplayName( Calendar.MONTH, Calendar.LONG, Locale.getDefault() ) ), dateField, numberField );
+                grid.addRow( new Label( calendar.getDisplayName( Calendar.MONTH, Calendar.LONG, new Locale( "pt", "BR" ) ) ), dateField, numberField );
             }
+            
+            grid.setWidths( "100px", "200px", "200px" );
+            grid.setRowHeight( "30px" );
         }
     }
     

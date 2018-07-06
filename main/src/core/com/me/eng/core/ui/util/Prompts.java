@@ -23,6 +23,8 @@ import com.me.eng.core.application.ApplicationContext;
 import com.me.eng.core.ui.Callback;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.Events;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Html;
 import org.zkoss.zul.Messagebox;
@@ -33,6 +35,17 @@ import org.zkoss.zul.Messagebox;
  */
 public class Prompts
 {
+    /**
+     * confirm
+     * 
+     * @param message String
+     * @param callback Callback
+     */
+    public static void confirm( String message, final Callback callback )
+    {   
+        confirm( "Confirmação", message, callback );
+    }
+    
     /**
      * confirm
      * 
@@ -57,15 +70,35 @@ public class Prompts
         } );
     }
     
+
     /**
-     * confirm
+     * alert
      * 
-     * @param message String
-     * @param callback Callback
+     * @param info String
      */
-    public static void confirm( String message, final Callback callback )
-    {   
-        confirm( "Confirmação", message, callback );
+    public static void alert( String info )
+    {
+        alert( ApplicationContext.getInstance().getRoot(), info );
+    }
+    
+    /**
+     * alert
+     * 
+     * @param parent Component
+     * @param info String
+     */
+    public static void alert( Component parent, String info )
+    {
+        Div div = new Div();
+        div.setZclass( "me-prompts-alert" );
+        div.appendChild(  new Html( "<div class=\"close\">&times;</div>" + 
+                                    "<div class=\"me-prompts-alert-title\">Atenção!</div>" +
+                                    "<div class=\"me-prompts-alert-text\">" + info + "</div>"
+                                   ) );
+        
+        div.setWidgetListener( "onBind", "alert( this );" );
+
+        parent.appendChild( div );
     }
     
     /**

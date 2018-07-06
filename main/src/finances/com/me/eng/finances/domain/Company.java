@@ -156,7 +156,8 @@ public class Company
     {
         return name;
     }
-/**
+
+    /**
      * hashCode
      * 
      * @return int

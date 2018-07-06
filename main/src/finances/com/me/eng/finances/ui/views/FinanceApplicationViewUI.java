@@ -48,7 +48,8 @@ public class FinanceApplicationViewUI
     {
         setLabel( "Finanças" );
         setIcon( "finances/sb_finance.png" );
-        addAction( "Lançamentos", addAction, editAction );
+        addAction( "Lançamentos", addAction, editAction, deleteAction );
+        addAction( "Movimentações", finishAction );
     }
 
     /**
@@ -117,7 +118,7 @@ public class FinanceApplicationViewUI
         
         else
         {
-            Prompts.info( validate );
+            Prompts.alert( validate );
         }
     }
     
@@ -153,7 +154,39 @@ public class FinanceApplicationViewUI
         
         else
         {
-            Prompts.info( validate );
+            Prompts.alert( validate );
+        }
+    }
+    
+    /**
+     * finish
+     * 
+     */
+    private void finish()
+    {
+        Posting posting =  list.getSelectedElement();
+        
+        String validate = controller.validateFinish( posting );
+        
+        if( validate == null )
+        {
+            PostingEditor.edit( this, PostingEditor.Mode.FINISH, new Callback<Posting>( posting )
+            {
+                @Override
+                public void acceptInput() throws Exception 
+                {
+                    controller.finishPosting( getSource() );
+
+                    refreshContent();
+
+                    Prompts.info( "Finalizado com sucesso!" );
+                }
+            } );
+        }
+        
+        else
+        {
+            Prompts.alert( validate );
         }
     }
     
@@ -170,7 +203,8 @@ public class FinanceApplicationViewUI
         list.setHflex( "true" );
         list.setVflex( "true" );
         
-        list.addContextAction( editAction );
+        list.addContextAction( finishAction );
+        list.addContextAction( deleteAction );
         
         appendChild( list );
     }
@@ -192,6 +226,24 @@ public class FinanceApplicationViewUI
         public void onEvent( Event t ) throws Exception 
         {
             edit();
+        }
+    };
+    
+    private Action deleteAction = new Action( "core/tb_delete.png", "Excluir", "Excluir lançamento selecionado!" ) 
+    {
+        @Override
+        public void onEvent( Event t ) throws Exception 
+        {
+            delete();
+        }
+    };
+    
+    private Action finishAction = new Action( "finances/tb_finish.png", "Finalizar", "Finalizar lançamento selecionado!" ) 
+    {
+        @Override
+        public void onEvent( Event t ) throws Exception 
+        {
+            finish();
         }
     };
 }

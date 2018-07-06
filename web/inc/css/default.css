@@ -14,7 +14,7 @@ body, html
     position: absolute;
     top: 50%;
     left: 50%;
-    background-color: rgb(48, 67, 105, 0.6);
+    background-color: rgba(48, 67, 105, 0.6);
     padding: 75px;
     border-radius: 50px;
 }
@@ -232,7 +232,7 @@ body, html
     width: 50%;
     height: 40px;
     background-color: #2ecc71;
-    z-index: 10000;
+    z-index: 90000;
     border-radius: 20px;
     margin: auto;
     position: absolute;
@@ -249,7 +249,94 @@ body, html
     width: 100%;
     text-align: center;
     vertical-align: middle;
-    font-family: sans-serif;
+    font-family: Arial,sans-serif;
     transform: translateY(50%);
     font-weight: bold;
+}
+
+.me-prompts-alert
+{
+    width: 700px;
+    height: 300px;
+    background-color: #fbb62f;
+    z-index: 90000;
+    border-radius: 20px;
+    margin: auto;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    top: 20%;
+    color: #fff;
+}
+
+.me-prompts-alert-text
+{
+    width: 100%;
+    padding-left: 50px;
+    font-size: 18px;
+    font-family: Arial,sans-serif;
+    font-weight: bold;
+}
+
+.me-prompts-alert .close
+{
+    right: 15px;
+    position: absolute;
+    top: 5px;
+    font-size: 35px;
+    cursor: pointer;
+}
+
+.me-prompts-alert-title
+{
+    width: 100%;
+    text-align: center;
+    font-family: Arial,sans-serif;
+    font-size: 22px;
+    margin: 25px 0px;
+    font-weight: bold;
+}
+
+.posting-list
+{
+    font-family: Arial,Sans-serif;
+    width: 100%;
+    padding: 10px 0px;
+}
+
+.posting-list .value
+{
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.posting-list .icon,
+.posting-list .icon img
+{
+    width: 65px;
+    padding: 5px 10px;
+}
+
+.posting-list .title
+{
+    font-size: 22px;
+    color:  rgb(48, 67, 105);
+    font-weight: bold;
+}
+
+.posting-list .info
+{
+    font-size: 15px;
+    width: 125px;
+    font-weight: bold;
+    color:  rgb(48, 67, 105);
+}
+
+.posting-list .details
+{
+    font-size: 15px;
+    width: 200px;
+    background-color: rgb(48, 67, 105);
 }

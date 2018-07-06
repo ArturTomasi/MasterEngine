@@ -118,6 +118,7 @@ public class PostingDAO
                                            " and " +
                                            " portion   = :portion " );
         
+        query.setParameter( "state",     posting.getState() );
         query.setParameter( "newstate",  posting.getState() == PostingState.FINISHED ? PostingState.PROGRESS : PostingState.REGISTRED );
         query.setParameter( "realDate",  null );
         query.setParameter( "realValue", null );

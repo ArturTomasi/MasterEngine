@@ -59,7 +59,7 @@ public class PostingController
     {
         try
         {
-            if ( posting.getId() == 0 )
+            if ( posting.getId() == null || posting.getId() == 0 )
             {
                 PostingRepository repository = ApplicationServices.getCurrent().getPostingRepository();
                 
@@ -109,23 +109,23 @@ public class PostingController
         }
     }
     
-    
+    /**
+     * finishPosting
+     * 
+     * @param posting Posting
+     */
     public void finishPosting( Posting posting )
     {
         try
         {
-//            com.pa.helpfin.model.ModuleContext.getInstance()
-//                                            .getPostingManager()
-//                                            .updateValue( posting );
-//            
-//            if( posting.isRepeat() && posting.getPortion() < posting.getPortionTotal() )
-//            {
-//                com.pa.helpfin.model.ModuleContext
-//                        .getInstance()
-//                        .getPostingManager()
-//                        .updateNextPortion( posting );
-//            }
+            PostingRepository repository = ApplicationServices.getCurrent().getPostingRepository();
+
+            repository.update( posting );
             
+            if( posting.isRepeat() && posting.getPortion() < posting.getPortionTotal() )
+            {
+                repository.updateNextPortion( posting );
+            }
         }
         
         catch ( Exception e )

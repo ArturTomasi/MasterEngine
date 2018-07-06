@@ -22,8 +22,8 @@ package com.me.eng.core.ui.views;
 import com.me.eng.core.application.ConfigurationManager;
 import com.me.eng.core.ui.apps.Action;
 import com.me.eng.core.ui.parts.ConfigurationTree;
+import com.me.eng.core.ui.util.Prompts;
 import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zul.Messagebox;
 
 /**
  *
@@ -74,7 +74,7 @@ public class ConfigurationApplicationViewUI
             ConfigurationManager.getInstance()
                     .store( configurationTree.getConfigurationNodeRoot() );
             
-            Messagebox.show( "Salvo com sucesso!" );
+            Prompts.info( "Salvo com sucesso!" );
         }
         
         catch ( Exception e )

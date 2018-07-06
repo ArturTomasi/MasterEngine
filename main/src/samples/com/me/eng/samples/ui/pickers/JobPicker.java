@@ -34,7 +34,6 @@ import com.me.eng.core.ui.util.Utils;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zul.Hlayout;
-import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Toolbarbutton;
 import org.zkoss.zul.Vlayout;
 
@@ -46,11 +45,24 @@ public class JobPicker
     extends 
         PickerPanel<Job>
 {
+    /**
+     * pick
+     * 
+     * @param owner Component
+     * @param callback Callback&lt;Job&gt;
+     */
     public static void pick( Component owner, Callback<Job> callback )
     {
         pick( owner, null, callback );
     }
     
+    /**
+     * pick
+     * 
+     * @param owner Component
+     * @param client Client
+     * @param callback Callback&lt;Job&gt;
+     */
     public static void pick( Component owner, Client client, Callback<Job> callback )
     {
         JobPicker jobPicker = new JobPicker();
@@ -75,35 +87,58 @@ public class JobPicker
 
     private Client client;
     
+    /**
+     * JobPicker
+     * 
+     */
     public JobPicker()
     {
         initComponents();
     }
 
+    /**
+     * setSelectedItem
+     * 
+     * @param source Job
+     */
     @Override
     public void setSelectedItem( Job source )
     {
         jobTable.setSelectedElement( source );
     }
     
+    /**
+     * getSelectedItem
+     * 
+     * @return Job
+     */
     @Override
     public Job getSelectedItem()
     {
         return jobTable.getSelectedElement();
     }
     
+    /**
+     * getSelectedJob
+     * 
+     * @return Job
+     */
     private Job getSelectedJob()
     {
         Job job = getSelectedItem();
         
         if ( job == null )
         {
-            Messagebox.show( "Selecione uma obra!" );
+            Prompts.alert( "Selecione uma obra!" );
         }
         
         return job;
     }
     
+    /**
+     * search
+     * 
+     */
     private void search()
     {
         Job found = Utils.search( searchField.getText(), 
@@ -117,6 +152,10 @@ public class JobPicker
         }
     }
     
+    /**
+     * initComponents
+     * 
+     */
     private void initComponents()
     {
         btAdd.setLabel( "Novo" );
@@ -225,7 +264,7 @@ public class JobPicker
                             
                             if ( v > 0 )
                             {
-                                Messagebox.show( "Esta obra possui " + v + " amostra(s) registradas.\n" +
+                                Prompts.alert( "Esta obra possui " + v + " amostra(s) registradas.\n" +
                                         "Não é possível proceder com a exclusão." );
                             }
                             

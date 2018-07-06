@@ -59,7 +59,6 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Hbox;
 import org.zkoss.zul.Image;
-import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Toolbarbutton;
 import org.zkoss.zul.Vlayout;
 
@@ -189,7 +188,7 @@ public class ReportApplicationViewUI
         
         if ( sample == null )
         {
-            Messagebox.show( "Selecione um item!" );
+            Prompts.alert( "Selecione um item!" );
             return;
         }
         
@@ -199,7 +198,7 @@ public class ReportApplicationViewUI
         
         if ( erros != null )
         {
-            Messagebox.show( erros );
+            Prompts.alert( erros );
             return;
         }
         
@@ -228,8 +227,7 @@ public class ReportApplicationViewUI
      */
     private void sendMails() throws Exception
     {
-        Prompts.confirm( "Reenviar os e-mails que já foram entregues?", 
-                         new Callback()
+        Prompts.confirm( "Reenviar os e-mails que já foram entregues?", new Callback()
         {
             @Override
             public void acceptInput() throws Exception

@@ -17,8 +17,9 @@
  *  stipulated in the agreement/contract under which
  *  the program(s) have been supplied.
  */
-package com.me.eng.core.application;
+package com.me.eng.core.ui.apps.listeners;
 
+import com.me.eng.core.application.ApplicationContext;
 import com.me.eng.core.infrastructure.NotificationManager;
 import com.me.eng.core.license.controller.LicenseManager;
 import javax.servlet.ServletContextEvent;

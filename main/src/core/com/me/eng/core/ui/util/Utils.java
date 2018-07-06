@@ -20,7 +20,6 @@
 package com.me.eng.core.ui.util;
 
 import java.util.List;
-import org.zkoss.zul.Messagebox;
 
 /**
  *
@@ -84,7 +83,7 @@ public class Utils
             return found;
         }
         
-        Messagebox.show( "Nenhum item encontrado!" );
+        Prompts.info( "Nenhum item encontrado!" );
         
         return null;
     }

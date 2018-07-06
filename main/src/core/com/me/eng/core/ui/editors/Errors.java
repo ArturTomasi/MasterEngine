@@ -19,10 +19,10 @@
  */
 package com.me.eng.core.ui.editors;
 
+import com.me.eng.core.ui.util.Prompts;
 import java.util.LinkedList;
 import java.util.List;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zul.Messagebox;
 
 /**
  *
@@ -30,13 +30,24 @@ import org.zkoss.zul.Messagebox;
  */
 public class Errors
 {
-    private List<String> errors = new LinkedList<String>();
+    private List<String> errors = new LinkedList();
     
+    /**
+     * addError
+     * 
+     * @param error String
+     */
     public void addError( String error )
     {
         errors.add( error );
     }
     
+    /**
+     * validate
+     * 
+     * @param owner Component
+     * @return boolean
+     */
     public boolean validate( Component owner )
     {
         StringBuilder sb = new StringBuilder();
@@ -47,10 +58,10 @@ public class Errors
             {
                 sb.append( "* " );
                 sb.append( e );
-                sb.append( "\n" );
+                sb.append( "<br>" );
             }
             
-            Messagebox.show( sb.toString() );
+            Prompts.alert( sb.toString() );
         }
         
         return errors.isEmpty();

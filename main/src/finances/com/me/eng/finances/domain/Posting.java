@@ -39,6 +39,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  *
@@ -125,6 +126,7 @@ public class Posting
     @JoinColumn(name = "ref_posting")
     private Posting parent;
 
+    @Transient
     private List<Posting> childs = new LinkedList();
     /**
      * Posting
@@ -491,6 +493,17 @@ public class Posting
     public List<Posting> getChilds() 
     {
         return childs;
+    }
+
+    /**
+     * toString
+     * 
+     * @return String
+     */
+    @Override
+    public String toString() 
+    {
+        return getName();
     }
 
     /**

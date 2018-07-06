@@ -62,7 +62,7 @@ public class PostingCategory
     @Enumerated( EnumType.ORDINAL )
     @Basic(optional = false)
     @Column(name = "posting_type")
-    private PostingType type;
+    private PostingType type = PostingType.COST;
 
     /**
      * PostingCategory
