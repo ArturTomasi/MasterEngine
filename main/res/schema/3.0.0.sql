@@ -108,3 +108,14 @@ insert into fin_companies ( id, name, info, contact ) values ( null, 'ARRUDA E M
 insert into fin_companies ( id, name, info, contact ) values ( null, 'SUBMARINO'           , null, 'art@interact.com.br' );
 insert into fin_companies ( id, name, info, contact ) values ( null, 'WALMART'             , null, 'art@interact.com.br' );
 insert into fin_companies ( id, name, info, contact ) values ( null, 'INTERACT SOLUTIONS'  , null, 'art@interact.com.br' );
+
+create table core_attachments
+(
+    id                       int             not null auto_increment,
+    name                     varchar ( 200 ) not null,
+    family                   int             not null,
+    type                     varchar ( 200 ) not null,
+    ref_source               int             not null,
+    
+    primary key( id )
+);

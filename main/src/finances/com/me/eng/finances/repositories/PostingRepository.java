@@ -19,8 +19,10 @@
  */
 package com.me.eng.finances.repositories;
 
+import com.me.eng.core.domain.User;
 import com.me.eng.core.repositories.EntityRepository;
 import com.me.eng.finances.domain.Posting;
+import java.util.List;
 
 /**
  *
@@ -60,4 +62,26 @@ public interface PostingRepository
      * @ignored deleteNextPortions
      */
     public abstract void deleteNextPortions( Posting posting ) throws Exception;
+    
+    /**
+     * List&lt;Posting&gt;
+     * 
+     * @param user User
+     * @return abstract
+     * @throws Exception
+     * @ignored findPendency
+     */
+    public abstract List<Posting> findPendency( User user ) throws Exception;
+    
+    /**
+     * List&lt;Posting&gt;
+     * 
+     * @param user User
+     * @return abstract
+     * @throws Exception
+     * @ignored findAll
+     */
+    public abstract List<Posting> findAll( User user ) throws Exception;
+    
+    
 }

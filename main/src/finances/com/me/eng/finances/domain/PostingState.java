@@ -25,19 +25,22 @@ package com.me.eng.finances.domain;
  */
 public enum PostingState 
 {
-    REGISTRED   ( "fi_registred.png" ),
-    PROGRESS    ( "fi_running.png" ),
-    FINISHED    ( "fi_finished.png" );
+    REGISTRED   ( "fi_registred.png",   "Aguardando" ),
+    PROGRESS    ( "fi_running.png",     "Em Andamento" ),
+    FINISHED    ( "fi_finished.png",    "Finalizado" );
 
-    private String icon;
+    private String icon, name;
     
     /**
      * PostingState
      * 
+     * @param icon String
+     * @param name String
      */
-    private PostingState( String icon ) 
+    private PostingState( String icon, String name ) 
     {
         this.icon = icon;
+        this.name = name;
     }
     
     /**
@@ -48,5 +51,16 @@ public enum PostingState
     public String icon()
     {
         return "finances/" + icon;
+    }
+
+    /**
+     * toString
+     * 
+     * @return String
+     */
+    @Override
+    public String toString() 
+    {
+        return name;
     }
 }

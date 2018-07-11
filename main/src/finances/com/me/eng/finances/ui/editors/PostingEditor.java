@@ -24,6 +24,7 @@ import com.me.eng.core.ui.editors.DefaultEditor;
 import com.me.eng.core.ui.editors.EditorPanel;
 import com.me.eng.core.ui.editors.Errors;
 import com.me.eng.finances.domain.Posting;
+import com.me.eng.finances.ui.editors.tabs.PostingEditorAttachmentPane;
 import com.me.eng.finances.ui.editors.tabs.PostingEditorGeneralPane;
 import com.me.eng.finances.ui.editors.tabs.PostingEditorInformationPane;
 import com.me.eng.finances.ui.editors.tabs.PostingEditorValuesPane;
@@ -175,6 +176,7 @@ public class PostingEditor
         generalPane.loadField( mode );
         valuesPane.setInput( value );
         infoPane.setInput( value );
+        attachmentPane.setInput( value );
         
         if ( mode == Mode.NEW )
         {
@@ -198,10 +200,12 @@ public class PostingEditor
                 generalPane.getInput( value );
                 valuesPane.getInput( value );
                 infoPane.getInput( value );
+                attachmentPane.getInput( value );
             break;
             case FINISH:
                 generalPane.getInput( value );
                 infoPane.getInput( value );
+                attachmentPane.getInput( value );
             break;
         }   
     }
@@ -234,6 +238,7 @@ public class PostingEditor
         tabbox.getTabs().appendChild( generalTab );
         tabbox.getTabs().appendChild( valuesTab );
         tabbox.getTabs().appendChild( infoTab );
+        tabbox.getTabs().appendChild( attachmentTab );
      
         valuesTab.setVisible( false );
         
@@ -246,9 +251,13 @@ public class PostingEditor
         Tabpanel valuesTabPanel = new Tabpanel();
         valuesTabPanel.appendChild( valuesPane );
         
+        Tabpanel attachmentTabPanel = new Tabpanel();
+        attachmentTabPanel.appendChild( attachmentPane );
+        
         tabbox.getTabpanels().appendChild( generalTabpanel );
         tabbox.getTabpanels().appendChild( valuesTabPanel );
         tabbox.getTabpanels().appendChild( infoTabPanel );
+        tabbox.getTabpanels().appendChild( attachmentTabPanel );
         
         appendChild( tabbox );
         
@@ -266,12 +275,14 @@ public class PostingEditor
         } );
     }
     
-    private Tabbox tabbox   = new Tabbox();
-    private Tab generalTab  = new Tab( "Geral" );
-    private Tab valuesTab   = new Tab( "Valores" );
-    private Tab infoTab     = new Tab( "Informações" );
+    private Tabbox tabbox       = new Tabbox();
+    private Tab generalTab      = new Tab( "Geral" );
+    private Tab valuesTab       = new Tab( "Valores" );
+    private Tab infoTab         = new Tab( "Informações" );
+    private Tab attachmentTab   = new Tab( "Anexos" );
 
-    private PostingEditorGeneralPane generalPane  = new PostingEditorGeneralPane();
-    private PostingEditorInformationPane infoPane = new PostingEditorInformationPane();
-    private PostingEditorValuesPane valuesPane    = new PostingEditorValuesPane();
+    private PostingEditorGeneralPane generalPane       = new PostingEditorGeneralPane();
+    private PostingEditorInformationPane infoPane      = new PostingEditorInformationPane();
+    private PostingEditorAttachmentPane attachmentPane = new PostingEditorAttachmentPane();
+    private PostingEditorValuesPane valuesPane         = new PostingEditorValuesPane();
 }

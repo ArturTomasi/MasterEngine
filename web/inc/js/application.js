@@ -38,23 +38,6 @@ function shake( parent )
 };
 
 
-function alert( parent )
-{
-    var self = $( parent.$n() );
-    
-    var root = zk.Widget.$( '.z-page' );
-    
-    zAu.cmd0.showBusy( root.uuid, "alert" );
-    
-    self.find( '.close' ).click( function()
-    {
-        self.remove();
-        
-        zAu.cmd0.clearBusy( root.uuid );
-    } );
-}
-
-
 function copyClipboard( text )
 {
     var elem = document.createElement( 'textarea' );

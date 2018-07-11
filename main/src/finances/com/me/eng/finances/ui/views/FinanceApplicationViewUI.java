@@ -19,13 +19,13 @@
  */
 package com.me.eng.finances.ui.views;
 
-import com.me.eng.core.services.ApplicationServices;
 import com.me.eng.core.ui.Callback;
 import com.me.eng.core.ui.apps.Action;
 import com.me.eng.core.ui.util.Prompts;
 import com.me.eng.core.ui.views.ApplicationViewUI;
 import com.me.eng.finances.controllers.PostingController;
 import com.me.eng.finances.domain.Posting;
+import com.me.eng.finances.domain.PostingFilter;
 import com.me.eng.finances.ui.editors.PostingEditor;
 import com.me.eng.finances.ui.lists.PostingList;
 import org.zkoss.zk.ui.event.Event;
@@ -40,6 +40,8 @@ public class FinanceApplicationViewUI
 {
     private PostingController controller = PostingController.getInstance();
     
+    private PostingFilter filter = PostingFilter.PENDENCY;
+    
     /**
      * FinanceApplicationViewUI
      * 
@@ -49,7 +51,9 @@ public class FinanceApplicationViewUI
         setLabel( "Finanças" );
         setIcon( "finances/sb_finance.png" );
         addAction( "Lançamentos", addAction, editAction, deleteAction );
-        addAction( "Movimentações", finishAction );
+        addAction( "Movimentações", finishAction, copyAction, reverseAction );
+        addAction( "Filtro", filterAllAction, filterPendencyAction );
+        addAction( "Relatórios" );
     }
 
     /**
@@ -61,7 +65,7 @@ public class FinanceApplicationViewUI
     {
         try
         {
-            list.setElements( ApplicationServices.getCurrent().getPostingRepository().findAll() );
+            list.setElements( filter.getElements() );
         }
         
         catch ( Exception e )
@@ -121,6 +125,69 @@ public class FinanceApplicationViewUI
             Prompts.alert( validate );
         }
     }
+    
+    /**
+     * reverse
+     * 
+     */
+    private void reverse()
+    {
+        Posting posting = list.getSelectedElement();
+        
+        String validate = controller.validateReserve( posting );
+        
+        if ( validate == null )
+        {
+            controller.reversePosting( posting );
+
+            refreshContent();
+            
+            Prompts.info( "Lançamento revertido com sucesso!" );
+        }
+        
+        else
+        {
+            Prompts.alert( validate );
+        }
+    }
+    
+    
+    /**
+     * copy
+     * 
+     */
+    private void copy()
+    {
+        Posting posting =  list.getSelectedElement();
+        
+        if( posting == null )
+        {
+            Prompts.alert( "Selecione um Lançamento para copiar!" );
+            
+            return;
+        }
+        
+        Prompts.confirm( "Confirmar Cópia", "Você tem certeza que deseja copiar o Lançamento: \"" + posting.getName() + "\"", new Callback()
+        {
+            @Override
+            public void acceptInput() throws Exception 
+            {
+                PostingEditor.edit( FinanceApplicationViewUI.this, PostingEditor.Mode.NEW, new Callback<Posting>( posting.clone() )
+                {
+                    @Override
+                    public void acceptInput() throws Exception 
+                    {
+                        controller.addPosting( getSource() );
+
+                        refreshContent();
+
+                        Prompts.info( "Adicionado com sucesso!" );
+                    }
+                } );
+            }
+        } );
+    }
+    
     
     /**
      * delete
@@ -244,6 +311,46 @@ public class FinanceApplicationViewUI
         public void onEvent( Event t ) throws Exception 
         {
             finish();
+        }
+    };
+    
+    private Action reverseAction = new Action( "finances/tb_reverse.png", "Retornar", "Retornar lançamento selecionado!" ) 
+    {
+        @Override
+        public void onEvent( Event t ) throws Exception 
+        {
+            reverse();
+        }
+    };
+    
+    private Action copyAction = new Action( "core/tb_copy.png", "Copiar", "Copiar lançamento selecionado!" ) 
+    {
+        @Override
+        public void onEvent( Event t ) throws Exception 
+        {
+            copy();
+        }
+    };
+    
+    private Action filterAllAction = new Action( "core/tb_filter.png", "Todos", "Buscar todos os lançamentos!" ) 
+    {
+        @Override
+        public void onEvent( Event t ) throws Exception 
+        {
+            filter = PostingFilter.ALL;
+            
+            refreshContent();
+        }
+    };
+    
+    private Action filterPendencyAction = new Action( "core/tb_filter.png", "Pendentes", "Buscar lançamentos pendentes!" ) 
+    {
+        @Override
+        public void onEvent( Event t ) throws Exception 
+        {
+            filter = PostingFilter.PENDENCY;
+            
+            refreshContent();
         }
     };
 }

@@ -19,6 +19,8 @@
  */
 package com.me.eng.finances.domain;
 
+import com.me.eng.core.domain.Attachment;
+import com.me.eng.core.domain.AttachmentSource;
 import com.me.eng.core.domain.User;
 import java.io.Serializable;
 import java.util.Date;
@@ -49,7 +51,7 @@ import javax.persistence.Transient;
 @Table( name = "fin_postings" )
 public class Posting 
     implements 
-        Serializable, Cloneable
+        Serializable, Cloneable, AttachmentSource
 {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
@@ -128,18 +130,21 @@ public class Posting
 
     @Transient
     private List<Posting> childs = new LinkedList();
+
+    @Transient
+    private List<Attachment> attachments = new LinkedList();
     /**
      * Posting
      * 
      */
     public Posting() {}
 
-    
     /**
      * getId
      * 
      * @return Integer
      */
+    @Override
     public Integer getId() 
     {
         return id;
@@ -494,7 +499,48 @@ public class Posting
     {
         return childs;
     }
+    
+    /**
+     * addAttachment
+     * 
+     * @param value Attachment
+     */
+    public void addAttachment( Attachment value )
+    {
+        attachments.add( value );
+    }
+    
+    /**
+     * addAttachment
+     * 
+     * @param value Attachment
+     */
+    public void addAttachment( List<Attachment> value )
+    {
+        attachments.addAll( value );
+    }
 
+    /**
+     * getAttachments
+     * 
+     * @return List&lt;Attachment&gt;
+     */
+    public List<Attachment> getAttachments() 
+    {
+        return attachments;
+    }
+
+    /**
+     * getFamily
+     * 
+     * @return Attachment.Family
+     */
+    @Override
+    public Attachment.Family getFamily() 
+    {
+        return Attachment.Family.POSTING;
+    }
+    
     /**
      * toString
      * 
@@ -516,7 +562,7 @@ public class Posting
     public Posting clone() throws CloneNotSupportedException 
     {
         Posting clone = (Posting)super.clone();
-        clone.setId( -1 );
+        clone.setId( 0 );
         clone.setRealDate( null );
         clone.setRealValue( null );
         clone.setState( PostingState.REGISTRED );

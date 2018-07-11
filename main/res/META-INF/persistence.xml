@@ -23,6 +23,7 @@
     <class>com.me.eng.core.domain.Role</class>
     <class>com.me.eng.core.domain.User</class>
     <class>com.me.eng.core.domain.License</class>
+    <class>com.me.eng.core.domain.Attachment</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/eng_homolog?autoReconnect=true&amp;zeroDateTimeBehavior=convertToNull&amp;characterEncoding=utf8"/>

@@ -229,7 +229,18 @@ public abstract class AbstractList<T>
         Menuitem menuitem = new Menuitem( a.getLabel() );
         menuitem.setImage( a.getIcon() );
         menuitem.setTooltiptext( a.getTooltipText() );
-        menuitem.addEventListener( org.zkoss.zk.ui.event.Events.ON_CLICK, a );
+        
+        if ( a.getUpload() == null )
+        {
+            menuitem.addEventListener( org.zkoss.zk.ui.event.Events.ON_CLICK, a );
+        }
+
+        else
+        {
+            menuitem.setUpload( a.getUpload() );
+            menuitem.addEventListener( 1000, org.zkoss.zk.ui.event.Events.ON_UPLOAD, e -> menupopup.close() );
+            menuitem.addEventListener( org.zkoss.zk.ui.event.Events.ON_UPLOAD, a );
+        }
         
         menupopup.appendChild( menuitem );
     }

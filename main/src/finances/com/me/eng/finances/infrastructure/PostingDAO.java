@@ -20,6 +20,7 @@
 package com.me.eng.finances.infrastructure;
 
 import com.google.common.collect.Iterables;
+import com.me.eng.core.domain.User;
 import com.me.eng.core.infrastructure.EntityDAO;
 import com.me.eng.core.infrastructure.Transactional;
 import com.me.eng.finances.domain.Posting;
@@ -57,6 +58,69 @@ public class PostingDAO
     {
         return manager.createQuery( "select p from " + persistentClass.getSimpleName() + " p " ).getResultList();
     }
+   
+    
+    /**
+     * findAll
+     * 
+     * @param user User
+     * @return List&lt;Posting&gt;
+     */
+    @Override
+    public List<Posting> findAll( User user )
+    {
+        Query q = manager.createQuery( 
+                " select p from " + persistentClass.getSimpleName() + " p " +
+                " where " +
+                " p.owner = :user " +
+                " order by " +
+                " p.estimateDate "
+                );
+        
+        q.setParameter( "user",  user );
+        
+        return q.getResultList();
+    }
+
+    /**
+     * findPendency
+     * 
+     * @param user User
+     * @return List&lt;Posting&gt;
+     * @throws Exception
+     */
+    @Override
+    public List<Posting> findPendency( User user ) throws Exception 
+    {
+        Query q = manager.createQuery( 
+                " select p from " + persistentClass.getSimpleName() + " p " +
+                " where " +
+                " p.owner = :user " +
+                " and " +
+                " (" +
+                    " p.state = :state " +
+                    " or " +
+                    " (" +
+                        " func( 'month', p.estimateDate ) " +
+                        " between " +
+                        " func( 'month', current_date ) - 1 " +
+                        " and " +
+                        " func( 'month', current_date ) + 1 " +
+                        " and " +
+                        " p.state <> :finished " +
+                    " )" +
+                " )" +
+                " order by " +
+                " p.estimateDate "
+                );
+        
+        q.setParameter( "state",    PostingState.PROGRESS );
+        q.setParameter( "finished", PostingState.FINISHED );
+        q.setParameter( "user",     user );
+        
+        return q.getResultList();
+    }
+    
 
     /**
      * getLastPosting

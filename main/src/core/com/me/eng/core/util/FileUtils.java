@@ -19,6 +19,7 @@
  */
 package com.me.eng.core.util;
 
+import com.google.common.io.Files;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -27,6 +28,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+import org.apache.commons.io.IOUtils;
+import org.zkoss.util.media.Media;
 
 /**
  *
@@ -50,6 +53,44 @@ public class FileUtils
         out.deleteOnExit();
         
         return out;
+    }
+
+    /**
+     * asFile
+     * 
+     * @param media Media
+     * @return File
+     * @throws Exception
+     */
+    public static File asFile( Media media ) throws Exception
+    {
+        if ( media == null )
+        {
+            throw new IllegalArgumentException( "Media cannot be null!" );
+        }
+        
+        byte[] data = null;
+        
+        if ( media.isBinary() )
+        {
+            data = IOUtils.toByteArray( media.getStreamData() );
+        }
+        
+        else 
+        {
+            data = media.getStringData().getBytes();
+        }
+        
+        if ( data == null )
+        {
+            throw new IllegalArgumentException( "Data cannot be null!" );
+        }
+
+        File f = createTempFile( media.getName() );
+        
+        Files.write( data, f );
+        
+        return f;
     }
     
     /**

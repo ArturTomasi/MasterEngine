@@ -28,12 +28,9 @@ import com.me.eng.finances.ui.apps.FinanceApplicationUI;
 import com.me.eng.samples.ui.apps.PendenciesApplicationUI;
 import com.me.eng.core.ui.apps.SetupApplicationUI;
 import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.event.EventListener;
-import org.zkoss.zul.Div;
-import org.zkoss.zul.Image;
-import org.zkoss.zul.Label;
-import org.zkoss.zul.Vbox;
+import org.zkoss.zk.ui.event.Events;
+import org.zkoss.zkex.zul.Fisheye;
+import org.zkoss.zkex.zul.Fisheyebar;
 
 /**
  *
@@ -64,22 +61,10 @@ public class LauncherApplicationViewUI
     {
         final ApplicationDescriptor app = ui.getAnnotation( ApplicationDescriptor.class );
         
-        Vbox div = new Vbox();
-        div.setSclass( "launcher-app-button" );
-        div.setAlign( "middle" );
-        div.appendChild( new Image( ResourceLocator.getImageResource( app.icon() ) ) );
-        div.appendChild( new Label( app.label() ) );
+        Fisheye fisheye = new Fisheye( app.label(), ResourceLocator.getImageResource( app.icon() ) );
+        fisheye.addEventListener( Events.ON_CLICK, e->  Executions.getCurrent().sendRedirect( app.url(), "_blank" ) );
         
-        div.addEventListener( org.zkoss.zk.ui.event.Events.ON_CLICK, new EventListener<Event>()
-        {
-            @Override
-            public void onEvent( Event t ) throws Exception
-            {
-                Executions.getCurrent().sendRedirect( app.url(), "_blank" );
-            }
-        } );
-        
-        inner.appendChild( div );
+        bar.appendChild( fisheye );
     }
 
     /**
@@ -98,22 +83,15 @@ public class LauncherApplicationViewUI
             addApplication( SetupApplicationUI.class );
         }
         
-        setSclass( "launcher-app" );
         setVflex( "true" );
         
-        inner.setWidgetAttribute( "align", "center" );
-        inner.setSclass( "launcher-app-container" );
-        inner.setStyle( "display: table-cell; vertical-align: middle" );
+        bar.setItemHeight( 150 );
+        bar.setItemWidth( 150 );
+        bar.setItemMaxHeight( 350 );
+        bar.setItemMaxWidth( 350 );
         
-        content.appendChild( inner );
-        
-        content.setStyle( "display: table" );
-        content.setHflex( "true" );
-        content.setVflex( "true" );
-        
-        appendChild( content );
+        appendChild( bar );
     }
     
-    private Div content = new Div();
-    private Div inner = new Div();
+    private Fisheyebar bar = new Fisheyebar();
 }

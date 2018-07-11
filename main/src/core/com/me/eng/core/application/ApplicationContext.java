@@ -34,7 +34,6 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Execution;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
-import org.zkoss.zul.Messagebox;
 
 /**
  *
@@ -180,9 +179,7 @@ public class ApplicationContext
         
         e.printStackTrace( pw );
         
-        String msg = Strings.isNullOrEmpty( e.getMessage() ) ? "Erro" : e.getMessage();
-        
-//        Prompts.alert( msg, "Erro inesperado", Messagebox.OK, Messagebox.ERROR );
+        Prompts.error( sw.toString() );
     }
     
     /**

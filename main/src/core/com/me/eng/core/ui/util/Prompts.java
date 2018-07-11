@@ -23,7 +23,6 @@ import com.me.eng.core.application.ApplicationContext;
 import com.me.eng.core.ui.Callback;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Html;
@@ -55,8 +54,7 @@ public class Prompts
      */
     public static void confirm( String title, String message, final Callback callback )
     {
-        Messagebox.show( message, title , Messagebox.YES | Messagebox.NO, 
-                         Messagebox.QUESTION,  (Event e) ->
+        Messagebox.show( message, title , Messagebox.YES | Messagebox.NO, Messagebox.QUESTION,  (Event e) ->
         {
             switch ( (Integer) e.getData() )
             {
@@ -69,7 +67,6 @@ public class Prompts
             }
         } );
     }
-    
 
     /**
      * alert
@@ -89,14 +86,45 @@ public class Prompts
      */
     public static void alert( Component parent, String info )
     {
-        Div div = new Div();
-        div.setZclass( "me-prompts-alert" );
-        div.appendChild(  new Html( "<div class=\"close\">&times;</div>" + 
-                                    "<div class=\"me-prompts-alert-title\">Atenção!</div>" +
-                                    "<div class=\"me-prompts-alert-text\">" + info + "</div>"
-                                   ) );
+        Clients.evalJavaScript( "zAu.cmd0.showBusy( zk.Widget.$( '.z-page' ).uuid, 'alert' ); " );
         
-        div.setWidgetListener( "onBind", "alert( this );" );
+        Div div = new Div();
+        div.setZclass( "me-prompts-window alert" );
+        div.appendChild(  new Html( "<div class=\"close\" onclick=\"this.parentNode.parentNode.remove(); zAu.cmd0.clearBusy( zk.Widget.$( '.z-page' ).uuid );\" >&times;</div>" + 
+                                    "<div class=\"title icon-alert\">Atenção!</div>" +
+                                    "<div class=\"text\">" + info + "</div>"
+                                   ) );
+
+        parent.appendChild( div );
+    }
+    
+
+    /**
+     * error
+     * 
+     * @param msg String
+     */
+    public static void error( String msg )
+    {
+        error( ApplicationContext.getInstance().getRoot(), msg );
+    }
+    
+    /**
+     * alert
+     * 
+     * @param parent Component
+     * @param msg String
+     */
+    public static void error( Component parent, String msg )
+    {
+        Clients.evalJavaScript( "zAu.cmd0.showBusy( zk.Widget.$( '.z-page' ).uuid, 'error' ); " );
+        
+        Div div = new Div();
+        div.setZclass( "me-prompts-window error" );
+        div.appendChild(  new Html( "<div class=\"close\" onclick=\"this.parentNode.parentNode.remove(); zAu.cmd0.clearBusy( zk.Widget.$( '.z-page' ).uuid );\" >&times;</div>" + 
+                                    "<div class=\"title icon-error\">Algo deu errado!</div>" +
+                                    "<div class=\"text\">" + msg + "</div>"
+                                   ) );
 
         parent.appendChild( div );
     }

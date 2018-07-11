@@ -19,6 +19,7 @@
  */
 package com.me.eng.core.services;
 
+import com.me.eng.core.repositories.AttachmentRepository;
 import com.me.eng.samples.repositories.CapstoneRepository;
 import com.me.eng.core.repositories.CityRepository;
 import com.me.eng.core.repositories.ClientRepository;
@@ -83,6 +84,9 @@ public class ApplicationService
     
     @Inject
     private CompanyRepository companyRepository;
+    
+    @Inject
+    private AttachmentRepository attachmentRepository;
 
     /**
      * getCityRepository
@@ -212,5 +216,15 @@ public class ApplicationService
     public PostingRepository getPostingRepository() 
     {
         return postingRepository;
+    }
+
+    /**
+     * getAttachmentRepository
+     * 
+     * @return AttachmentRepository
+     */
+    public AttachmentRepository getAttachmentRepository() 
+    {
+        return attachmentRepository;
     }
 }

@@ -1,0 +1,8 @@
+
+<package name="com.me.eng.core.ui.parts" language="xul/html">
+    
+    <widget name="DropUpload"/>
+
+    <script src="lib/dropzone.js"/>
+
+</package>

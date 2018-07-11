@@ -23,6 +23,9 @@ import com.me.eng.core.application.ResourceLocator;
 import com.me.eng.core.ui.lists.AbstractList;
 import com.me.eng.core.util.Formatter;
 import com.me.eng.finances.domain.Posting;
+import com.me.eng.finances.ui.panes.PostingLegendPane;
+import org.zkoss.zul.Listfoot;
+import org.zkoss.zul.Listfooter;
 
 /**
  *
@@ -37,7 +40,10 @@ public class PostingList
      * PostingList
      * 
      */
-    public PostingList() {}
+    public PostingList() 
+    {
+        initComponents();
+    }
     
     /**
      * doContent
@@ -81,4 +87,18 @@ public class PostingList
         return sb.toString();
     }
     
+    /**
+     * initComponents
+     * 
+     */
+    private void initComponents()
+    {
+        Listfoot foot     = new Listfoot();
+        Listfooter footer = new Listfooter();
+        
+        footer.appendChild( new PostingLegendPane() );
+        foot.appendChild( footer );
+        
+        appendChild( foot );
+    }
 }

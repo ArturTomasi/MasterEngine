@@ -20,10 +20,14 @@
 package com.me.eng.finances.controllers;
 
 import com.me.eng.core.application.ApplicationContext;
+import com.me.eng.core.domain.Attachment;
+import com.me.eng.core.domain.AttachmentSource;
 import com.me.eng.core.services.ApplicationServices;
+import com.me.eng.finances.domain.CompletionType;
 import com.me.eng.finances.domain.Posting;
 import com.me.eng.finances.domain.PostingState;
 import com.me.eng.finances.repositories.PostingRepository;
+import java.util.List;
 
 /**
  *
@@ -65,6 +69,8 @@ public class PostingController
                 
                 repository.add( posting );
                 
+                storeAttachment( posting, posting.getAttachments() );
+                
                 if ( posting.isRepeat() )
                 {
                     for ( Posting p : posting.getChilds() )
@@ -96,6 +102,8 @@ public class PostingController
                 
             repository.update( posting );
             
+            storeAttachment( posting, posting.getAttachments() );
+            
             if( posting.isRepeat() && posting.getPortion() < posting.getPortionTotal() &&
                 posting.getState() == PostingState.FINISHED )
             {
@@ -122,6 +130,8 @@ public class PostingController
 
             repository.update( posting );
             
+            storeAttachment( posting, posting.getAttachments() );
+            
             if( posting.isRepeat() && posting.getPortion() < posting.getPortionTotal() )
             {
                 repository.updateNextPortion( posting );
@@ -147,6 +157,8 @@ public class PostingController
                 
             repository.delete( posting );
             
+            ApplicationServices.getCurrent().getAttachmentRepository().delete( posting );
+            
             if( posting.isRepeat() && posting.getPortion() < posting.getPortionTotal() )
             {
                repository.deleteNextPortions( posting );
@@ -159,32 +171,62 @@ public class PostingController
         }
     }
 
-    
+    /**
+     * reversePosting
+     * 
+     * @param posting Posting
+     */
     public void reversePosting( Posting posting )
     {
         try
         {
-//            if( posting.getState() == Posting.STATE_FINISHED )
-//            {
-//                posting.setState( Posting.STATE_PROGRESS );
-//                posting.setRealDate( null );
-//                posting.setRealValue( 0d );
-//                
-//                if( posting.isCompletionAuto() )
-//                        posting.setCompletionType( 0 );
-//                    
-//                com.pa.helpfin.model.ModuleContext.getInstance().getPostingManager().updateValue( posting );
-//
-//                if( posting.isRepeat() && posting.getPortion() < posting.getPortionTotal() )
-//                {
-//                    com.pa.helpfin.model.ModuleContext.getInstance().getPostingManager().updateNextPortion( posting );
-//                }
-//            }
+            if( posting.getState() == PostingState.FINISHED )
+            {
+                posting.setState( PostingState.PROGRESS );
+                posting.setRealDate( null );
+                posting.setRealValue( 0d );
+                
+                if( posting.isCompletionAuto() )
+                {
+                    posting.setCompletionType( CompletionType.CASH );
+                }
+                
+                PostingRepository repository = ApplicationServices.getCurrent().getPostingRepository();
+                
+                repository.update( posting );
+
+                if( posting.isRepeat() && posting.getPortion() < posting.getPortionTotal() )
+                {
+                    repository.updateNextPortion( posting );
+                }
+            }
         }
         
         catch( Exception e )
         {
             ApplicationContext.getInstance().logException( e );
+        }
+    }
+    
+    /**
+     * storeAttachment
+     * 
+     * @param attachments List&lt;Attachment&gt;
+     * @throws Exception
+     */
+    private void storeAttachment( AttachmentSource source, List<Attachment> attachments ) throws Exception
+    {
+        if ( ! attachments.isEmpty() )
+        {
+            for ( Attachment a : attachments )
+            {
+                if ( a.getId() == null || a.getId() == 0 )
+                {
+                    a.setSource( source.getId() );
+
+                    ApplicationServices.getCurrent().getAttachmentRepository().add( a );
+                }
+            }
         }
     }
     
@@ -233,13 +275,19 @@ public class PostingController
     public String validateFinish( Posting posting )
     {
         if( posting == null )
+        {
             return "Selecione um Lançamento para finalizar !";
+        }
         
         if( posting.getState() == PostingState.FINISHED )
+        {
             return "Lançamento está finalizado,\n não é possivel finaliza-lo duas vezes !";
+        }
         
         if( posting.getState() != PostingState.PROGRESS && posting.getPortionTotal() > 1 )
+        {
             return "Lançamento não está correte,\n não é possivel finaliza-lo antes das outras parcelas!";
+        }
         
         return null;
     }
@@ -253,10 +301,14 @@ public class PostingController
     public String validateEdit( Posting posting )
     {
         if( posting == null )
+        {
             return "Selecione um Lançamento para editar !";
+        }
         
         if( posting.getState() == PostingState.FINISHED )
+        {
             return "Lançamento está finalizado,\n não é possivel edita-lo após finalizado!";
+        }
         
         return null;
     }
@@ -270,10 +322,14 @@ public class PostingController
     public String validateDelete( Posting posting )
     {
         if ( posting == null )
+        {
             return "Selecione um Lançamento para excluir !";
+        }
         
         if ( posting.getState() == PostingState.FINISHED )
+        {
             return "Lançamento está finalizado,\n não é possivel excluir após finalizado!";
+        }
         
         return null;
     }
@@ -287,10 +343,14 @@ public class PostingController
     public String validateReserve( Posting posting )
     {
         if( posting == null )
+        {
             return "Selecione um Lançamento para extornar!";
+        }
         
         if( posting.getState() != PostingState.FINISHED )
-            return "Lançamento deve estár finalizado para extornar";
+        {
+            return "Lançamento deve estár finalizado para extornar!";
+        }
         
         return null;
     }

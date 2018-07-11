@@ -34,6 +34,7 @@ public abstract class Action
     private String icon;
     private String label;
     private String tooltipText;
+    private String upload;
 
     /**
      * Action
@@ -77,5 +78,36 @@ public abstract class Action
     public String getTooltipText()
     {
         return tooltipText;
+    }
+
+    /**
+     * setUpload
+     * 
+     * @param upload String
+     */
+    public void setUpload( String upload ) 
+    {
+        this.upload = upload;
+    }
+
+    /**
+     * getUpload
+     * 
+     * @return String
+     */
+    public String getUpload() 
+    {
+        return upload;
+    }
+    
+    /**
+     * toString
+     * 
+     * @return String
+     */
+    @Override
+    public String toString() 
+    {
+        return label;
     }
 }

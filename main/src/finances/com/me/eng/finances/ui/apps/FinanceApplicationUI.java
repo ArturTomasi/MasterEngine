@@ -21,9 +21,7 @@ package com.me.eng.finances.ui.apps;
 
 import com.me.eng.core.annotations.ApplicationDescriptor;
 import com.me.eng.core.ui.apps.ApplicationUI;
-import com.me.eng.finances.ui.views.CompanyApplicationViewUI;
-import com.me.eng.finances.ui.views.PostingCategoryApplicationViewUI;
-import com.me.eng.finances.ui.views.FinanceApplicationViewUI;
+import com.me.eng.finances.ui.views.*;
 
 /**
  *
@@ -45,6 +43,7 @@ public class FinanceApplicationUI
     public FinanceApplicationUI() 
     {
         addView( new FinanceApplicationViewUI() );
+        addView( new AnalysisApplicationViewUI() );
         addView( new PostingCategoryApplicationViewUI() );
         addView( new CompanyApplicationViewUI() );
     }
