@@ -22,6 +22,7 @@ package com.me.eng.finances.ui.editors.tabs;
 import com.me.eng.core.application.ApplicationContext;
 import com.me.eng.core.ui.editors.Errors;
 import com.me.eng.core.ui.editors.tabs.SubEditorPanel;
+import com.me.eng.core.ui.parts.Datebox;
 import com.me.eng.core.ui.parts.TableLayout;
 import com.me.eng.core.ui.selectors.UserSelector;
 import com.me.eng.core.ui.util.Prompts;
@@ -34,7 +35,6 @@ import com.me.eng.finances.ui.selectors.PostingCategorySelector;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zul.Checkbox;
-import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Doublebox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Spinner;
@@ -80,7 +80,6 @@ public class PostingEditorGeneralPane
         source.setName( nameField.getValue() );
         source.setRealDate( realDateFiled.getValue() );
         source.setEstimateDate( estimateDateField.getValue() );
-        source.setRealDate( realDateFiled.getValue() );
         source.setRealValue( realValueField.getValue() );
         source.setEstimateValue( estimateValueField.getValue() );
         source.setOwner( userCombo.getSelectedItem() );
@@ -306,8 +305,7 @@ public class PostingEditorGeneralPane
         realValueField.setFormat( "R$ ##0.00" );
         estimateValueField.setFormat( "R$ ##0.00" );
         portionTotalFiled.setConstraint( "no empty,min 1 max 12" );
-        
-        
+
         grid.addRow( lbName, nameField );
         grid.addRow( lbEstimateDate, estimateDateField, lbRealDate, realDateFiled );
         grid.addRow( lbEstimateValue, estimateValueField, lbRealValue, realValueField );

@@ -4,6 +4,7 @@ body, html
     padding: 0px !important;
     background-image: url('../../img/core/background.jpg');
     background-repeat: round;
+    overflow: hidden;
 }
 
 .login-center
@@ -110,7 +111,8 @@ body, html
 
 .default-app-pane-west
 {
-    background: linear-gradient(to bottom,#fefefe 0,#eee 100%);
+    background: #fff;
+    outline: 1px solid rgb(48, 67, 105);
 }
 
 .default-app-pane-north
@@ -121,19 +123,11 @@ body, html
 
 .default-app-view-button
 {
-    padding: 5px;
-    border-radius: 8px;
-    border: 1px solid lightgrey;
-    height: 70px;
-    margin: 2px;
-    text-align: center;
-    cursor: pointer;
-    background: linear-gradient(to bottom,#fefefe 0,#eee 100%);
 }
 
 .default-app-view-button.selected
 {
-    background: linear-gradient(rgb(213, 228, 234) 0px, rgb(183, 210, 226) 100%);
+    border-bottom: 2px solid #fff;
 }
 
 .default-app-view-button img
@@ -420,4 +414,73 @@ body, html
     font-family: Arial,sans-serif;
     color: #646C7F;
     font-weight: bold;
+}
+
+.fisheye-application-menu
+{
+    transform: translateX(-50%);
+    left: 50%;
+    bottom: 0px;
+    user-select: none;
+    z-index: 100;
+    position: absolute;
+    top: calc(100% - 70px);
+}
+
+.z-navbar
+{
+    border: none !important;
+    padding: 0px !important;
+}
+
+.z-nav-image
+{
+    width: auto;
+    height: auto;
+    min-width: 0px;
+    margin: 0px;
+}
+
+.z-nav-text
+{
+    font-family: Arial,sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.z-navitem-text
+{
+    font-family: Arial,sans-serif;
+    font-size: 15px !important;
+    font-weight: normal;
+}
+.z-navitem-image
+{
+    vertical-align: middle;
+}
+
+.z-navbar .z-navitem-selected .z-navitem-content
+{
+    color: rgba(0,0,0,0.57);
+}
+
+.z-navbar-vertical .z-nav-selected, 
+.z-nav-popup .z-nav-selected,
+.z-navbar-vertical li, 
+.z-navbar-vertical .z-nav-open,
+.z-nav-popup .z-nav-open,
+.z-nav-popup li
+{
+    border: none;
+}
+
+.z-west-header
+{
+    color: rgb(48, 67, 105);
+    text-align: center;
+    line-height: 28px;
+    font-family: Arial,sans-serif;
+    font-size: 18px;
+    background: #fff !important;
+    border-bottom: 1px solid rgb(48, 67, 105);
 }

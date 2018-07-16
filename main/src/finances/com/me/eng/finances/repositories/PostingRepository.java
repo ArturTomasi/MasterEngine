@@ -19,10 +19,14 @@
  */
 package com.me.eng.finances.repositories;
 
+import com.me.eng.core.data.ChartData;
 import com.me.eng.core.domain.User;
 import com.me.eng.core.repositories.EntityRepository;
 import com.me.eng.finances.domain.Posting;
+import com.me.eng.finances.domain.PostingType;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -83,5 +87,12 @@ public interface PostingRepository
      */
     public abstract List<Posting> findAll( User user ) throws Exception;
     
-    
+    /**
+     * Map&lt;PostingType,
+     * 
+     * @return abstract
+     * @ignored Double&gt;
+     * @ignored sum
+     */
+    public abstract List<ChartData> sum();
 }

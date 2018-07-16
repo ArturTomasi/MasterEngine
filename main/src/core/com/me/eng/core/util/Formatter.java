@@ -22,6 +22,7 @@ package com.me.eng.core.util;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -99,6 +100,39 @@ public class Formatter
         }
         
         return df.format( date );
+    }
+    
+    /**
+     * formatMonth
+     * 
+     * @param date Date
+     * @return String
+     */
+    public String formatMonth( Date date )
+    {
+        if ( date == null )
+        {
+            return "n/d";
+        }
+        
+        Calendar cal = Calendar.getInstance( locale );
+        cal.setTime( date );
+        
+        return cal.getDisplayName( Calendar.MONTH, Calendar.LONG_FORMAT, locale );
+    }
+    
+    /**
+     * formatMonth
+     * 
+     * @param month Integer
+     * @return String
+     */
+    public String formatMonth( Integer month )
+    {
+        Calendar cal = Calendar.getInstance( locale );
+        cal.set( Calendar.MONTH, month - 1 );
+        
+        return cal.getDisplayName( Calendar.MONTH, Calendar.LONG_FORMAT, locale );
     }
     
     /**

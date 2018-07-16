@@ -20,7 +20,6 @@
 package com.me.eng.core.application;
 
 import com.me.eng.core.services.ApplicationServices;
-import com.google.common.base.Strings;
 import com.me.eng.samples.domain.SampleFilter;
 import com.me.eng.core.domain.User;
 import com.me.eng.core.license.controller.LicenseManager;
@@ -28,6 +27,7 @@ import com.me.eng.core.ui.util.Prompts;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.security.Principal;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.zkoss.zk.ui.Component;
@@ -180,6 +180,16 @@ public class ApplicationContext
         e.printStackTrace( pw );
         
         Prompts.error( sw.toString() );
+    }
+    
+    /**
+     * currentDate
+     * 
+     * @return Date
+     */
+    public Date currentDate()
+    {
+        return new Date( System.currentTimeMillis() );
     }
     
     /**

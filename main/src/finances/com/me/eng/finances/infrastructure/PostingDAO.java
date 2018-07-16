@@ -20,13 +20,19 @@
 package com.me.eng.finances.infrastructure;
 
 import com.google.common.collect.Iterables;
+import com.me.eng.core.data.ChartData;
 import com.me.eng.core.domain.User;
 import com.me.eng.core.infrastructure.EntityDAO;
 import com.me.eng.core.infrastructure.Transactional;
 import com.me.eng.finances.domain.Posting;
 import com.me.eng.finances.domain.PostingState;
+import com.me.eng.finances.domain.PostingType;
 import com.me.eng.finances.repositories.PostingRepository;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
@@ -218,5 +224,42 @@ public class PostingDAO
         query.setParameter( "portion",   posting.getPortion() );
         
         query.executeUpdate();
+    }
+
+    /**
+     * sum
+     * 
+     * @return List&lt;ChartData&gt;
+     */
+    @Override
+    public List<ChartData> sum()
+    {
+        String sql = " select " +
+                     " func( 'month', P.realDate ), P.category.type, sum( P.realValue ) " +
+                     " from " + 
+                     persistentClass.getSimpleName() + " P " +
+                     " where " +
+                     " P.state = :state "+
+                     " group by " +
+                     " func( 'month', P.realDate ), P.category.type " +
+                     " order by " +
+                     " p.category.type";
+        
+        TypedQuery<Object[]> query = manager.createQuery( sql, Object[].class );
+        
+        query.setParameter( "state", PostingState.FINISHED );
+        
+        List<ChartData> data = new LinkedList();
+        
+        query.getResultList().forEach( o ->
+        {
+            ChartData d = new ChartData();
+            d.put( ChartData.ATTR_SERIES,   o[0] );
+            d.put( ChartData.ATTR_CATEGORY, o[1] );
+            d.put( ChartData.ATTR_VALUE,    o[2] );
+            data.add( d );
+        });
+        
+        return data;
     }
 }

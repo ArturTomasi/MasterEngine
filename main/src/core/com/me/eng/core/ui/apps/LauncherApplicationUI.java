@@ -29,6 +29,10 @@ public class LauncherApplicationUI
     extends 
         ApplicationUI
 {
+    /**
+     * LauncherApplicationUI
+     * 
+     */
     public LauncherApplicationUI()
     {
         addView( new LauncherApplicationViewUI() );
