@@ -88,7 +88,7 @@ public class SituationChart
         title.setStyle( "fontWeight: 'bold'; color: 'rgb(48, 67, 105)';" );
         
         Subtitle subtitle = new Subtitle();
-        subtitle.setText( "Resultado Geral e situação do mês de " + Formatter.getInstance().formatMonth( new Date( System.currentTimeMillis() ) ) );
+        subtitle.setText( "Situação financeira de receitas e despesas agrupadas por mês" );
         subtitle.setStyle( "color: 'rgb(48, 67, 105)'" );
         
         setTitle( title );

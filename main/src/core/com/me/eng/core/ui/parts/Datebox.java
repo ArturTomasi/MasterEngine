@@ -19,6 +19,8 @@
  */
 package com.me.eng.core.ui.parts;
 
+import com.me.eng.core.util.Formatter;
+
 /**
  *
  * @author Artur Tomasi
@@ -35,5 +37,7 @@ public class Datebox
     public Datebox() 
     {
         setFormat( "dd/MM/yyyy" );
+        
+        setLocale( Formatter.getInstance().getLocale() );
     }
 }

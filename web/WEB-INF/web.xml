@@ -29,6 +29,18 @@
         </auth-constraint>
     </security-constraint>
     
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>secured</web-resource-name>
+            <url-pattern>/admin/finance.jsp</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>administrator</role-name>
+        </auth-constraint>
+    </security-constraint>
+    
     
     <security-constraint>
         <web-resource-collection>

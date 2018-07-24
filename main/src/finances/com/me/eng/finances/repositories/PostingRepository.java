@@ -23,10 +23,8 @@ import com.me.eng.core.data.ChartData;
 import com.me.eng.core.domain.User;
 import com.me.eng.core.repositories.EntityRepository;
 import com.me.eng.finances.domain.Posting;
-import com.me.eng.finances.domain.PostingType;
-import java.util.Date;
+import com.me.eng.finances.domain.PostingFilter;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -70,22 +68,13 @@ public interface PostingRepository
     /**
      * List&lt;Posting&gt;
      * 
-     * @param user User
+     * @param filter PostingFilter
      * @return abstract
      * @throws Exception
-     * @ignored findPendency
+     * @ignored find
      */
-    public abstract List<Posting> findPendency( User user ) throws Exception;
+    public abstract List<Posting> find( PostingFilter filter ) throws Exception;
     
-    /**
-     * List&lt;Posting&gt;
-     * 
-     * @param user User
-     * @return abstract
-     * @throws Exception
-     * @ignored findAll
-     */
-    public abstract List<Posting> findAll( User user ) throws Exception;
     
     /**
      * Map&lt;PostingType,

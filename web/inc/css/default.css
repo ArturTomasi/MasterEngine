@@ -384,6 +384,10 @@ body, html
 
 .z-fisheye-text
 {
+    color: #fff;
+    padding: 7px;
+    border: none;
+    border-radius: 10px;
     background-color: rgb(48, 67, 105);
     font-size: 16px;
 }
@@ -431,6 +435,7 @@ body, html
 {
     border: none !important;
     padding: 0px !important;
+    background: #f7f7f7;
 }
 
 .z-nav-image
@@ -459,9 +464,18 @@ body, html
     vertical-align: middle;
 }
 
+.z-navbar-vertical .z-nav-content:before, 
+.z-nav-popup .z-nav-content:before
+{
+    background: transparent;
+}
+
+.z-navbar .z-navitem-selected .z-navitem-content:hover,
+.z-navbar>ul ul .z-navitem-content:hover,
 .z-navbar .z-navitem-selected .z-navitem-content
 {
-    color: rgba(0,0,0,0.57);
+    color: #333;
+    background: #f7f7f7;
 }
 
 .z-navbar-vertical .z-nav-selected, 

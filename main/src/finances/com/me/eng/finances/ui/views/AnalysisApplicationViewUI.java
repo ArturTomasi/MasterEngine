@@ -19,9 +19,15 @@
  */
 package com.me.eng.finances.ui.views;
 
+import com.me.eng.core.ui.apps.Action;
 import com.me.eng.core.ui.views.ApplicationViewUI;
 import com.me.eng.finances.ui.charts.FinanceDetailsChart;
 import com.me.eng.finances.ui.charts.SituationChart;
+import com.me.eng.finances.ui.panes.FilterPane;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zul.Borderlayout;
+import org.zkoss.zul.Center;
+import org.zkoss.zul.North;
 
 /**
  *
@@ -62,11 +68,22 @@ public class AnalysisApplicationViewUI
     {
         setWidth( "100%" );
         setHeight( "100%" );
+
+        borderlayout.appendChild( new North() );
+        borderlayout.appendChild( new Center() );
         
-        appendChild( situationChart );
-//        appendChild( financeDetailsChart );
+        borderlayout.getNorth().setCollapsible( true );
+        borderlayout.getNorth().setSplittable( true );
+        
+//        borderlayout.getNorth().appendChild( filterPane );
+        borderlayout.getCenter().appendChild( situationChart );
+        
+        appendChild( borderlayout );
     }
+    
+    private Borderlayout borderlayout = new Borderlayout();
     
     private FinanceDetailsChart financeDetailsChart = new FinanceDetailsChart();
     private SituationChart situationChart           = new SituationChart();
+//    private FilterPane filterPane                   = new FilterPane();
 }

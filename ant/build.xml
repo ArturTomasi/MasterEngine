@@ -44,11 +44,14 @@
 	<tstamp>
    	    <format property="today" pattern="dd/MM/yyyy" />
 	</tstamp>
+
+        <property environment="env" />
+    
         <replace file="${src.dir}/main/src/core/com/me/eng/BuildInfo.java" failOnNoReplacements="true">
             <replacefilter token="@number@"  value="${number}"/>
             <replacefilter token="@release@" value="${release}"/>
             <replacefilter token="@hotfix@"  value="${hotfix}"/>
-            <replacefilter token="@build@"   value="${build_number}"/>
+            <replacefilter token="@build@"   value="${env.BUILD_NUMBER}"/>
             <replacefilter token="@mode@"    value="${mode}"/>
             <replacefilter token="@commit@"  value="${git.revision}"/>
             <replacefilter token="@today@"   value="${today}"/>

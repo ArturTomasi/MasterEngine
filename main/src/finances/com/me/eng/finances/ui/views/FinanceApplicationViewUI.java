@@ -19,6 +19,7 @@
  */
 package com.me.eng.finances.ui.views;
 
+import com.me.eng.core.services.ApplicationServices;
 import com.me.eng.core.ui.Callback;
 import com.me.eng.core.ui.apps.Action;
 import com.me.eng.core.ui.util.Prompts;
@@ -28,7 +29,11 @@ import com.me.eng.finances.domain.Posting;
 import com.me.eng.finances.domain.PostingFilter;
 import com.me.eng.finances.ui.editors.PostingEditor;
 import com.me.eng.finances.ui.lists.PostingList;
+import com.me.eng.finances.ui.panes.FilterPane;
 import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zul.Borderlayout;
+import org.zkoss.zul.Center;
+import org.zkoss.zul.North;
 
 /**
  *
@@ -38,9 +43,7 @@ public class FinanceApplicationViewUI
     extends 
         ApplicationViewUI
 {
-    private PostingController controller = PostingController.getInstance();
-    
-    private PostingFilter filter = PostingFilter.PENDENCY;
+    private PostingController controller;
     
     /**
      * FinanceApplicationViewUI
@@ -52,7 +55,7 @@ public class FinanceApplicationViewUI
         setIcon( "finances/sb_finance.png" );
         addAction( "Lançamentos", addAction, editAction, deleteAction );
         addAction( "Movimentações", finishAction, copyAction, reverseAction );
-        addAction( "Filtro", filterAllAction, filterPendencyAction );
+        addAction( "Filtro", filterAllAction );
         addAction( "Relatórios" );
     }
 
@@ -63,9 +66,19 @@ public class FinanceApplicationViewUI
     @Override
     public void refreshContent() 
     {
+        filter( filterPane.getFilter() );
+    }
+    
+    /**
+     * filter
+     * 
+     * @param filter PostingFilter
+     */
+    private void filter( PostingFilter filter )
+    {
         try
         {
-            list.setElements( filter.getElements() );
+            list.setElements( ApplicationServices.getCurrent().getPostingRepository().find( filter ) );
         }
         
         catch ( Exception e )
@@ -258,26 +271,64 @@ public class FinanceApplicationViewUI
     }
     
     /**
+     * showFilter
+     * 
+     */
+    private void showFilter()
+    {
+        North north = borderlayout.getNorth();
+        
+        if ( north == null )
+        {
+            north = new North();
+            north.setCollapsible( true );
+            north.setSplittable( true );
+            north.setAutoscroll( true );
+            north.appendChild( filterPane );
+            
+            borderlayout.appendChild( north );
+        }
+        
+        else
+        {
+            borderlayout.getNorth().detach();
+        }
+        
+        borderlayout.invalidate();
+    }
+    
+    /**
      * initComponents
      * 
      */
     @Override
     protected void initComponents() 
     {
+        controller = PostingController.getInstance();
+        
         setVflex( "true" );
         setHflex( "true" );
         
         list.setHflex( "true" );
         list.setVflex( "true" );
         
+        list.addContextAction( addAction );
         list.addContextAction( finishAction );
         list.addContextAction( deleteAction );
         
-        appendChild( list );
+        borderlayout.appendChild( new Center() );
+        
+        borderlayout.getCenter().appendChild( list );
+        
+        appendChild( borderlayout );
     }
+    
+    private Borderlayout borderlayout = new Borderlayout();
     
     private PostingList list = new PostingList();
     
+    private FilterPane filterPane = new FilterPane( this::filter );
+
     private Action addAction = new Action( "core/tb_add.png", "Novo", "Adicionar novo lançamento!" ) 
     {
         @Override
@@ -332,25 +383,12 @@ public class FinanceApplicationViewUI
         }
     };
     
-    private Action filterAllAction = new Action( "core/tb_filter.png", "Todos", "Buscar todos os lançamentos!" ) 
+    private Action filterAllAction = new Action( "core/tb_filter.png", "Filtro", "Buscar lançamentos de  acordo com o filtro!" ) 
     {
         @Override
         public void onEvent( Event t ) throws Exception 
         {
-            filter = PostingFilter.ALL;
-            
-            refreshContent();
-        }
-    };
-    
-    private Action filterPendencyAction = new Action( "core/tb_filter.png", "Pendentes", "Buscar lançamentos pendentes!" ) 
-    {
-        @Override
-        public void onEvent( Event t ) throws Exception 
-        {
-            filter = PostingFilter.PENDENCY;
-            
-            refreshContent();
+            showFilter();
         }
     };
 }

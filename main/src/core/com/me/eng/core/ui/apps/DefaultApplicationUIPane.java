@@ -117,7 +117,8 @@ public class DefaultApplicationUIPane
             actions.forEach( category ->
             {
                 Nav nav = new Nav( category.getLabel() );
-
+                nav.setOpen( navbar.getChildren().isEmpty() );
+                
                 category.getActions().forEach( a -> 
                 {
                     Navitem item = new Navitem();
@@ -128,7 +129,7 @@ public class DefaultApplicationUIPane
 
                     nav.appendChild( item );
                 } );
-
+                
                 navbar.appendChild( nav );
             } );
 
