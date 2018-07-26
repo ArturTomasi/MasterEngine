@@ -53,10 +53,7 @@ public class FinanceApplicationViewUI
     {
         setLabel( "Finanças" );
         setIcon( "finances/sb_finance.png" );
-        addAction( "Lançamentos", addAction, editAction, deleteAction );
-        addAction( "Movimentações", finishAction, copyAction, reverseAction );
-        addAction( "Filtro", filterAllAction );
-        addAction( "Relatórios" );
+        addAction( "Movimentações", addAction, editAction, deleteAction, finishAction, copyAction, reverseAction, filterAllAction );
     }
 
     /**
@@ -281,9 +278,6 @@ public class FinanceApplicationViewUI
         if ( north == null )
         {
             north = new North();
-            north.setCollapsible( true );
-            north.setSplittable( true );
-            north.setAutoscroll( true );
             north.appendChild( filterPane );
             
             borderlayout.appendChild( north );
@@ -316,7 +310,9 @@ public class FinanceApplicationViewUI
         list.addContextAction( finishAction );
         list.addContextAction( deleteAction );
         
-        borderlayout.appendChild( new Center() );
+        Center center = new Center() ;
+        center.setTitle( "Lançamentos" );
+        borderlayout.appendChild( center );
         
         borderlayout.getCenter().appendChild( list );
         

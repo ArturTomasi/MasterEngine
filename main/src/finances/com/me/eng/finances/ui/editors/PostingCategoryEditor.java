@@ -25,9 +25,8 @@ import com.me.eng.core.ui.editors.EditorPanel;
 import com.me.eng.core.ui.editors.Errors;
 import com.me.eng.core.ui.parts.TableLayout;
 import com.me.eng.finances.domain.PostingCategory;
-import com.me.eng.finances.domain.PostingType;
+import com.me.eng.finances.ui.selectors.PostingTypeSelector;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Textbox;
 
@@ -74,7 +73,7 @@ public class PostingCategoryEditor
     public void setInput( PostingCategory value ) 
     {
         nameField.setValue( value.getName() );
-        typesField.setSelectedIndex( value.getType().ordinal() );
+        typesField.setSelectedElement( value.getType() );
         infoField.setValue( value.getInfo() );
     }
 
@@ -87,7 +86,7 @@ public class PostingCategoryEditor
     public void getInput( PostingCategory value ) 
     {
         value.setName( nameField.getValue() );
-        value.setType( PostingType.values()[ typesField.getSelectedIndex() ] );
+        value.setType( typesField.getSelectedElement() );
         value.setInfo( infoField.getValue() );
     }
 
@@ -104,7 +103,7 @@ public class PostingCategoryEditor
             e.addError( "Preencha um nome!" );
         }
         
-        if ( typesField.getSelectedIndex() < 0 )
+        if ( typesField.getSelectedElement() == null )
         {
             e.addError( "Selecione um tipo!" );
         }
@@ -117,17 +116,10 @@ public class PostingCategoryEditor
      */
     private void initComponents()
     {
-        for ( PostingType s : PostingType.values() )
-        {
-            typesField.appendItem( s.toString() );
-        }
-
         nameField.setWidth( "100%" );
         infoField.setWidth( "100%" );
         infoField.setRows( 20 );
                 
-        typesField.setReadonly( true );
-
         tableLayout.addRow( lbName, nameField );
         tableLayout.addRow( lbType, typesField );
         tableLayout.addRow( lbInfo );
@@ -147,5 +139,5 @@ public class PostingCategoryEditor
     
     private Textbox nameField    = new Textbox();
     private Textbox infoField    = new Textbox();
-    private Combobox  typesField = new Combobox();
+    private PostingTypeSelector  typesField = new PostingTypeSelector();
 }

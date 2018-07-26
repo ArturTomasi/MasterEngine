@@ -488,7 +488,22 @@ body, html
     border: none;
 }
 
-.z-west-header
+.z-center
+{
+    border: 0px;
+}
+
+.z-listbox-footer
+{
+    border-top: 1px solid rgb(48, 67, 105);
+}
+.z-listbox
+{
+    border: 0px;
+}
+
+.z-west-header,
+.z-center-header
 {
     color: rgb(48, 67, 105);
     text-align: center;
@@ -497,4 +512,19 @@ body, html
     font-size: 18px;
     background: #fff !important;
     border-bottom: 1px solid rgb(48, 67, 105);
+}
+
+.z-combobox-input[readonly]
+{
+    background-color: #fff;
+}
+
+.z-comboitem-selected 
+{
+    display: none;
+}
+
+.z-north-collapsed
+{
+    border: 0;
 }

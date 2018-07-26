@@ -72,6 +72,16 @@ public class PostingFilter
     {
         this.mode = mode;
     }
+  
+    /**
+     * mode
+     * 
+     * @return Mode
+     */
+    public Mode mode()
+    {
+        return this.mode;
+    }
     
     /**
      * from
@@ -81,6 +91,16 @@ public class PostingFilter
     public void from( Date date )
     {
         this.from = date;
+    }
+    
+    /**
+     * from
+     * 
+     * @return Date
+     */
+    public Date from()
+    {
+        return this.from;
     }
 
     /**
@@ -92,6 +112,16 @@ public class PostingFilter
     {
         this.until = date;
     }
+    
+    /**
+     * until
+     * 
+     * @return Date
+     */
+    public Date until()
+    {
+        return this.until;
+    }
 
     /**
      * info
@@ -102,6 +132,16 @@ public class PostingFilter
     {
         this.info = info;
     }
+        
+    /**
+     * info
+     * 
+     * @return Date
+     */
+    public String info()
+    {
+        return this.info;
+    }
 
     /**
      * type
@@ -111,6 +151,16 @@ public class PostingFilter
     public void type( PostingType type )
     {
         this.type = type;
+    }
+    
+    /**
+     * type
+     * 
+     * @return Date
+     */
+    public PostingType type()
+    {
+        return this.type;
     }
 
     /**
@@ -124,6 +174,16 @@ public class PostingFilter
     }
     
     /**
+     * state
+     * 
+     * @return Date
+     */
+    public PostingState state()
+    {
+        return this.state;
+    }
+    
+    /**
      * user
      * 
      * @param user User
@@ -131,6 +191,16 @@ public class PostingFilter
     public void user( User user )
     {
         this.user = user;
+    }
+
+    /**
+     * user
+     * 
+     * @return User
+     */
+    public User user()
+    {
+        return this.user;
     }
     
     /**
@@ -186,12 +256,74 @@ public class PostingFilter
             
             case CUSTOM:
             {
-                return manager.createQuery
-                ( 
-                    " select p from Posting p " +
-                    " where " +
-                    " p.owner = :user "
-                );
+                String sql = " select p from Posting p " +
+                             " where " +
+                             " p.owner = :user ";
+                
+                if ( from != null )
+                {
+                    sql += " and " +
+                           " coalesce( p.estimateDate, p.realDate  ) >= :from  ";
+                }
+                
+                if ( until != null )
+                {
+                    sql += " and " +
+                           " coalesce( p.estimateDate, p.realDate  ) <= :until  ";
+                }
+                
+                if ( state != null )
+                {
+                    sql += " and " +
+                           " p.state = :state ";
+                }
+                
+                if ( type != null )
+                {
+                    sql += " and " +
+                           " p.category.type = :type";
+                }
+                
+                if ( info != null )
+                {
+                    sql += " and " +
+                           " ( " +
+                           " upper( p.name  ) like upper( :info ) " +
+                           " or " +
+                           " upper( p.info  ) like upper( :info ) " +
+                           " ) ";
+                              
+                }
+                
+                Query q = manager.createQuery( sql )
+                                  .setParameter( "user", user );
+                
+                if ( from != null )
+                {
+                    q.setParameter( "from", from );
+                }
+                
+                if ( until != null )
+                {
+                    q.setParameter( "until", until );
+                }
+                
+                if ( state != null )
+                {
+                    q.setParameter( "state", state );
+                }
+                
+                if ( type != null )
+                {
+                    q.setParameter( "type", type );
+                }
+                
+                if ( info != null )
+                {
+                    q.setParameter( "info", "%" + info + "%" );
+                }
+                
+                return q;
             }
             
             default: 
