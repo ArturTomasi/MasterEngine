@@ -6,7 +6,7 @@
       type="javax.enterprise.inject.spi.BeanManager"
       factory="org.jboss.weld.resources.ManagerObjectFactory"/>
     
-    <Resource 
+<!--    <Resource 
         name="ds/default" 
         auth="Container" 
         type="javax.sql.DataSource" 
@@ -19,6 +19,6 @@
         validationQuery="select 1"
         password="admin" 
         driverClassName="com.mysql.jdbc.Driver" 
-        url="jdbc:mysql://localhost:3306/eng_homolog?autoReconnect=true&amp;characterEncoding=utf8"/>
+        url="jdbc:mysql://localhost:3306/eng_homolog?autoReconnect=true&amp;characterEncoding=utf8"/>-->
     
 </Context>

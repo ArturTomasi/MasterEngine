@@ -71,6 +71,19 @@ create table eng_clients
     foreign key fk_clients_cities (ref_city) references eng_cities (id)
 );
 
+create table eng_jobs
+(
+    id int not null auto_increment,
+    name varchar(260) not null,
+    ref_client int not null,
+    address varchar(300),
+    ref_city int,
+    cei char(14), 
+    primary key (id),
+    foreign key fk_jobs_client (ref_client) references eng_clients (id),
+    foreign key fk_jobs_cities (ref_city) references eng_cities (id)
+);
+
 create table eng_contacts
 (
     id int not null auto_increment,
@@ -101,18 +114,7 @@ create table eng_capstones
     primary key(id)
 );
 
-create table eng_jobs
-(
-    id int not null auto_increment,
-    name varchar(260) not null,
-    ref_client int not null,
-    address varchar(300),
-    ref_city int,
-    cei char(14), 
-    primary key (id),
-    foreign key fk_jobs_client (ref_client) references eng_clients (id),
-    foreign key fk_jobs_cities (ref_city) references eng_cities (id)
-);
+
 
 -- create table eng_traces
 -- (

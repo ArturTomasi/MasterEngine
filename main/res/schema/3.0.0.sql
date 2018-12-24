@@ -47,18 +47,6 @@ create table fin_postings
     foreign key fk_postings_ref_company(ref_company) references fin_companies(id)
 );
 
-
-create table core_attachments
-(
-    id   int          not null auto_increment,
-    name varchar ( 200 ) not null,
-    url  varchar ( 200 ) not null,
-    info varchar ( 200 ) ,
-
-    constraint pk_attachments_id primary key ( id )
-);
-
-
 /* 
  * CREATE INDEX FOR TABLES 
  */

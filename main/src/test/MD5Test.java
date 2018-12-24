@@ -22,6 +22,7 @@ package test;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.Base64;
+import java.util.Calendar;
 import org.apache.commons.codec.digest.DigestUtils;
 
 /**
@@ -34,7 +35,12 @@ public class MD5Test
     {
         try
         {
-            System.out.println( DigestUtils.md5Hex( "admin" ) );
+//            System.out.println( DigestUtils.md5Hex( "admin" ) );
+            Calendar c = Calendar.getInstance();
+            c.set( Calendar.YEAR, 2020 );
+            c.set( Calendar.MONTH, Calendar.JANUARY );
+            c.set( Calendar.DAY_OF_MONTH, 1 );
+            System.out.println( c.getTimeInMillis() );
         }
         
         catch ( Exception e )
