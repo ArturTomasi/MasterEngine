@@ -528,3 +528,20 @@ body, html
 {
     border: 0;
 }
+
+.req-structure
+{
+    border: 0px !important;
+}
+
+.req-structure img
+{
+    width: 24px;
+}
+
+.req-structure span
+{
+    font-family: Arial,sans-serif;
+    font-size: 15px !important;
+    font-weight: normal;
+}

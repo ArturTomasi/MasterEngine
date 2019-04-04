@@ -2,6 +2,40 @@
 
 <configuration>
     
+        
+    <category label="Aplicação">
+        
+        <item label="Diretório da aplicação"
+              property="master_engine.home"
+              type="string">
+        </item>
+        
+        <item label="Nome da aplicação"
+              property="application.name"
+              type="string">
+        </item>
+        
+    </category>
+    
+    <category label="MEPad">
+        
+        <item label="Chave do Firebase"
+              property="me.pad.api.key"
+              type="string">
+        </item>
+        
+        <item label="Dominio do Firebase"
+              property="me.pad.auth.domain"
+              type="string">
+        </item>
+        
+        <item label="Dominio do Firebase"
+              property="me.pad.database.url"
+              type="string">
+        </item>
+        
+    </category>
+    
     <category label="Envio de Email">
         
         <item label="SMTP Host"
@@ -42,5 +76,5 @@
         </item>
         
     </category>
-    
+
 </configuration>

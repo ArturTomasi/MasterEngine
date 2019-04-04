@@ -35,14 +35,15 @@
     </session-config>
     
     <client-config>
-    <debug-js>true</debug-js>
-</client-config>
-<library-property>
-    <name>org.zkoss.web.classWebResource.cache</name>
-    <value>false</value>
-</library-property>
-<library-property>
-    <name>org.zkoss.zk.WPD.cache</name>
-    <value>false</value>
-</library-property>
+        <debug-js>true</debug-js>
+    </client-config>
+    <library-property>
+        <name>org.zkoss.web.classWebResource.cache</name>
+        <value>false</value>
+    </library-property>
+
+    <library-property>
+        <name>org.zkoss.zk.WPD.cache</name>
+        <value>false</value>
+    </library-property>
 </zk>

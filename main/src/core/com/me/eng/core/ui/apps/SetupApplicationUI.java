@@ -23,6 +23,7 @@ import com.me.eng.core.annotations.ApplicationDescriptor;
 import com.me.eng.core.ui.views.ConfigurationApplicationViewUI;
 import com.me.eng.core.ui.views.ScriptApplicationViewUI;
 import com.me.eng.core.ui.views.UserApplicationViewUI;
+import com.me.eng.core.ui.views.SectorApplicationViewUI;
 
 /**
  *
@@ -44,6 +45,7 @@ public class SetupApplicationUI
     public SetupApplicationUI()
     {
         addView( new UserApplicationViewUI() );
+        addView( new SectorApplicationViewUI() );
         addView( new ConfigurationApplicationViewUI() );
         addView( new ScriptApplicationViewUI() );
     }

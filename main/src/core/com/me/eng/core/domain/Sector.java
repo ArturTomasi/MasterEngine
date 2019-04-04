@@ -1,0 +1,143 @@
+/*
+ * Filename:    Sector 
+ *
+ * Author:      Artur Tomasi
+ * EMail:       tomasi.artur@gmail.com
+ * Internet:    https://www.masterengine.com.br
+ *
+ * Copyright © 2019 by Over Line Ltda.
+ * 95900-038, LAJEADO, RS
+ * BRAZIL
+ *
+ * The copyright to the computer program(s) herein
+ * is the property of Over Line Ltda., Brazil.
+ * The program(s) may be used and/or copied only with
+ * the written permission of Over Line Ltda.
+ * or in accordance with the terms and conditions
+ * stipulated in the agreement/contract under which
+ * the program(s) have been supplied.
+ */
+package com.me.eng.core.domain;
+
+import com.google.common.base.Objects;
+import java.io.Serializable;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+/**
+ *
+ * @author Artur Tomasi
+ */
+@Entity
+@Table(name = "core_sectors")
+public class Sector 
+    implements 
+        Serializable
+{
+    private static final long serialVersionUID = 1L;
+    
+    @Id
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
+    
+    @Basic(optional = false)
+    @Column(name = "name")
+    private String name;
+    
+    /**
+     * Sector
+     * 
+     */
+    public Sector(){}
+
+    /**
+     * getId
+     * 
+     * @return Integer
+     */
+    public Integer getId()
+    {
+        return id;
+    }
+
+    /**
+     * setId
+     * 
+     * @param id Integer
+     */
+    public void setId( Integer id )
+    {
+        this.id = id;
+    }
+
+    /**
+     * getName
+     * 
+     * @return String
+     */
+    public String getName()
+    {
+        return name;
+    }
+
+    /**
+     * setName
+     * 
+     * @param name String
+     */
+    public void setName( String name )
+    {
+        this.name = name;
+    }
+    
+    /**
+     * hashCode
+     * 
+     * @return int
+     */
+    @Override
+    public int hashCode()
+    {
+        int hash = 0;
+        
+        hash += ( id != null ? id.hashCode() : 0 );
+        
+        return hash;
+    }
+
+    /**
+     * equals
+     * 
+     * @param object Object
+     * @return boolean
+     */
+    @Override
+    public boolean equals( Object object )
+    {
+        if ( object instanceof Sector )
+        {
+            return Objects.equal( this.getId(), Sector.class.cast( object ).getId() );
+        }
+        
+        return false;
+    }
+
+    /**
+     * toString
+     * 
+     * @return String
+     */
+    @Override
+    public String toString()
+    {
+        return name;
+    }
+    
+}

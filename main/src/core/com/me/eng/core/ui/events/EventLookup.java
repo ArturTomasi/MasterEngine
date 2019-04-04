@@ -27,6 +27,7 @@ import org.zkoss.zk.ui.event.EventQueues;
  */
 public enum EventLookup
 {
+    UPDATE_TEXT         ( "onUpdateText",   EventQueues.APPLICATION ),
     UPDATE_SAMPLE       ( "onUpdateSample", EventQueues.APPLICATION ),
     DELETE_SAMPLE       ( "onDeleteSample", EventQueues.APPLICATION );
 

@@ -41,26 +41,9 @@
         </auth-constraint>
     </security-constraint>
     
-    
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>secured</web-resource-name>
-            <url-pattern>/admin/recipes.jsp</url-pattern>
-            <http-method>GET</http-method>
-            <http-method>POST</http-method>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>operator</role-name>
-            <role-name>administrator</role-name>
-            <role-name>recipes</role-name>
-        </auth-constraint>
-    </security-constraint>
-    
-    
     <security-role>
         <role-name>administrator</role-name>
         <role-name>operator</role-name>
-        <role-name>recipes</role-name>
     </security-role>
     
     
@@ -103,6 +86,8 @@
         <display-name>ZK Session Cleaner</display-name>
         <listener-class>org.zkoss.zk.ui.http.HttpSessionListener</listener-class>
     </listener>
+    
+    <!-- Start of Servlet-->
     
     <servlet>
         <description>The servlet loads the DSP pages.</description>
@@ -147,7 +132,24 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-    
+    <!-- End of Servlet-->
+
+    <!-- Start of Rest API-->
+    <servlet>
+        <servlet-name>Jersey RESTful</servlet-name>
+        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+        <init-param>
+          <param-name>com.sun.jersey.config.property.packages</param-name>
+          <param-value>com.me.eng.api.rest</param-value>
+        </init-param> 
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Jersey RESTful</servlet-name>
+        <url-pattern>/rs/*</url-pattern>
+    </servlet-mapping>
+    <!-- End of Rest API -->
     
     <!-- ERROR PAGES -->
     <error-page>

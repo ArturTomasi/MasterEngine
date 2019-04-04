@@ -31,5 +31,12 @@ public interface UserRepository
     extends 
         EntityRepository<User>
 {
+    /**
+     * findByLogin
+     * 
+     * @param login String
+     * @return User
+     * @throws Exception
+     */
     public User findByLogin( String login ) throws Exception;
 }

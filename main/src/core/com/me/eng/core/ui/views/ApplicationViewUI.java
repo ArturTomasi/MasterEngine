@@ -23,6 +23,7 @@ import com.me.eng.core.application.ApplicationContext;
 import com.me.eng.core.ui.apps.Action;
 import com.me.eng.core.ui.apps.ActionCategory;
 import com.me.eng.core.ui.apps.ApplicationUI;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import org.zkoss.zul.Div;
@@ -82,9 +83,38 @@ public abstract class ApplicationViewUI
      */
     protected void addAction( String label, Action... a )
     {
-        actions.add( new ActionCategory( label, a ) );
+        addAction( new ActionCategory( label, a ) );
     }
 
+    /**
+     * addAction
+     * 
+     * @param a ActionCategory
+     */
+    protected void addAction( ActionCategory a )
+    {
+        actions.add( a );
+    }
+
+    /**
+     * addAction
+     * 
+     * @param a ActionCategory
+     */
+    protected void addActions( ActionCategory... a )
+    {
+        actions.addAll( Arrays.asList( a ) );
+    }
+
+    /**
+     * clearActions
+     * 
+     */
+    protected void clearActions()
+    {
+        actions.clear();
+    }
+    
     /**
      * getActions
      * 
@@ -93,6 +123,15 @@ public abstract class ApplicationViewUI
     public List<ActionCategory> getActions()
     {
         return actions;
+    }
+    
+    /**
+     * updateActions
+     * 
+     */
+    public void updateActions()
+    {
+        applicationUI.updateActions();
     }
     
     /**

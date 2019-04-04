@@ -19,25 +19,30 @@
  */
 package com.me.eng.core.ui.apps;
 
+import com.me.eng.core.ui.util.GenericObserver;
 import com.me.eng.core.ui.views.ApplicationViewUI;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Observable;
+import java.util.Map;
 
 /**
  *
  * @author Matheus
  */
 public class ApplicationUI
-    extends 
-        Observable
 {
+    public static final int ACTIVE_VIEW   = 0;
+    public static final int UPDATE_ACTION = 1;
+    
     private String title;
     private String label;
     private String info;
     private String icon;
     
     private LinkedList<ApplicationViewUI> views = new LinkedList();
+    
+    private Map<Integer, GenericObserver> observers = new HashMap();
     
     /**
      * addView
@@ -61,14 +66,43 @@ public class ApplicationUI
     }
     
     /**
+     * addObserver
+     * 
+     * @param id int
+     * @param obs GenericObserver
+     */
+    public void addObserver( int id, GenericObserver obs )
+    {
+        observers.put( id, obs );
+    }
+    
+    /**
      * setSelectedView
      * 
      * @param view ApplicationViewUI
      */
     public void setSelectedView( ApplicationViewUI view )
     {
-        setChanged();
-        notifyObservers( view );
+        GenericObserver obs = observers.get( ACTIVE_VIEW );
+        
+        if ( obs != null )
+        {
+            obs.notify( view );
+        }
+    }
+    
+    /**
+     * updateActions
+     * 
+     */
+    public void updateActions()
+    {
+        GenericObserver obs = observers.get( UPDATE_ACTION );
+        
+        if ( obs != null )
+        {
+            obs.notify( getViews() );
+        }
     }
     
     /**

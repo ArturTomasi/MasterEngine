@@ -58,6 +58,12 @@ public class LauncherApplication
         addApplication( SetupApplicationUI.class );
     }
     
+    /**
+     * addApplication
+     * 
+     * @param extends Class&lt;?
+     * @param ui ApplicationUI&gt;
+     */
     private void addApplication( Class<? extends ApplicationUI> ui )
     {
         final ApplicationDescriptor app = ui.getAnnotation( ApplicationDescriptor.class );
@@ -80,12 +86,21 @@ public class LauncherApplication
         inner.appendChild( div );
     }
     
+    /**
+     * refreshContent
+     * 
+     */
+    @Override
     public void refreshContent()
     {
         statusBar.setUser( ApplicationContext.getInstance()
                               .getActiveUser() );
     }
     
+    /**
+     * initComponents
+     * 
+     */
     private void initComponents()
     {
         setSclass( "launcher-app" );

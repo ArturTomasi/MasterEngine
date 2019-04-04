@@ -23,6 +23,7 @@ import com.me.eng.core.application.ApplicationInject;
 import com.me.eng.core.license.controller.LicenseManager;
 import com.me.eng.core.license.exceptions.LicenseException;
 import com.me.eng.core.services.ApplicationServices;
+import com.me.eng.core.ui.util.GenericObserver;
 import com.me.eng.core.ui.views.ApplicationViewUI;
 import java.util.Observable;
 import java.util.Observer;
@@ -72,14 +73,9 @@ public class DefaultApplicationUIController
 
         applicationPane.setApplicationUI( ui );
 
-        ui.addObserver( new Observer()
-        {
-            @Override
-            public void update( Observable o, Object arg )
-            {
-                applicationPane.activeView( (ApplicationViewUI) arg );
-            }
-        } );
+        ui.addObserver( ApplicationUI.ACTIVE_VIEW, (GenericObserver<ApplicationViewUI>) applicationPane::activeView );
+
+        ui.addObserver( ApplicationUI.UPDATE_ACTION, (GenericObserver) -> applicationPane.updateActions() ); 
 
         comp.addEventListener( "onClientInfo", new EventListener<ClientInfoEvent>()
         {

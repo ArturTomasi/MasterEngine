@@ -27,6 +27,7 @@ import com.me.eng.samples.repositories.EquipmentRepository;
 import com.me.eng.samples.repositories.JobRepository;
 import com.me.eng.core.repositories.LicenseRepository;
 import com.me.eng.core.repositories.RoleRepository;
+import com.me.eng.core.repositories.SectorRepository;
 import com.me.eng.samples.repositories.RuleRepository;
 import com.me.eng.samples.repositories.SampleRepository;
 import com.me.eng.core.repositories.UserRepository;
@@ -87,6 +88,9 @@ public class ApplicationService
     
     @Inject
     private AttachmentRepository attachmentRepository;
+    
+    @Inject
+    private SectorRepository sectorRepository;
 
     /**
      * getCityRepository
@@ -226,5 +230,15 @@ public class ApplicationService
     public AttachmentRepository getAttachmentRepository() 
     {
         return attachmentRepository;
+    }
+
+    /**
+     * getSectorRepository
+     * 
+     * @return SectorRepository
+     */
+    public SectorRepository getSectorRepository() 
+    {
+        return sectorRepository;
     }
 }

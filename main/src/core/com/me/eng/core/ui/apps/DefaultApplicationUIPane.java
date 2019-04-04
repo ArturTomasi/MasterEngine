@@ -105,42 +105,51 @@ public class DefaultApplicationUIPane
         if ( ! Objects.equal( viewUI, view ) )
         {
             this.viewUI = view;
-
-            setVisibleMenu( ! view.getActions().isEmpty() );
-            
-            List<ActionCategory> actions = new LinkedList();
-            actions.addAll( view.getActions() );
-            actions.add( systemActions );
-
-            Navbar navbar = new Navbar( "vertical" );
-            
-            actions.forEach( category ->
-            {
-                Nav nav = new Nav( category.getLabel() );
-                nav.setOpen( navbar.getChildren().isEmpty() );
-                
-                category.getActions().forEach( a -> 
-                {
-                    Navitem item = new Navitem();
-                    item.setLabel( a.getLabel() );
-                    item.setImage( a.getIcon() );
-                    item.setTooltiptext( a.getTooltipText() );
-                    item.addEventListener( org.zkoss.zk.ui.event.Events.ON_CLICK, a );
-
-                    nav.appendChild( item );
-                } );
-                
-                navbar.appendChild( nav );
-            } );
-
-            borderlayout.getWest().getChildren().clear();
-            borderlayout.getWest().appendChild( navbar  );
+    
+            updateActions();
 
             borderlayout.getCenter().getChildren().clear();
             borderlayout.getCenter().appendChild( view  );
 
             view.active();
         }
+    }
+    
+    /**
+     * updateActions
+     * 
+     */
+    public void updateActions()
+    {
+        setVisibleMenu( ! viewUI.getActions().isEmpty() );
+            
+        List<ActionCategory> actions = new LinkedList();
+        actions.addAll( viewUI.getActions() );
+        actions.add( systemActions );
+
+        Navbar navbar = new Navbar( "vertical" );
+
+        actions.forEach( category ->
+        {
+            Nav nav = new Nav( category.getLabel() );
+            nav.setOpen( navbar.getChildren().isEmpty() );
+
+            category.getActions().forEach( a -> 
+            {
+                Navitem item = new Navitem();
+                item.setLabel( a.getLabel() );
+                item.setImage( a.getIcon() );
+                item.setTooltiptext( a.getTooltipText() );
+                item.addEventListener( org.zkoss.zk.ui.event.Events.ON_CLICK, a );
+
+                nav.appendChild( item );
+            } );
+
+            navbar.appendChild( nav );
+        } );
+
+        borderlayout.getWest().getChildren().clear();
+        borderlayout.getWest().appendChild( navbar  );
     }
     
     /**

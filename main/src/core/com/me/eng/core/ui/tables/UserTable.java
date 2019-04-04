@@ -48,6 +48,22 @@ public class UserTable
             {
                 return value.getName();
             }
+        },
+        SECTOR( "Setor" )
+        {
+            @Override
+            public Object getValueAt( User value )
+            {
+                return value.getSector().getName();
+            }
+        },
+        PROFILE( "Perfil" )
+        {
+            @Override
+            public Object getValueAt( User value )
+            {
+                return User.PROFILE_NAMES[ value.getProfile() ]; 
+            }
         };
         
         private String label;

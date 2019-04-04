@@ -33,6 +33,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -53,15 +54,13 @@ public class User
     public static final String PROFILE_NAMES[] = 
     {
         "Operador",
-        "Administrador",
-        "Gerenciador de Receitas"
+        "Administrador"
     };
     
     public static final String PROFILE_ROLES[] = 
     {
         "operator",
-        "administrator",
-        "recipes"
+        "administrator"
     };
     
     @Id
@@ -85,6 +84,10 @@ public class User
     @Basic(optional = false)
     @Column(name = "profile")
     private Integer profile = PROFILE_OPERATOR;
+    
+    @JoinColumn(name = "ref_sector", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Sector sector;
     
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable( name = "core_user_roles",
@@ -176,6 +179,25 @@ public class User
     public void setName( String name )
     {
         this.name = name;
+    }
+
+    /**
+     * getSector
+     * 
+     * @return Sector
+     */
+    public Sector getSector() {
+        return sector;
+    }
+
+    /**
+     * setSector
+     * 
+     * @param sector Sector
+     */
+    public void setSector( Sector sector )
+    {
+        this.sector = sector;
     }
     
     /**

@@ -24,6 +24,7 @@ import com.me.eng.core.domain.Role;
 import com.me.eng.core.domain.User;
 import com.me.eng.core.ui.Callback;
 import com.me.eng.core.ui.parts.TableLayout;
+import com.me.eng.core.ui.selectors.SectorSelector;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
@@ -87,6 +88,7 @@ public class UserEditor
         tfLogin.setValue( value.getLogin() );
         
         cbProfile.setSelectedIndex( value.getProfile() );
+        cbSector.setSelectedItem( value.getSector() );
     }
 
     /**
@@ -106,6 +108,7 @@ public class UserEditor
         }
         
         value.setProfile( cbProfile.getSelectedIndex() );
+        value.setSector( cbSector.getSelectedItem() );
         
         try
         {
@@ -174,6 +177,11 @@ public class UserEditor
             e.addError( "Perfil" );
         }
         
+        if ( cbSector.getSelectedItem() == null )
+        {
+            e.addError( "Setor" );
+        }
+        
         if ( source.isSystemUser() )
         {
             if ( cbProfile.getSelectedIndex() < User.PROFILE_ADMINISTRATOR )
@@ -202,6 +210,7 @@ public class UserEditor
         lbLogin.setValue( "Login:" );
         lbPassword.setValue( "Senha:" );
         lbProfile.setValue( "Perfil:" );
+        lbSector.setValue( "Setor:" );
         
         tfPassword.setType( "password" );
         tfPassword.setReadonly( true );
@@ -210,10 +219,12 @@ public class UserEditor
         tableLayout.addRow( lbLogin, tfLogin );
         tableLayout.addRow( lbPassword, tfPassword, btEnabled );
         tableLayout.addRow( lbProfile, cbProfile );
+        tableLayout.addRow( lbSector, cbSector );
         
         tableLayout.setColspan( 0, 1, 2 );
         tableLayout.setColspan( 1, 1, 2 );
         tableLayout.setColspan( 3, 1, 2 );
+        tableLayout.setColspan( 4, 1, 2 );
         
         appendChild( tableLayout );
         
@@ -237,8 +248,10 @@ public class UserEditor
     private Label lbLogin = new Label();
     private Label lbPassword = new Label();
     private Label lbProfile = new Label();
+    private Label lbSector = new Label();
     
     private Toolbarbutton btEnabled = new Toolbarbutton();
     
     private Combobox cbProfile = new Combobox();
+    private SectorSelector cbSector = new SectorSelector();
 }
